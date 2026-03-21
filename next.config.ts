@@ -1,7 +1,30 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  webpack(config) {
+    const fileLoaderRule = config.module.rules.find(
+      (rule: { test?: { test?: (s: string) => boolean } }) =>
+        rule.test?.test?.('.svg'),
+    )
 
-export default nextConfig;
+    config.module.rules.push(
+      {
+        ...fileLoaderRule,
+        test: /\.svg$/i,
+        resourceQuery: /url/,
+      },
+      {
+        test: /\.svg$/i,
+        issuer: fileLoaderRule.issuer,
+        resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /url/] },
+        use: [{ loader: '@svgr/webpack', options: { icon: true } }],
+      },
+    )
+
+    fileLoaderRule.exclude = /\.svg$/i
+
+    return config
+  },
+}
+
+export default nextConfig

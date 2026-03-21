@@ -1,209 +1,129 @@
 @import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import './tokens.generated.css';
 
-@theme {
+@custom-variant dark (&:is(.dark *));
 
-  /* === Semantic Colors === */
-  --color-brand-primary: #5a44f2;
-  --color-brand-secondary: #0e2646;
-  --color-brand-tertiary: #5291eb;
-  --color-brand-primary-stronger: #472be0;
-  --color-brand-secondary-weaker: #273c5d;
-  --color-background-gray-default: #fafafa;
-  --color-background-brand-default: #fcf8ff;
-  --color-background-gray-stronger: #f2f2f2;
-  --color-background-brand-stronger: #f3effa;
-  --color-stroke-border-default: #c8c5d0;
-  --color-stroke-divider: #c8c5d0;
-  --color-stroke-border-primary: #e5e1ec;
-  --color-text-and-icon-default: #121212;
-  --color-text-and-icon-primary: #3c3a43;
-  --color-text-and-icon-tertiary: #787680;
-  --color-text-and-icon-disabled: #928f99;
-  --color-text-and-icon-inverse: #fcf8ff;
-  --color-text-and-icon-secondary: #53515a;
-  --color-feedback-success: #06a33c;
-  --color-feedback-error: #fd565f;
-  --color-feedback-informative: #0075ff;
-
-
-  /* === Component Tokens === */
-  --comp-button-primary-filled-filled-disabled: #e4dfff;
-  --comp-button-primary-filled-filled-pressed: #0d0d0d29;
-  --comp-button-primary-filled-filled-hover: #0d0d0d14;
-  --comp-button-primary-outlined-outlined-hover: #5a44f214;
-  --comp-button-primary-outlined-outlined-pressed: #5a44f229;
-  --comp-button-primary-outlined-outlined-stroke-enabled: #5a44f299;
-  --comp-button-primary-outlined-outlined-disabled: #fffbff;
-  --comp-button-primary-outlined-outlined-stroke-disabled: #5a44f23d;
-  --comp-button-primary-text-disabled: #a8a0ff;
-  --comp-button-secondary-outlined-outlined-hover: #0e264614;
-  --comp-button-secondary-outlined-outlined-stroke-disabled: #0e26463d;
-  --comp-button-secondary-outlined-outlined-disabled: #fdfbff;
-  --comp-button-secondary-outlined-outlined-stroke-enabled: #0e264680;
-  --comp-button-secondary-outlined-outlined-pressed: #0e264629;
-  --comp-button-secondary-text-disabled: #97acd3;
-  --comp-button-secondary-filled-filled-disabled: #d6e3ff;
-  --comp-button-secondary-filled-filled-pressed: #ffffff29;
-  --comp-button-secondary-filled-filled-hover: #ffffff14;
-
-
-  /* === Spacing — Named (Desktop default) === */
-  --spacing-2xs: 12px;
-  --spacing-xs: 16px;
-  --spacing-sm: 20px;
-  --spacing-md: 24px;
-  --spacing-xl: 32px;
-  --spacing-lg: 28px;
-  --spacing-2xl: 40px;
-  --spacing-3xl: 48px;
-
-
-  /* === Spacing — Unit Scale === */
-  --spacing-0: 0px;
-  --spacing-1: 1px;
-  --spacing-2: 2px;
-  --spacing-3: 3px;
-  --spacing-4: 4px;
-  --spacing-6: 6px;
-  --spacing-8: 8px;
-  --spacing-10: 10px;
-  --spacing-12: 12px;
-  --spacing-16: 16px;
-  --spacing-20: 20px;
-  --spacing-24: 24px;
-  --spacing-28: 28px;
-  --spacing-32: 32px;
-  --spacing-40: 40px;
-  --spacing-48: 48px;
-  --spacing-56: 56px;
-  --spacing-64: 64px;
-  --spacing-72: 72px;
-  --spacing-80: 80px;
-  --spacing-96: 96px;
-
-
-  /* === Typography === */
-  --font-point: "IBM Plex Sans KR";
-  --font-default: "Noto Sans KR";
-  --font-weight-heading-thin: 500;
-  --font-weight-heading-normal: 600;
-  --font-weight-heading-bold: 700;
-  --font-weight-title-normal: 500;
-  --font-weight-title-bold: 600;
-  --font-weight-title-thin: 400;
-  --font-weight-body-normal: 400;
-  --font-weight-body-bold: 500;
-  --font-weight-caption-normal: 400;
-  --font-weight-caption-bold: 500;
-  --font-weight-display-bold: 700;
-  --font-weight-display-normal: 600;
-  --font-weight-display-thin: 500;
-  --font-weight-label-normal: 500;
-  --font-weight-label-thin: 400;
-  --font-weight-label-bold: 600;
-  --text-heading-lg: 32px;
-  --text-heading-sm: 24px;
-  --text-heading-md: 28px;
-  --text-display-sm: 40px;
-  --text-display-lg: 56px;
-  --text-display-md: 48px;
-  --text-caption-sm: 10px;
-  --text-caption-lg: 13px;
-  --text-caption-md: 12px;
-  --text-title-md: 18px;
-  --text-title-sm: 16px;
-  --text-title-lg: 20px;
-  --text-body-sm: 15px;
-  --text-body-md: 16px;
-  --text-body-lg: 17px;
-  --text-body-xs: 14px;
-  --text-body-2xs: 13px;
-  --text-label-lg: 16px;
-  --text-label-sm: 13px;
-  --text-label-md: 15px;
-  --text-label-xs: 12px;
-  --leading-heading-sm: 32px;
-  --leading-heading-md: 36px;
-  --leading-heading-lg: 44px;
-  --leading-display-sm: 52px;
-  --leading-display-md: 60px;
-  --leading-display-lg: 72px;
-  --leading-caption-sm: 12px;
-  --leading-caption-lg: 16px;
-  --leading-caption-md: 16px;
-  --leading-body-xxs: 18px;
-  --leading-body-md: 24px;
-  --leading-body-lg: 26px;
-  --leading-body-xs: 20px;
-  --leading-body-sm: 22px;
-  --leading-title-sm: 24px;
-  --leading-title-md: 24px;
-  --leading-title-lg: 28px;
-  --leading-label-lg: 24px;
-  --leading-label-sm: 16px;
-  --leading-label-md: 20px;
-  --leading-label-xs: 16px;
-
-
-  /* === Border Radius === */
-  --radius-0: 0px;
-  --radius-2: 2px;
-  --radius-4: 4px;
-  --radius-6: 6px;
-  --radius-8: 8px;
-  --radius-10: 10px;
-  --radius-12: 12px;
-  --radius-16: 16px;
-  --radius-24: 24px;
-
-
-  /* === Opacity === */
-  --opacity-0: 0;
-  --opacity-5: 0.05;
-  --opacity-8: 0.08;
-  --opacity-12: 0.12;
-  --opacity-16: 0.16;
-  --opacity-23: 0.23;
-  --opacity-29: 0.29;
-  --opacity-36: 0.36;
-  --opacity-44: 0.44;
-  --opacity-54: 0.54;
-  --opacity-63: 0.63;
-  --opacity-76: 0.76;
-  --opacity-91: 0.91;
-  --opacity-100: 1;
-
-
-  /* === Breakpoints === */
-  --breakpoint-desktop: 1024px;
-  --breakpoint-tablet: 768px;
-  --breakpoint-mobile: 375px;
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.809 0.105 251.813);
+  --chart-2: oklch(0.623 0.214 259.815);
+  --chart-3: oklch(0.546 0.245 262.881);
+  --chart-4: oklch(0.488 0.243 264.376);
+  --chart-5: oklch(0.424 0.199 265.638);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 }
 
-/* === Responsive Spacing — Tablet (768px ~ 1023px) === */
-@media (min-width: 768px) and (max-width: 1023px) {
-  :root {
-    --spacing-2xs: 8px;
-    --spacing-xs: 12px;
-    --spacing-sm: 16px;
-    --spacing-md: 20px;
-    --spacing-xl: 28px;
-    --spacing-lg: 24px;
-    --spacing-2xl: 32px;
-    --spacing-3xl: 40px;
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.809 0.105 251.813);
+  --chart-2: oklch(0.623 0.214 259.815);
+  --chart-3: oklch(0.546 0.245 262.881);
+  --chart-4: oklch(0.488 0.243 264.376);
+  --chart-5: oklch(0.424 0.199 265.638);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+@theme inline {
+  --font-sans: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
-
-/* === Responsive Spacing — Mobile (max 767px) === */
-@media (max-width: 767px) {
-  :root {
-    --spacing-2xs: 4px;
-    --spacing-xs: 8px;
-    --spacing-sm: 12px;
-    --spacing-md: 16px;
-    --spacing-xl: 24px;
-    --spacing-lg: 20px;
-    --spacing-2xl: 28px;
-    --spacing-3xl: 32px;
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
   }
 }
