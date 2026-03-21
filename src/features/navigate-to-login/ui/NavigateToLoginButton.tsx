@@ -15,7 +15,7 @@ export function NavigateToLoginButton() {
         style='filled'
         leftIcon={<SearchIcon />}
         onClick={() => router.push('/login')}>
-        레이블
+        로그인
       </Button>
     </>
   )
