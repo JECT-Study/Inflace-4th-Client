@@ -90,10 +90,12 @@
 
   /* === section Header === */
   --header-logo-width: 87px;
+  --header-logo-height: 28px;
   --spacing-header-height: 66px;
 
   /* === section Header === */
   --footer-logo-width: 180px;
+  --footer-logo-height: 59px;
 
   /* === Typography === */
   --font-point: 'IBM Plex Sans KR';
