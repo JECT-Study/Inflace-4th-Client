@@ -11,14 +11,10 @@ export const Logo = ({ variant = 'header', className }: LogoProps) => {
   return (
     <Link
       href={'/'}
-      className={cn(
-        'inline-flex items-center gap-2 outline-none focus-visible:ring-2',
-        className
-      )}
+      className={cn('inline-flex items-center', className)}
       aria-label='inflace 홈으로 이동'>
       <LogoSvg
         className={cn(
-          'h-auto transition-opacity hover:opacity-80',
           variant === 'header' &&
             'h-[var(--header-logo-height)] w-[var(--header-logo-width)]',
           variant === 'footer' &&
@@ -26,7 +22,7 @@ export const Logo = ({ variant = 'header', className }: LogoProps) => {
         )}
         role='img'
       />
-      <span className='sr-only'>서비스 이름</span>
+      <span className='sr-only'>inflace</span>
     </Link>
   )
 }
