@@ -2,7 +2,7 @@ import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
-} from '@/shared/ui/sidebar'
+} from '@/shared/ui/shadcn/sidebar'
 import { NAV_ITEMS } from '../model/navItems'
 import { NavMenuItem } from './NavMenuItem'
 

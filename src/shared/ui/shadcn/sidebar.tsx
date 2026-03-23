@@ -5,19 +5,19 @@ import { mergeProps } from '@base-ui/react/merge-props'
 import { useRender } from '@base-ui/react/use-render'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { useIsMobile } from '@/shared/lib/hooks/use-mobile'
-import { cn } from '@/lib/utils'
-import { Button } from '@/shared/ui/button'
-import { Input } from '@/shared/ui/input'
-import { Separator } from '@/shared/ui/separator'
+import { cn } from '@/shared/lib/utils'
+import { Button } from '@/shared/ui/shadcn/button'
+import { Input } from '@/shared/ui/shadcn/input'
+import { Separator } from '@/shared/ui/shadcn/separator'
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from '@/shared/ui/sheet'
-import { Skeleton } from '@/shared/ui/skeleton'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/tooltip'
+} from '@/shared/ui/shadcn/sheet'
+import { Skeleton } from '@/shared/ui/shadcn/skeleton'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/shadcn/tooltip'
 import { SidebarIcon } from '@/features/navigation/ui/NavSidebarIcon'
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state'

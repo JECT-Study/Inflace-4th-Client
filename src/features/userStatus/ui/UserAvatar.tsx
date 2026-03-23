@@ -1,13 +1,8 @@
 'use client'
 
-import profileImg from '@/shared/assets/mockups/profilepng.png'
+import profileImg from '@/shared/assets/mock/profilepng.png'
 import IconYoutube from '@/shared/assets/youtube.svg'
-import {
-  Avatar,
-  AvatarImage,
-  AvatarFallback,
-  AvatarBadge,
-} from '@/shared/ui/avatar'
+import { Avatar, AvatarImage, AvatarBadge } from '@/shared/ui/shadcn/avatar'
 
 interface UserAvatarProps {
   size?: 'sm' | 'default' | 'lg'

@@ -3,8 +3,8 @@
 import * as React from "react"
 import { Dialog as SheetPrimitive } from "@base-ui/react/dialog"
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/shared/ui/button"
+import { cn } from "@/shared/lib/utils"
+import { Button } from "@/shared/ui/shadcn/button"
 import { XIcon } from "lucide-react"
 
 function Sheet({ ...props }: SheetPrimitive.Root.Props) {
@@ -64,7 +64,7 @@ function SheetContent({
             data-slot="sheet-close"
             render={
               <Button
-    
+
                 className="absolute top-3 right-3"
                 size="sm"
               />

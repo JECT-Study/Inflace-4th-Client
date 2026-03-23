@@ -1,7 +1,6 @@
-import { SidebarMenuItem, SidebarMenuButton } from '@/shared/ui/sidebar'
+import { SidebarMenuItem, SidebarMenuButton } from '@/shared/ui/shadcn/sidebar'
 import { SidebarIcon } from '@/features/navigation/ui/NavSidebarIcon'
 import type { NavItem } from '../model/types'
-import { NavLockedItem } from './NavLockedItem'
 import Link from 'next/link'
 
 interface NavMenuItemProps {

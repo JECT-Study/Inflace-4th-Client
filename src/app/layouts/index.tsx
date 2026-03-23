@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
 import '../styles'
-import { SidebarProvider, SidebarTrigger } from '@/shared/ui/sidebar'
+import { SidebarProvider, SidebarTrigger } from '@/shared/ui/shadcn/sidebar'
 import { AppSidebar } from '@/widgets/sidebar'
 import { Header } from '@/widgets/header'
 import { Footer } from '@/widgets/footer'

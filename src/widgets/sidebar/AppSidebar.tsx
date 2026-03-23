@@ -1,6 +1,6 @@
 'use client'
 
-import { Sidebar, SidebarContent } from '@/shared/ui/sidebar'
+import { Sidebar, SidebarContent } from '@/shared/ui/shadcn/sidebar'
 import { NavGroupList } from '@/features/navigation/ui/NavGroupList'
 import { UserStatusCard } from '@/features/userStatus'
 
