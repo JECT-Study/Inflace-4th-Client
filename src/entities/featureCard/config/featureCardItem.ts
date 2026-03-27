@@ -1,9 +1,8 @@
 import { FeatureCardItem } from './types'
-import featureCardImg from '@/shared/assets/mock/featureCard.jpg'
+import featureCardImg from '@/entities/featureCard/assets/featureCard.jpg'
 
 export const FEATURE_CARD_ITEM: FeatureCardItem[] = [
   {
-    id: 1,
     title: '가짜 구독자 탐지',
     subTitle: '가짜 구독자를 걸러내고 진짜 영향력만 확인하세요',
     description:
@@ -12,7 +11,6 @@ export const FEATURE_CARD_ITEM: FeatureCardItem[] = [
     url: '',
   },
   {
-    id: 2,
     title: '가짜 구독자 탐지',
     subTitle: '가짜 구독자를 걸러내고 진짜 영향력만 확인하세요',
     description:
@@ -21,7 +19,6 @@ export const FEATURE_CARD_ITEM: FeatureCardItem[] = [
     url: '',
   },
   {
-    id: 3,
     title: '가짜 구독자 탐지',
     subTitle: '가짜 구독자를 걸러내고 진짜 영향력만 확인하세요',
     description:
@@ -30,7 +27,6 @@ export const FEATURE_CARD_ITEM: FeatureCardItem[] = [
     url: '',
   },
   {
-    id: 4,
     title: '가짜 구독자 탐지',
     subTitle: '가짜 구독자를 걸러내고 진짜 영향력만 확인하세요',
     description:
@@ -39,7 +35,6 @@ export const FEATURE_CARD_ITEM: FeatureCardItem[] = [
     url: '',
   },
   {
-    id: 5,
     title: '가짜 구독자 탐지',
     subTitle: '가짜 구독자를 걸러내고 진짜 영향력만 확인하세요',
     description:
@@ -48,7 +43,6 @@ export const FEATURE_CARD_ITEM: FeatureCardItem[] = [
     url: '',
   },
   {
-    id: 6,
     title: '가짜 구독자 탐지',
     subTitle: '가짜 구독자를 걸러내고 진짜 영향력만 확인하세요',
     description:

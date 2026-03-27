@@ -1,10 +1,10 @@
 'use client'
-import swiper01 from '@/shared/assets/mock/swiper01.jpg'
-import swiper02 from '@/shared/assets/mock/swiper02.jpg'
+import swiper01 from '@/widgets/landing/assets/swiper01.jpg'
+import swiper02 from '@/widgets/landing/assets/swiper02.jpg'
 import IconSearch from '@/shared/assets/search-bold.svg'
 import { Button } from '@/widgets/button'
 
-export function HeroSwiper() {
+export function HeroMain() {
   return (
     <>
       <section
