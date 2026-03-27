@@ -341,4 +341,9 @@
   html {
     @apply font-sans;
   }
+  html.snap-landing {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--spacing-header-height);
+  }
 }

@@ -28,7 +28,7 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
             <main className='relative flex min-h-screen flex-1 flex-col'>
               <SidebarTrigger />
               <Header />
-              <div className='mt-header-height flex-1'>{children}</div>
+              <div className='flex-1'>{children}</div>
             </main>
           </SidebarProvider>
         </div>

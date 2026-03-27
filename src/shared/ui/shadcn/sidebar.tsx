@@ -17,7 +17,11 @@ import {
   SheetTitle,
 } from '@/shared/ui/shadcn/sheet'
 import { Skeleton } from '@/shared/ui/shadcn/skeleton'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/shadcn/tooltip'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/shared/ui/shadcn/tooltip'
 import { SidebarIcon } from '@/features/navigation/ui/NavSidebarIcon'
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state'
@@ -226,7 +230,7 @@ function Sidebar({
           'group-data-[collapsible=offcanvas]:w-0 group-data-[collapsible=offcanvas]:-translate-x-full group-data-[collapsible=offcanvas]:opacity-0',
           variant === 'floating' || variant === 'inset'
             ? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]'
-            : 'border-r border-[var(--color-stroke-border-primary)] group-data-[collapsible=icon]:w-(--sidebar-width-icon)',
+            : 'border-[var(--color-stroke-border-primary)] group-data-[collapsible=icon]:w-(--sidebar-width-icon)',
           className
         )}
         {...props}>
