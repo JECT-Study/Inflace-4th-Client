@@ -3,9 +3,7 @@ import { Inter } from 'next/font/google'
 
 import '../styles'
 import { SidebarProvider, SidebarTrigger } from '@/shared/ui/shadcn/sidebar'
-import { AppSidebar } from '@/widgets/sidebar'
-import { Header } from '@/widgets/header'
-import { Footer } from '@/widgets/footer'
+import { Header, Footer, AppSidebar } from '@/widgets/layout'
 import { AuthInitializer } from '@/features/auth'
 import { LoginModal } from '@/widgets/auth/login-modal'
 
