@@ -10,7 +10,7 @@ export function HeroMain() {
       <section
         className='relative h-[calc(100vh-var(--spacing-header-height))] w-full snap-start snap-always bg-cover bg-center bg-no-repeat'
         style={{ backgroundImage: `url(${swiper01.src})` }}>
-        <div className='left-30-white absolute top-40.5'>
+        <div className='absolute top-40.5 left-30 text-white'>
           <h3 className='text-display-sm leading-display-sm font-semibold'>
             인플루언서 선택, 감이 아닌
             <strong className='text-[#8B80FF]'> 데이터</strong>로
