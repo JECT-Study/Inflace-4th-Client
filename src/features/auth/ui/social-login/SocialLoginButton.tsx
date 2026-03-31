@@ -14,9 +14,13 @@ export function SocialLoginButton({
       type='button'
       onClick={onClick}
       disabled={disabled}
-      className='flex w-full items-center justify-center gap-[var(--spacing-8)] rounded-[var(--radius-24)] border border-[var(--color-stroke-border-default)] px-[var(--spacing-16)] py-[var(--spacing-10)] text-[length:var(--text-caption-md)] leading-caption-md font-normal tracking-[0%] text-[var(--color-text-and-icon-default)] transition-colors hover:bg-[var(--color-background-gray-default)] disabled:pointer-events-none disabled:opacity-50'>
-      <span className='flex shrink-0 items-center'>{icon}</span>
-      <span>{label}</span>
+      className='flex h-13.5 w-88 items-center justify-center rounded-6 border border-stroke-border-gray-stronger bg-white text-(length:--text-caption-md) leading-caption-md font-normal tracking-[0%] text-text-and-icon-default transition-colors disabled:pointer-events-none disabled:opacity-50'>
+      <div className='top-3.75 left-17.5 flex size-fit gap-16'>
+        <span className='flex shrink-0 items-center'>{icon}</span>
+        <span className='font-(family-name:--typo-typeface-point) text-(length:--typo-size-label-lg) leading-(--typo-lineHeight-label-lg) font-semibold tracking-normal'>
+          {label}
+        </span>
+      </div>
     </button>
   )
 }

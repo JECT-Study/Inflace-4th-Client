@@ -46,3 +46,6 @@ storybook-static
 # 디자인 토큰 자동 생성 파일
 src/app/styles/tokens.generated.css
 src/shared/tokens/tokens.generated.ts
+
+#claude
+.claude

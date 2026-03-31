@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 import type { AuthState } from '@/features/auth/model/types'
 
-//AT, 유저 정보, 초기화 상태를 메모리에 보관
+//access token, 유저 정보, 초기화 상태를 메모리에 보관
 export const useAuthStore = create<AuthState>((set) => ({
   accessToken: null,
   user: null,
