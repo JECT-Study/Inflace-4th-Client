@@ -1,6 +1,7 @@
 'use client'
 
 import { AuthStatusButton } from '@/features/auth'
+import { OnboardingButton } from '@/features/onboarding'
 import { Logo } from '@/shared/ui/Logo'
 
 // 로그인 상태에 따라 이모티콘 보이고 안보이고 변경 필요
@@ -13,6 +14,8 @@ export function Header() {
           <div className='flex shrink-0 basis-full items-center justify-between'>
             <Logo variant='header' />
             <div className='flex items-center gap-x-16'>
+              {/* 임시 온보딩 버튼 */}
+              <OnboardingButton />
               <AuthStatusButton />
             </div>
           </div>
