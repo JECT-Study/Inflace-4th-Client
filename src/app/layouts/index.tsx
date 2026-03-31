@@ -6,6 +6,7 @@ import { SidebarProvider, SidebarTrigger } from '@/shared/ui/shadcn/sidebar'
 import { Header, Footer, AppSidebar } from '@/widgets/layout'
 import { AuthInitializer } from '@/features/auth'
 import { LoginModal } from '@/widgets/auth/login-modal'
+import { OnboardingModal } from '@/widgets/onboarding'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,6 +21,7 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
       <body className={`${inter.className} flex min-h-screen flex-col`}>
         <AuthInitializer />
         <LoginModal />
+        <OnboardingModal />
         <div className='flex flex-1'>
           <SidebarProvider>
             <AppSidebar />
