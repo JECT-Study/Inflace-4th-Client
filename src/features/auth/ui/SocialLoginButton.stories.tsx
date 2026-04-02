@@ -76,6 +76,10 @@ export const Disabled: Story = {
 }
 
 export const Overview: Story = {
+  args: {
+    icon: <GoogleIcon />,
+    label: 'Overview',
+  },
   render: () => (
     <div className='flex flex-col gap-16 p-6'>
       <div>
