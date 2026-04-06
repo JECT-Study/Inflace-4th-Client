@@ -43,7 +43,7 @@ export function OnboardingActionButtons() {
             disabled={youtube.isLoading}
           />
           <button
-            className='mt-[var(--spacing-xs)] cursor-pointer text-center'
+            className='mt-(--spacing-xs) cursor-pointer text-center'
             onClick={handelComplete}>
             나중에 할래요
           </button>

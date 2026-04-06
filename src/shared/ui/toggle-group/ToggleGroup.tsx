@@ -87,8 +87,8 @@ function ToggleGroupItem({
           className={cn(
             'relative shrink-0 transition-all',
             resolvedSize === 'lg'
-              ? 'h-[var(--spacing-md)] w-[var(--spacing-md)]'
-              : 'flex h-[var(--spacing-xs)] w-[var(--spacing-xs)]'
+              ? 'h-(--spacing-md) w-(--spacing-md)'
+              : 'flex h-(--spacing-xs) w-(--spacing-xs)'
           )}>
           <Image
             src={imgSrc}
