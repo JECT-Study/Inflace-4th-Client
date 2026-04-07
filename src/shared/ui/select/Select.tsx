@@ -45,14 +45,18 @@ function SelectTrigger({
     <SelectPrimitive.Trigger
       data-slot='select-trigger'
       className={cn(
-        "flex w-fit cursor-pointer items-center gap-4 rounded-full border border-stroke-border-gray-default bg-transparent px-16 py-8 text-(length:--text-label-sm) leading-(--leading-label-sm) font-medium whitespace-nowrap text-text-and-icon-secondary transition-colors outline-none select-none not-data-placeholder:bg-brand-secondary not-data-placeholder:text-white hover:bg-(--comp-button-secondary-outlined-outlined-hover) hover:text-text-and-icon-secondary disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 data-placeholder:text-muted-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "group flex w-fit cursor-pointer items-center gap-4 rounded-full border border-stroke-border-gray-default bg-transparent px-16 py-8 text-(length:--text-label-sm) leading-(--leading-label-sm) font-medium whitespace-nowrap text-text-and-icon-secondary transition-colors outline-none select-none not-data-placeholder:bg-brand-secondary not-data-placeholder:text-white hover:bg-(--comp-button-secondary-outlined-outlined-hover) hover:text-text-and-icon-secondary disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 data-placeholder:text-muted-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}>
-      {showLeft && <IconDown className='pointer-events-none size-16' />}
+      {showLeft && (
+        <IconDown className='pointer-events-none size-16 transition-transform group-data-[state=open]:rotate-180' />
+      )}
       {children}
       <SelectPrimitive.Icon asChild>
-        {showRight && <IconDown className='pointer-events-none size-16' />}
+        {showRight && (
+          <IconDown className='pointer-events-none size-16 transition-transform group-data-[state=open]:rotate-180' />
+        )}
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   )
