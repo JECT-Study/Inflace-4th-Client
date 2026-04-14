@@ -129,6 +129,7 @@ function SidebarProvider({
     <SidebarContext.Provider value={contextValue}>
       <div
         data-slot='sidebar-wrapper'
+        data-sidebar-open={open ? 'true' : 'false'}
         style={
           {
             '--sidebar-width': SIDEBAR_WIDTH,
@@ -699,6 +700,7 @@ function SidebarMenuSubButton({
 }
 
 export {
+  SidebarContext,
   Sidebar,
   SidebarContent,
   SidebarFooter,
