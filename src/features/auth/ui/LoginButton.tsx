@@ -12,7 +12,7 @@ import { UserIcon } from '@/features/userStatus'
  * 로그인 시 '로그아웃' 표시
  */
 export function LoginButton() {
-  const { isAuthenticated, isInitializing, logout } = useAuth()
+  const { isLoggedIn, isInitializing, logout } = useAuth()
   const openModal = useLoginModal((s) => s.open)
 
   if (isInitializing) {
@@ -24,7 +24,7 @@ export function LoginButton() {
   }
 
   /* 로그인 상태일 때 */
-  if (isAuthenticated) {
+  if (isLoggedIn) {
     return (
       <div className='flex size-fit gap-16'>
         <Button color='secondary' size='sm' variant='filled' onClick={logout}>

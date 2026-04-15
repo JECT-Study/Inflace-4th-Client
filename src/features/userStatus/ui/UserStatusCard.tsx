@@ -1,6 +1,7 @@
 'use client'
 
-import { useAuthStore } from '@/shared/api/authStore'
+import { useShallow } from 'zustand/react/shallow'
+import { isLoggedIn, useAuthStore } from '@/shared/api/authStore'
 import { UserIcon } from './UserIcon'
 
 import { Button } from '@/shared/ui/button'
@@ -12,14 +13,16 @@ import IconLock from '@/shared/assets/unlock-filled-bold.svg'
 /* 사이드바에 표시되는 유저의 상태 (유튜브 채널 정보, 현재 플랜 등) */
 export const UserStatusCard = () => {
   /* 유저의 정보를 불러옵니다. */
-  const accessToken = useAuthStore((state) => state.accessToken)
-  const plan = useAuthStore((state) => state.user?.plan)
-  const youtubeChannelName = useAuthStore(
-    (state) => state.user?.youtubeChannelName
+  const { loggedIn, plan, youtubeChannelName } = useAuthStore(
+    useShallow((state) => ({
+      loggedIn: isLoggedIn(state),
+      plan: state.user?.plan,
+      youtubeChannelName: state.user?.youtubeChannelName,
+    }))
   )
 
   /*  유튜브 채널 연동 여부를 이름으로 확인합니다. */
-  const isChannelConnected = Boolean(accessToken && youtubeChannelName)
+  const isChannelConnected = loggedIn && Boolean(youtubeChannelName)
 
   /* 채널 미연동 시 연동하기 버튼을 누르면 모달이 열립니다. */
   const openModal = useLoginModal((s) => s.open)
