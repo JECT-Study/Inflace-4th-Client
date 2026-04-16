@@ -28,7 +28,7 @@ export function ChannelProfilePage() {
   return (
     <div className='flex flex-col divide-y'>
       {/* 프로필 카드 */}
-      <ChannelProfileSection channelId={id} />
+      <ChannelProfileSection channelId={id} isExpanded={false} />
 
       {/* 콘텐츠 */}
       <div className='felx h-fit w-full flex-col px-24 pt-40 pb-96'>

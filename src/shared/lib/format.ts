@@ -1,5 +1,10 @@
 /* 숫자 포맷팅 */
 
+// 쉼표 포맷팅 1000000 => 1,000,000
+export function formatComma(count: number): string {
+  return (count ?? 0).toLocaleString('ko-KR')
+}
+
 // 1000명 단위 포맷팅 3,700 => 3천
 export function formatThousands(count: number): string {
   if (count >= 1000) {
@@ -18,18 +23,22 @@ export function format10Thousands(count: number): string {
 
 /* 날짜 포맷팅 */
 
-// 년, 월, 일을 반환
-// ex. 2025-01-14T00:00:00 => {2025, 01, 14}
+// 년, 월, 일, 시, 분을 반환
+// ex. 2025-01-14T09:30:00 => {2025, 01, 14, 09, 30}
 export function formatDate(iso: string): {
   year: string
   month: string
   day: string
+  hour: string
+  minute: string
 } {
   const date = new Date(iso)
   const year = date.getFullYear().toString()
   const month = String(date.getMonth() + 1).padStart(2, '0')
   const day = String(date.getDate()).padStart(2, '0')
-  return { year, month, day }
+  const hour = String(date.getHours()).padStart(2, '0')
+  const minute = String(date.getMinutes()).padStart(2, '0')
+  return { year, month, day, hour, minute }
 }
 
 // 몇 개월 전인지 반환

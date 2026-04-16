@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from './table'
-import { mockTrendingVideos } from '@/features/channelDashboard/trendingVideos/mock/mockTrendingVideos'
+import { mockChannelTrendingVideo as mockTrendingVideos } from '@/entities/channelDashboard/channelTrendingVideo'
 
 const meta: Meta = {
   title: 'Shared/Table',

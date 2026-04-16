@@ -1,4 +1,4 @@
-export type VideoPerformanceItem = {
+export type TrendingVideoItem = {
   rank: number
   title: string
   thumbnailUrl: string

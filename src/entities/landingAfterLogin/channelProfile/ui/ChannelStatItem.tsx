@@ -1,21 +1,31 @@
 import { type ReactNode } from 'react'
 
+type ChannelStatItemVariant = 'default' | 'dashboard'
+
 interface ChannelStatItemProps {
   icon?: ReactNode
   label: string
   value: string
   unit?: string
+  variant?: ChannelStatItemVariant
 }
 
 //구독자 수, 총 동영상 수, 최근 업로드일을 알려주는 카드 컴포넌트
+const cardBgVariants: Record<ChannelStatItemVariant, string> = {
+  default: 'bg-white',
+  dashboard: 'bg-background-gray-default',
+}
+
 export function ChannelStatItem({
   icon,
   label,
   value,
   unit,
+  variant = 'default',
 }: ChannelStatItemProps) {
   return (
-    <div className='min-w[168px] flex h-fit w-full flex-col gap-4 rounded-12 border bg-white px-32 py-16'>
+    <div
+      className={`min-w[168px] flex h-fit w-full flex-col gap-4 rounded-12 ${cardBgVariants[variant]} px-32 py-16`}>
       {/* 아이콘 + 내용 ex. 구독자 수 */}
       <div className='flex h-fit w-full items-center gap-4 text-noto-body-xs-bold text-text-and-icon-tertiary'>
         {icon && <span>{icon}</span>}

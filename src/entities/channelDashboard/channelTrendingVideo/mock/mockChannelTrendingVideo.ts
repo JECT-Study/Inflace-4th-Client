@@ -1,7 +1,7 @@
-import type { VideoPerformanceItem } from '../model/types'
+import type { TrendingVideoItem } from '../model/types'
 import mockThumbnailImage from '@/shared/assets/mock/mockThumbnailImage.png'
 
-export const mockTrendingVideos: VideoPerformanceItem[] = [
+export const mockChannelTrendingVideo: TrendingVideoItem[] = [
   {
     rank: 1,
     title:
