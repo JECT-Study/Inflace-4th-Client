@@ -19,20 +19,18 @@ export function ChannelRefreshButton({ queryKeys }: ChannelRefreshButtonProps) {
   }
 
   return (
-    <>
-      <div className='flex w-full items-center justify-end gap-12'>
-        <p className='text-noto-caption-lg-normal text-text-and-icon-tertiary'>
-          {`마지막 업데이트: ${year}년 ${month}월 ${day}일 ${hour}:${minute}`}
-        </p>
-        <Button
-          variant='filled'
-          color='gray'
-          size='xs'
-          leftIcon={<IconRefresh />}
-          onClick={handleRefresh}>
-          새로고침
-        </Button>
-      </div>
-    </>
+    <div className='flex w-full items-center justify-end gap-12'>
+      <p className='text-noto-caption-lg-normal text-text-and-icon-tertiary'>
+        {`마지막 업데이트: ${year}년 ${month}월 ${day}일 ${hour}:${minute}`}
+      </p>
+      <Button
+        variant='filled'
+        color='gray'
+        size='xs'
+        leftIcon={<IconRefresh />}
+        onClick={handleRefresh}>
+        새로고침
+      </Button>
+    </div>
   )
 }

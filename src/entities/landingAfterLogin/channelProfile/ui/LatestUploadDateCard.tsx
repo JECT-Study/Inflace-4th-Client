@@ -1,5 +1,7 @@
 import { Calendar } from 'lucide-react'
 
+import { cn } from '@/shared/lib/utils'
+
 type LatestUploadDateCardVariant = 'default' | 'dashboard'
 
 interface RecenetUploadDateCardProps {
@@ -12,10 +14,6 @@ interface RecenetUploadDateCardProps {
 }
 
 //구독자 수, 총 동영상 수, 최근 업로드일을 알려주는 카드 컴포넌트
-const cardBgVariants: Record<LatestUploadDateCardVariant, string> = {
-  default: 'bg-white',
-  dashboard: 'bg-background-gray-default',
-}
 
 export function LatestUploadDateCard({
   value,
@@ -23,7 +21,7 @@ export function LatestUploadDateCard({
 }: RecenetUploadDateCardProps) {
   return (
     <div
-      className={`min-w[168px] flex h-fit w-full flex-col gap-4 rounded-12 ${cardBgVariants[variant]} px-32 py-16`}>
+      className={cn('min-w[168px] flex h-fit w-full flex-col gap-4 rounded-12 px-32 py-16', variant === 'dashboard' ? 'bg-background-gray-default' : 'bg-white')}>
       {/* 아이콘 + 내용 */}
       <div className='flex h-fit w-full items-center gap-4 text-noto-body-xs-bold text-text-and-icon-tertiary'>
         <span>

@@ -1,8 +1,9 @@
 /* 숫자 포맷팅 */
 
 // 쉼표 포맷팅 1000000 => 1,000,000
-export function formatComma(count: number): string {
-  return (count ?? 0).toLocaleString('ko-KR')
+export function formatComma(count: number | null | undefined): string {
+  if (count == null) return '0'
+  return count.toLocaleString('ko-KR')
 }
 
 // 1000명 단위 포맷팅 3,700 => 3천

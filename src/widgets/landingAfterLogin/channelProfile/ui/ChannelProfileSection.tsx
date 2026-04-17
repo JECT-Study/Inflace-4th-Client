@@ -1,5 +1,6 @@
 import { Users, Video } from 'lucide-react'
 
+import { cn } from '@/shared/lib/utils'
 import { Skeleton } from '@/shared/ui/shadcn/skeleton'
 import {
   ChannelProfileCard,
@@ -20,10 +21,6 @@ import RedirectIcon from '@/shared/assets/redirect-bold.svg'
 
 type ChannelProfileSectionVariant = 'default' | 'dashboard'
 
-const sectionBgVariants: Record<ChannelProfileSectionVariant, string> = {
-  default: 'bg-background-gray-default',
-  dashboard: 'bg-white',
-}
 
 interface ChannelProfileSectionProps {
   channelId: string
@@ -60,7 +57,7 @@ export function ChannelProfileSection({
   }
 
   return (
-    <section className={`flex flex-col gap-25 p-3xl md:flex-row ${sectionBgVariants[variant]}`}>
+    <section className={cn('flex flex-col gap-25 p-3xl md:flex-row', variant === 'dashboard' ? 'bg-white' : 'bg-background-gray-default')}>
       {/* 채널 기본 정보 */}
       <ChannelProfileCard
         profileImageUrl={data.profileImageUrl}

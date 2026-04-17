@@ -12,8 +12,12 @@ export function ChannelDashboardPage() {
     <div className='flex flex-col gap-y-24 divide-y bg-background-gray-default'>
       {/* 프로필 카드 */}
 
-      <ChannelProfileSection channelId={id} isExpanded={true} variant='dashboard' />
-      <div className='px-24'>
+      <ChannelProfileSection
+        channelId={id}
+        isExpanded={true}
+        variant='dashboard'
+      />
+      <div className='border-0 px-24'>
         <ChannelKpiSection channelId={id} />
       </div>
     </div>
