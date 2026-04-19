@@ -1,4 +1,4 @@
-import type { ApiResponse } from '@/shared/api/types'
+import type { ApiResponse } from '@/shared/api'
 import { axiosInstance } from '@/shared/api'
 import type { VideoStatsDto } from '@/entities/video'
 
