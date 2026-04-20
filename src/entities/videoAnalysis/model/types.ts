@@ -8,4 +8,7 @@ export interface VideoCardItem {
   commentCount: number
   vph: number
   outLierScore: number
+  duration: number
+  isShort: boolean
+  isAd: boolean
 }

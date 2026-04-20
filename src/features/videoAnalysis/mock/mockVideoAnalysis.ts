@@ -5,7 +5,8 @@ import thumbnail from '@/shared/assets/mock/mocklVideoThumbnail.png'
 const mockVideoItems: VideoCardItem[] = [
   {
     videoId: '1',
-    title: '2026 최신 AI 폰 총정리 | 갤럭시 S26 vs 아이폰 17 비교',
+    title:
+      '2026 최신 AI 폰 총정리 | 갤럭시 S26 vs 아이폰 17 비교2026 최신 AI 폰 총정리 | 갤럭시 S26 vs 아이폰 17 비교2026 최신 AI 폰 총정리 | 갤럭시 S26 vs 아이폰 17 비교2026 최신 AI 폰 총정리 | 갤럭시 S26 vs 아이폰 17 비교2026 최신 AI 폰 총정리 | 갤럭시 S26 vs 아이폰 17 비교',
     thumbnailUrl: thumbnail.src,
     publishedAt: '2026-03-01',
     viewCount: 482300,
@@ -13,6 +14,9 @@ const mockVideoItems: VideoCardItem[] = [
     commentCount: 2100,
     vph: 72,
     outLierScore: 4.9,
+    duration: 79.45,
+    isShort: false,
+    isAd: true,
   },
   {
     videoId: '2',
@@ -24,6 +28,9 @@ const mockVideoItems: VideoCardItem[] = [
     commentCount: 2100,
     vph: 72,
     outLierScore: 4.9,
+    duration: 432,
+    isShort: false,
+    isAd: false,
   },
   {
     videoId: '3',
@@ -35,6 +42,9 @@ const mockVideoItems: VideoCardItem[] = [
     commentCount: 2100,
     vph: 72,
     outLierScore: 4.9,
+    duration: 58,
+    isShort: true,
+    isAd: false,
   },
   {
     videoId: '4',
@@ -46,6 +56,9 @@ const mockVideoItems: VideoCardItem[] = [
     commentCount: 2100,
     vph: 72,
     outLierScore: 4.9,
+    duration: 1024,
+    isShort: false,
+    isAd: true,
   },
   {
     videoId: '5',
@@ -57,10 +70,14 @@ const mockVideoItems: VideoCardItem[] = [
     commentCount: 2100,
     vph: 72,
     outLierScore: 4.9,
+    duration: 305,
+    isShort: false,
+    isAd: false,
   },
   {
     videoId: '6',
-    title: '2026 최신 AI 폰 총정리 | 갤럭시 S26 vs 아이폰 17 비교',
+    title:
+      '2026 최신 AI 폰 총정리 | 갤럭시 S26 vs 아이폰 17 비교 2026 최신 AI 폰 총정리 | 갤럭시 S26 vs 아이폰 17 비교2026 최신 AI 폰 총정리 | 갤럭시 S26 vs 아이폰 17 비교2026 최신 AI 폰 총정리 | 갤럭시 S26 vs 아이폰 17 비교2026 최신 AI 폰 총정리 | 갤럭시 S26 vs 아이폰 17 비교',
     thumbnailUrl: thumbnail.src,
     publishedAt: '2026-03-01',
     viewCount: 482300,
@@ -68,6 +85,9 @@ const mockVideoItems: VideoCardItem[] = [
     commentCount: 2100,
     vph: 72,
     outLierScore: 4.9,
+    duration: 47,
+    isShort: true,
+    isAd: false,
   },
   {
     videoId: '7',
@@ -79,6 +99,9 @@ const mockVideoItems: VideoCardItem[] = [
     commentCount: 2100,
     vph: 72,
     outLierScore: 4.9,
+    duration: 615,
+    isShort: false,
+    isAd: false,
   },
   {
     videoId: '8',
@@ -90,6 +113,9 @@ const mockVideoItems: VideoCardItem[] = [
     commentCount: 2100,
     vph: 72,
     outLierScore: 4.9,
+    duration: 880,
+    isShort: false,
+    isAd: true,
   },
   {
     videoId: '9',
@@ -101,6 +127,9 @@ const mockVideoItems: VideoCardItem[] = [
     commentCount: 2100,
     vph: 72,
     outLierScore: 4.9,
+    duration: 53,
+    isShort: true,
+    isAd: false,
   },
   {
     videoId: '10',
@@ -112,6 +141,9 @@ const mockVideoItems: VideoCardItem[] = [
     commentCount: 2100,
     vph: 72,
     outLierScore: 4.9,
+    duration: 740,
+    isShort: false,
+    isAd: false,
   },
   {
     videoId: '11',
@@ -123,6 +155,9 @@ const mockVideoItems: VideoCardItem[] = [
     commentCount: 2100,
     vph: 72,
     outLierScore: 4.9,
+    duration: 198,
+    isShort: false,
+    isAd: true,
   },
   {
     videoId: '12',
@@ -134,6 +169,9 @@ const mockVideoItems: VideoCardItem[] = [
     commentCount: 2100,
     vph: 72,
     outLierScore: 4.9,
+    duration: 530,
+    isShort: false,
+    isAd: false,
   },
 ]
 

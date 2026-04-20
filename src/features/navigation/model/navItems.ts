@@ -8,12 +8,12 @@ export const NAV_ITEMS: NavGroup[] = [
       {
         title: '채널 분석',
         icon: 'dashboard',
-        url: '',
+        url: '/me',
       },
       {
         title: '영상 성과 분석',
         icon: 'video',
-        url: '',
+        url: '/videos',
         requiredPlan: 'growth',
       },
     ],
