@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { fetchVideoAnalysis } from '../api/videoAnalysisApi'
+import { fetchVideoAnalysis } from '../api/videosApi'
 
-export function useVideoAnalysis(channelId: string) {
+export function useVideos(channelId: string) {
   return useQuery({
     queryKey: ['videoAnalysis', channelId],
     queryFn: () => fetchVideoAnalysis(channelId),

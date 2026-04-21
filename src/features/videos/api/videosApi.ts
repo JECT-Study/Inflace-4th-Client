@@ -1,6 +1,6 @@
 import type { ApiResponse } from '@/shared/api/types'
 import { axiosInstance } from '@/shared/api'
-import type { VideoCardItem } from '@/entities/videoAnalysis'
+import type { VideoCardItem } from '@/entities/videos'
 
 export interface PageInfo {
   size: number
@@ -8,15 +8,15 @@ export interface PageInfo {
   hasNext: boolean
 }
 
-export interface VideoAnalysisResponse {
+export interface VideosResponse {
   videos: VideoCardItem[]
   pageInfo: PageInfo
 }
 
 export async function fetchVideoAnalysis(
   channelId: string
-): Promise<VideoAnalysisResponse> {
-  const response = await axiosInstance.get<ApiResponse<VideoAnalysisResponse>>(
+): Promise<VideosResponse> {
+  const response = await axiosInstance.get<ApiResponse<VideosResponse>>(
     `/channel/${channelId}/videos`
   )
   return response.data.responseDto

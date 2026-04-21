@@ -1,5 +1,5 @@
-import { VideoCard } from '@/entities/videoAnalysis'
-import type { VideoCardItem } from '@/entities/videoAnalysis'
+import { VideoCard } from '@/entities/videos'
+import type { VideoCardItem } from '@/entities/videos'
 
 interface VideoListProps {
   videos: VideoCardItem[]

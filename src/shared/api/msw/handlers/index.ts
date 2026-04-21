@@ -3,7 +3,7 @@ import { channelProfileHandlers } from './channelProfileHandlers'
 import { onboardingHandlers } from './onboardingHandlers'
 import { trendMagazineHandlers } from './trendMagazineHandlers'
 import { trendingVideosHandlers } from './trendingVideosHandlers'
-import { videoAnalysisHandlers } from './videoAnalysisHandlers'
+import { videosHandlers } from './videosHandlers'
 
 export const handlers = [
   ...authHandlers,
@@ -11,5 +11,5 @@ export const handlers = [
   ...trendingVideosHandlers,
   ...trendMagazineHandlers,
   ...onboardingHandlers,
-  ...videoAnalysisHandlers,
+  ...videosHandlers,
 ]

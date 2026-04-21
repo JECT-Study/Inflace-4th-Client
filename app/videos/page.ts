@@ -1,1 +1,1 @@
-export { VideoAnalysisPage as default } from '@/pages/videoAnalysis'
+export { VideosPage as default } from '@/pages/videos'

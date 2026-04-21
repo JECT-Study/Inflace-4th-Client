@@ -1,5 +1,5 @@
-import type { VideoCardItem } from '@/entities/videoAnalysis'
-import type { VideoAnalysisResponse } from '../api/videoAnalysisApi'
+import type { VideoCardItem } from '@/entities/videos'
+import type { VideosResponse } from '../api/videosApi'
 import thumbnail from '@/shared/assets/mock/mocklVideoThumbnail.png'
 
 const mockVideoItems: VideoCardItem[] = [
@@ -175,7 +175,7 @@ const mockVideoItems: VideoCardItem[] = [
   },
 ]
 
-export const mockVideoAnalysis: VideoAnalysisResponse = {
+export const mockVideos: VideosResponse = {
   videos: mockVideoItems,
   pageInfo: {
     size: 12,

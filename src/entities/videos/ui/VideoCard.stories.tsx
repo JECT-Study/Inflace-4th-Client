@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 
-import { mockVideoAnalysis } from '@/features/videoAnalysis/mock/mockVideoAnalysis'
+import { mockVideos } from '@/features/videos/mock/mockVideos'
 import { VideoCard } from './VideoCard'
 
 const meta = {
-  title: 'Entities/VideoAnalysis/VideoCard',
+  title: 'Entities/Videos/VideoCard',
   component: VideoCard,
   tags: ['autodocs'],
   argTypes: {
@@ -23,7 +23,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const sampleVideo = mockVideoAnalysis.videos[0]
+const sampleVideo = mockVideos.videos[0]
 
 export const Default: Story = {
   args: { ...sampleVideo },
@@ -49,7 +49,7 @@ export const Overview: Story = {
   args: { ...sampleVideo },
   render: () => (
     <div className='grid grid-cols-3 gap-16 p-16'>
-      {mockVideoAnalysis.videos.slice(0, 6).map((video) => (
+      {mockVideos.videos.slice(0, 6).map((video) => (
         <VideoCard key={video.videoId} {...video} />
       ))}
     </div>

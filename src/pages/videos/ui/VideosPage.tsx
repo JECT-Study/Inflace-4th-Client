@@ -4,10 +4,10 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { useAuth } from '@/features/auth'
-import { useVideoAnalysis, VideoList } from '@/features/videoAnalysis'
-import { SearchAndFilter } from '@/widgets/videoAnalysis'
+import { useVideos, VideoList } from '@/features/videos'
+import { SearchAndFilter } from '@/widgets/videos'
 
-export function VideoAnalysisPage() {
+export function VideosPage() {
   const router = useRouter()
   const { isLoggedIn, isInitializing, user } = useAuth()
 
@@ -19,7 +19,7 @@ export function VideoAnalysisPage() {
   }, [isInitializing, isLoggedIn, user?.id, router])
 
   const channelId = user?.id ?? ''
-  const { data } = useVideoAnalysis(channelId)
+  const { data } = useVideos(channelId)
 
   return (
     <>
