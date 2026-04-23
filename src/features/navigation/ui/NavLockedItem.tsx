@@ -24,7 +24,7 @@ export const NavLockedItem = ({ item }: LockedNavItemProps) => {
           <span className='flex-1 whitespace-nowrap'>{item.title}</span>
           <SidebarIcon
             name={'lock'}
-            className='ml-auto shrink-0 [&_path]:fill-[#ccc]'
+            className='ml-auto shrink-0 [&_path]:fill-stroke-border-gray-stronger'
             size={16}
           />
         </Link>

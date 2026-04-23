@@ -13,10 +13,10 @@ const Toaster = ({ ...props }: ToasterProps) => {
       richColors
       closeButton
       icons={{
-        success: <IconSuccess className='size-24 [&_path]:fill-[#008A3C]' />,
-        info: <IconInfo className='size-24 [&_path]:fill-[#2473E6]' />,
-        error: <IconError className='size-24 [&_path]:fill-[#E02F52]' />,
-        close: <IconClose className='size-16 [&_path]:fill-[#77757F]' />,
+        success: <IconSuccess className='size-24 [&_path]:fill-feedback-success' />,
+        info: <IconInfo className='size-24 [&_path]:fill-feedback-informative' />,
+        error: <IconError className='size-24 [&_path]:fill-feedback-error' />,
+        close: <IconClose className='size-16 [&_path]:fill-text-and-icon-tertiary' />,
       }}
       style={
         {

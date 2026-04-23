@@ -37,7 +37,7 @@ export function HeroMain() {
               <p className='text-noto-title-lg-bold text-white'>
                 아직도 일일이 댓글 육안 검토하고 계신가요?
               </p>
-              <p className='text-noto-body-sm-normal text-[#E5E1EC]'>
+              <p className='text-noto-body-sm-normal text-stroke-divider'>
                 카테고리·구독자·참여율로 딱 맞는 인플루언서를 30초 안에
                 찾아드립니다.
                 <br />
