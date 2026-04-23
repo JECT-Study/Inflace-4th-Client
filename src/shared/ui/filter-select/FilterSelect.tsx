@@ -23,7 +23,7 @@ function FilterSelectTrigger(
         /* 레이아웃 */
         'group flex size-fit cursor-pointer items-center gap-10',
         /* 스타일링 */
-        'rounded-[50px] border border-stroke-border-gray-default px-16 py-10',
+        'rounded-[5rem] border border-stroke-border-gray-default px-16 py-10',
         /* 텍스트 */
         'text-noto-label-sm-thin text-text-and-icon-secondary',
         /* 기본 상태 */
@@ -32,7 +32,7 @@ function FilterSelectTrigger(
         'not-data-placeholder:bg-brand-secondary not-data-placeholder:text-noto-label-sm-normal not-data-placeholder:text-white',
         /* hover
          * TODO: 오버레이 색상 토큰 반영 */
-        'relative hover:after:absolute hover:after:inset-0 hover:after:rounded-[50px] hover:after:bg-[#FFFFFF14]',
+        'relative hover:after:absolute hover:after:inset-0 hover:after:rounded-[5rem] hover:after:bg-[#FFFFFF14]',
         /* placeholder */
         'data-placeholder:text-muted-foreground',
         /* select-value 자식 = FilterSelectValue */
@@ -64,33 +64,21 @@ function FilterSelectContent({
         data-align-trigger={position === 'item-aligned'}
         className={cn(
           /* 레이아웃 */
-          'relative z-50 overflow-x-hidden overflow-y-auto',
-          /* 크기 */
-          'max-h-(--radix-select-content-available-height) min-w-45',
-          /* 스타일링 */
-          'rounded-6 bg-popover text-popover-foreground shadow-[0_4px_12px_0_rgba(0,0,0,0.12)]',
+          'relative z-50 mt-8 overflow-x-hidden overflow-y-auto',
+          /* 크기 및 크기*/
+          'min-w-[18rem] rounded-6 bg-popover text-popover-foreground shadow-[0px_8px_12px_0px_var(--primitivecolortrasparent-brand-deep-900-transparent-16),0px_4px_6px_0px_var(--primitivecolortrasparent-brand-deep-900-transparent-24)]',
           /* 애니메이션 */
           'origin-(--radix-select-content-transform-origin) duration-100',
           'data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95',
           'data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95',
           'data-[align-trigger=true]:animate-none',
           'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-          /* popper 위치 보정 */
-          position === 'popper' &&
-            'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
           className
         )}
         position={position}
         align={align}
         {...props}>
-        <Select.Viewport
-          data-position={position}
-          className={cn(
-            /* popper 크기 동기화 */
-            'data-[position=popper]:h-(--radix-select-trigger-height) data-[position=popper]:w-full data-[position=popper]:min-w-(--radix-select-trigger-width)'
-          )}>
-          {children}
-        </Select.Viewport>
+        <Select.Viewport>{children}</Select.Viewport>
       </Select.Content>
     </Select.Portal>
   )
@@ -120,18 +108,9 @@ function FilterSelectItem({
         'focus:bg-(--comp-button-secondary-outlined-outlined-hover) focus:text-text-and-icon-default',
         /* disabled */
         'data-disabled:pointer-events-none data-disabled:opacity-50',
-        /* svg */
-        "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-        /* span 자식 */
-        '*:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2',
         className
       )}
       {...props}>
-      <span className='pointer-events-none absolute right-2 flex size-4 items-center justify-center'>
-        <Select.ItemIndicator>
-          <IconDown className='pointer-events-none' />
-        </Select.ItemIndicator>
-      </span>
       <Select.ItemText>{children}</Select.ItemText>
     </Select.Item>
   )
