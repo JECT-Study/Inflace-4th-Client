@@ -61,6 +61,15 @@ export function formatMonthAgo(iso: string): string {
   return `${month}개월 전`
 }
 
+// 초를 MM:SS 형식으로 변환
+// ex. 769 => "12:49"
+export function formatDuration(seconds: number): string {
+  const total = Math.round(seconds)
+  const m = Math.floor(total / 60)
+  const s = total % 60
+  return `${m}:${String(s).padStart(2, '0')}`
+}
+
 //현재가 몇 월이고, 몇 주차인지 반환 일요일 시작을 기준으로 반환
 // ex. 2025-01-14T00:00:00 => {1, 2}
 export function formatMonthAndWeek(iso: string): {
