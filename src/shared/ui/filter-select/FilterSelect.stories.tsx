@@ -1,12 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from './Select'
+  FilterSelect,
+  FilterSelectContent,
+  FilterSelectItem,
+  FilterSelectTrigger,
+  FilterSelectValue,
+} from './FilterSelect'
 
 const ITEMS = ['최신순', '조회수순', '좋아요순', 'VPH순', 'Outlier순']
 
@@ -46,22 +45,20 @@ export const Default: Story = {
     position: 'popper',
     align: 'start',
   },
-  render: ({ icon, position, align }) => (
+  render: ({ position, align }) => (
     <div className='p-6'>
-      <Select>
-        <SelectTrigger icon={icon}>
-          <SelectValue placeholder='최신순' />
-        </SelectTrigger>
-        <SelectContent position={position} align={align}>
-          <SelectGroup>
-            {ITEMS.map((item) => (
-              <SelectItem key={item} value={item}>
-                {item}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+      <FilterSelect>
+        <FilterSelectTrigger>
+          <FilterSelectValue placeholder='최신순' />
+        </FilterSelectTrigger>
+        <FilterSelectContent position={position} align={align}>
+          {ITEMS.map((item) => (
+            <FilterSelectItem key={item} value={item}>
+              {item}
+            </FilterSelectItem>
+          ))}
+        </FilterSelectContent>
+      </FilterSelect>
     </div>
   ),
 }
