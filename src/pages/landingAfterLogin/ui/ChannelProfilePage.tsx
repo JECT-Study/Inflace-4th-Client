@@ -17,10 +17,10 @@ export function ChannelProfilePage() {
   const { isLoggedIn, isInitializing, user } = useAuth()
 
   useEffect(() => {
-    if (!isInitializing && !isLoggedIn && !user?.id) {
+    if (!isInitializing && !isLoggedIn && !user?.userDetails.id) {
       router.replace(`/`)
     }
-  }, [isInitializing, isLoggedIn, user?.id, router])
+  }, [isInitializing, isLoggedIn, user?.userDetails.id, router])
 
   const params = useParams<{ id: string }>()
   const id = params!.id

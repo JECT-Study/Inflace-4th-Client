@@ -16,12 +16,12 @@ export const UserStatusCard = () => {
   const { loggedIn, plan, youtubeChannelName } = useAuthStore(
     useShallow((state) => ({
       loggedIn: isLoggedIn(state),
-      plan: state.user?.plan,
-      youtubeChannelName: state.user?.youtubeChannelName,
+      plan: state.user?.userDetails.plan,
+      youtubeChannelName: state.user?.userChannelDetails?.youtubeChannelName,
     }))
   )
 
-  /*  유튜브 채널 연동 여부를 이름으로 확인합니다. */
+  /*  유튜브 채널 연동 여부를 채널 정보 존재 유무로 확인합니다. */
   const isChannelConnected = loggedIn && Boolean(youtubeChannelName)
 
   /* 채널 미연동 시 연동하기 버튼을 누르면 모달이 열립니다. */
