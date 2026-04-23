@@ -1,17 +1,6 @@
 import type { ApiResponse } from '@/shared/api/types'
 import { axiosInstance } from '@/shared/api'
-import type { VideoCardItem } from '@/entities/videos'
-
-export interface PageInfo {
-  size: number
-  nextCursor: string | null
-  hasNext: boolean
-}
-
-export interface VideosResponse {
-  videos: VideoCardItem[]
-  pageInfo: PageInfo
-}
+import type { VideosResponse } from '../model/types'
 
 export async function fetchVideoAnalysis(
   channelId: string
