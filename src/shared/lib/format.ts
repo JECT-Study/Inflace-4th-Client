@@ -1,5 +1,22 @@
 /* 숫자 포맷팅 */
 
+// 쉼표 포맷팅 1000000 => 1,000,000
+export function formatComma(count: number | null | undefined): string {
+  if (count == null) return '0'
+  return count.toLocaleString('ko-KR')
+}
+
+// 만 단위 포맷팅 37,687,938 => 3768만 7938 / 83,904 => 8만 3904 / 187 => 187
+export function formatKoreanUnit(value: number): string {
+  const floor = Math.floor(value)
+  if (floor >= 10000) {
+    const man = Math.floor(floor / 10000)
+    const remainder = floor % 10000
+    return remainder > 0 ? `${man}만 ${remainder}` : `${man}만`
+  }
+  return String(floor)
+}
+
 // 1000명 단위 포맷팅 3,700 => 3천
 export function formatThousands(count: number): string {
   if (count >= 1000) {
@@ -18,18 +35,22 @@ export function format10Thousands(count: number): string {
 
 /* 날짜 포맷팅 */
 
-// 년, 월, 일을 반환
-// ex. 2025-01-14T00:00:00 => {2025, 01, 14}
+// 년, 월, 일, 시, 분을 반환
+// ex. 2025-01-14T09:30:00 => {2025, 01, 14, 09, 30}
 export function formatDate(iso: string): {
   year: string
   month: string
   day: string
+  hour: string
+  minute: string
 } {
   const date = new Date(iso)
   const year = date.getFullYear().toString()
   const month = String(date.getMonth() + 1).padStart(2, '0')
   const day = String(date.getDate()).padStart(2, '0')
-  return { year, month, day }
+  const hour = String(date.getHours()).padStart(2, '0')
+  const minute = String(date.getMinutes()).padStart(2, '0')
+  return { year, month, day, hour, minute }
 }
 
 // 몇 개월 전인지 반환
