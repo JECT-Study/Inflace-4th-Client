@@ -26,9 +26,7 @@ export function ChannelKpiSection({ channelId }: { channelId: string }) {
   return (
     <div className='flex flex-col gap-24 md:flex-row'>
       <ChannelKpiCard
-        icon={
-          <IconEye className='size-20 text-(--comp-button-primary-text-disabled)' />
-        }
+        icon={<IconEye className='size-20 text-btn-primary-text-disabled' />}
         label='총 조회수'
         value={formatComma(data.totalViews)}
         unit='회'
@@ -36,7 +34,7 @@ export function ChannelKpiSection({ channelId }: { channelId: string }) {
 
       <ChannelKpiCard
         icon={
-          <IconParticipation className='size-20 text-(--comp-button-primary-text-disabled)' />
+          <IconParticipation className='size-20 text-btn-primary-text-disabled' />
         }
         label='평균 참여율'
         value={data.avgEngagementRate}
@@ -44,18 +42,14 @@ export function ChannelKpiSection({ channelId }: { channelId: string }) {
       />
 
       <ChannelKpiCard
-        icon={
-          <IconEye className='size-20 text-(--comp-button-primary-text-disabled)' />
-        }
+        icon={<IconEye className='size-20 text-btn-primary-text-disabled' />}
         label='시청 유지율'
         value={data.avgRetentionRate}
         unit='%'
       />
 
       <ChannelKpiCard
-        icon={
-          <IconClock className='size-20 text-(--comp-button-primary-text-disabled)' />
-        }
+        icon={<IconClock className='size-20 text-btn-primary-text-disabled' />}
         prefix='주 '
         label='업로드 주기'
         value={data.weeklyUploadCount}

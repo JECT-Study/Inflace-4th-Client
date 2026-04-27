@@ -245,8 +245,14 @@ function genColors() {
 }
 
 function genComponent() {
-  return flatten(comp.button, 'button')
-    .map(([k, v]) => `  --comp-${k}: ${resolve(v)};`)
+  return flatten(comp.button, 'btn')
+    .map(([k, v]) => {
+      const deduped = k
+        .split('-')
+        .filter((seg, i, arr) => seg !== arr[i - 1])
+        .join('-')
+      return `  --color-${deduped}: ${resolve(v)};`
+    })
     .join('\n')
 }
 
