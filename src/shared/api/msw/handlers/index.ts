@@ -6,6 +6,7 @@ import { trendingVideosHandlers } from './trendingVideosHandlers'
 import { videosHandlers } from './videosHandlers'
 import { videoDetailHandlers } from './videoDetailHandlers'
 import { channelKpiHandlers } from './channelKpiHandlers'
+import { subscriberGrowthHandlers } from './subscriberGrowthHandlers'
 import { videoStatsHandlers } from './videoStatsHandlers'
 
 export const handlers = [
@@ -17,5 +18,6 @@ export const handlers = [
   ...videosHandlers,
   ...videoDetailHandlers,
   ...channelKpiHandlers,
+  ...subscriberGrowthHandlers,
   ...videoStatsHandlers,
 ]
