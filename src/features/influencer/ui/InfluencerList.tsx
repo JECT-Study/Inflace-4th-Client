@@ -35,7 +35,7 @@ export function InfluencerList() {
       )}
       {isError && (
         <div className='text-noto-label-sm-medium text-status-error'>
-          데이터를 불러오지 못했습니다.
+          조건에 맞는 인플루언서가 없습니다.
         </div>
       )}
       {data && (
