@@ -238,6 +238,7 @@ export const mockVideosPage1: VideosResponse = {
   videos: mockVideoItemsPage1,
   pageInfo: {
     size: 12,
+    numberOfElements: 9,
     nextCursor:
       'eyJzb3J0IjoiTEFURVNUIiwicHVibGlzaGVkQXQiOiIyMDI2LTAzLTAxVDA5OjAwOjAwWiIsInZpZGVvSWQiOiJhYmMxMjMifQ==',
     hasNext: true,
@@ -248,6 +249,7 @@ export const mockVideosPage2: VideosResponse = {
   videos: mockVideoItemsPage2,
   pageInfo: {
     size: 4,
+    numberOfElements: 9,
     nextCursor: null,
     hasNext: false,
   },

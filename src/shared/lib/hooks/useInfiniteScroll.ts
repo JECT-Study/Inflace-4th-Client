@@ -64,21 +64,13 @@ export function useInfiniteScroll<TPage extends { pageInfo: PageInfo }>({
 
   const { fetchNextPage, hasNextPage, isFetchingNextPage } = query
 
-  // ref로 감싸 항상 최신 값을 참조하도록 함
   const fetchNextPageRef = useRef(fetchNextPage)
   const hasNextPageRef = useRef(hasNextPage)
   const isFetchingNextPageRef = useRef(isFetchingNextPage)
 
-  // 렌더마다 ref를 최신 값으로 동기화
-  useEffect(() => {
-    fetchNextPageRef.current = fetchNextPage
-  }, [fetchNextPage])
-  useEffect(() => {
-    hasNextPageRef.current = hasNextPage
-  }, [hasNextPage])
-  useEffect(() => {
-    isFetchingNextPageRef.current = isFetchingNextPage
-  }, [isFetchingNextPage])
+  fetchNextPageRef.current = fetchNextPage
+  hasNextPageRef.current = hasNextPage
+  isFetchingNextPageRef.current = isFetchingNextPage
 
   // Observer를 마운트 시 1회만 생성
   useEffect(() => {

@@ -16,6 +16,7 @@ export interface ApiError {
 // 페이지네이션 공통 타입
 export interface PageInfo {
   size: number
+  numberOfElements: number
   nextCursor: string | null
   hasNext: boolean
 }
