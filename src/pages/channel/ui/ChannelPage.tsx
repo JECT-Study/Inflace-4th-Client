@@ -2,7 +2,7 @@
 
 import { useAuth } from '@/features/auth'
 import { ChannelProfileSection } from '@/widgets/main/channelProfile'
-import { KpiSection } from '@/widgets/channel/kpi'
+import { KpiSection } from '@/widgets/channel/Kpi'
 import { SubscriberGrowthSection } from '@/widgets/channel/SubscriberGrowth'
 import { TrendingVideoSection } from '@/widgets/channel/trendingVideo'
 import { NewInflowSection } from '@/widgets/channel/newInflow'
