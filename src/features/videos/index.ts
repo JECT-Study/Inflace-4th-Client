@@ -1,4 +1,5 @@
 export { useVideos } from './model/useVideos'
 export { mockVideos } from './mock/mockVideos'
 export { VideoList } from './ui/VideoList'
-export type { VideoFilterParams } from './model/types'
+export type { VideoFilterParams, VideoSort, VideoFormat } from './model/types'
+export { VALID_SORT, VALID_FORMAT } from './model/types'

@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useState, useEffect } from 'react'
+import { Suspense, useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { SearchBar } from '@/shared/ui/search-bar'
 import {
@@ -39,20 +39,31 @@ function SearchAndFilterInner() {
    */
   const [query, setQuery] = useState(searchParams?.get('keyword') ?? '')
   const [isFocused, setIsFocused] = useState(false)
-
+  const searchParamsRef = useRef(searchParams)
   useEffect(() => {
-    if (!isFocused) return
-    const timer = setTimeout(() => {
-      const params = new URLSearchParams(searchParams?.toString())
-      if (query) {
-        params.set('keyword', query)
+    searchParamsRef.current = searchParams
+  }, [searchParams])
+
+  const applyKeywordToUrl = useCallback(
+    (keyword: string) => {
+      const params = new URLSearchParams(searchParamsRef.current?.toString())
+      if (keyword) {
+        params.set('keyword', keyword)
       } else {
         params.delete('keyword')
       }
       router.replace(`${pathname}?${params.toString()}`)
+    },
+    [router, pathname],
+  )
+
+  useEffect(() => {
+    if (!isFocused) return
+    const timer = setTimeout(() => {
+      applyKeywordToUrl(query)
     }, 500) //debounce 500ms
     return () => clearTimeout(timer)
-  }, [query, isFocused, searchParams, router, pathname])
+  }, [query, isFocused, applyKeywordToUrl])
 
   function updateParam(key: string, value: string | null) {
     const params = new URLSearchParams(searchParams?.toString())
@@ -103,10 +114,18 @@ function SearchAndFilterInner() {
         placeholder='영상 제목으로 검색'
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        onClear={() => setQuery('')}
+        onClear={() => {
+          setQuery('')
+          applyKeywordToUrl('')
+        }}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            applyKeywordToUrl(query)
+            e.currentTarget.blur()
+          }
+        }}
       />
 
       <div className='flex size-fit items-center gap-6'>
