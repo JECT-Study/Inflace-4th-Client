@@ -21,4 +21,36 @@ export const influencerHandlers = [
       error: null,
     })
   }),
+
+  http.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/influencers/:channelId/bookmark`,
+    ({ params }) => {
+      const { channelId } = params
+      const influencer = mockInfluencers.find((i) => String(i.channelId) === channelId)
+      if (!influencer) {
+        return HttpResponse.json(
+          { responseDto: '', error: { code: 'NOT_FOUND', message: '인플루언서를 찾을 수 없습니다.' }, success: false },
+          { status: 404 }
+        )
+      }
+      influencer.bookmarked = true
+      return HttpResponse.json({ responseDto: '북마크가 추가되었습니다.', error: null, success: true })
+    }
+  ),
+
+  http.delete(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/influencers/:channelId/bookmark`,
+    ({ params }) => {
+      const { channelId } = params
+      const influencer = mockInfluencers.find((i) => String(i.channelId) === channelId)
+      if (!influencer) {
+        return HttpResponse.json(
+          { responseDto: '', error: { code: 'NOT_FOUND', message: '인플루언서를 찾을 수 없습니다.' }, success: false },
+          { status: 404 }
+        )
+      }
+      influencer.bookmarked = false
+      return HttpResponse.json({ responseDto: '북마크가 해제되었습니다.', error: null, success: true })
+    }
+  ),
 ]

@@ -1,4 +1,4 @@
 export { InfluencerList } from './ui/InfluencerList'
-export { fetchInfluencers } from './api/influencerApi'
+export { fetchInfluencers, addBookmark, removeBookmark } from './api/influencerApi'
 export { useInfluencers } from './model/useInfluencers'
-export type { InfluencerListResponse } from './api/influencerApi'
+export type { InfluencerListResponse, BookmarkResponse } from './api/influencerApi'

@@ -2,9 +2,10 @@
 
 import Image from 'next/image'
 
-import Send from '@/shared/assets/send-bold.svg'
 import { format10Thousands } from '@/shared/lib/format'
+import { HashtagBox } from '@/shared/ui/hashtag-box'
 import { HeartButton } from '@/shared/ui/heart-button'
+import { addBookmark, removeBookmark } from '@/features/influencer'
 import type { Influencer } from '../model/types'
 
 export function InfluencerCard({ influencer }: { influencer: Influencer }) {
@@ -20,10 +21,13 @@ export function InfluencerCard({ influencer }: { influencer: Influencer }) {
   } = influencer
 
   return (
-    <div className='flex h-fit w-full min-w-[52.1rem] flex-col gap-72 rounded-12 border border-stroke-border-gray-default p-32'>
+    <div className='flex h-fit w-full min-w-[52.1rem] flex-col items-end gap-24 overflow-hidden rounded-12 border border-stroke-border-gray-default p-32'>
       {/* 콘텐츠 */}
-      <div className='flex h-fit w-full flex-col gap-24'>
-        <div className='flex h-fit w-full items-center gap-16'>
+      <div className='relative flex h-fit w-full flex-col gap-24'>
+        {/* 배경 그라디언트 */}
+        <div className='absolute top-[-3.2rem] right-[-3.2rem] left-[-3.2rem] h-[11.8rem] bg-gradient-to-b from-white via-[#fcfcfc] to-[#fafafa]' />
+
+        <div className='relative flex h-fit w-full items-center gap-16'>
           {/* 채널 아이콘 */}
           <div className='relative size-[7.2rem] shrink-0 overflow-hidden rounded-full'>
             <Image src={thumbnailUrl} alt={channelName} fill />
@@ -38,20 +42,18 @@ export function InfluencerCard({ influencer }: { influencer: Influencer }) {
 
               <HeartButton
                 initialBookmarked={influencer.bookmarked}
-                onToggle={() => {
-                  // TODO: 찜 추가/해제 API 호출
+                onToggle={(bookmarked) => {
+                  void (bookmarked
+                    ? addBookmark(influencer.channelId)
+                    : removeBookmark(influencer.channelId))
                 }}
               />
             </div>
 
             {/* 해시태그 */}
-            <div className='flex h-fit w-full flex-wrap gap-12'>
+            <div className='flex h-fit w-full flex-wrap gap-8'>
               {categories.map((category) => (
-                <span
-                  key={category}
-                  className='size-fit gap-10 rounded-[10rem] bg-background-gray-stronger px-8 py-4 text-noto-label-xs-normal text-text-and-icon-tertiary'>
-                  #{category}
-                </span>
+                <HashtagBox key={category} label={category} />
               ))}
             </div>
           </div>
@@ -115,16 +117,10 @@ export function InfluencerCard({ influencer }: { influencer: Influencer }) {
         </div>
       </div>
 
-      {/* 하단: 공유 + 채널 분석 보기 */}
-      <div className='flex h-fit w-full items-center gap-16'>
-        <button className='flex size-[4.4rem] shrink-0 items-center justify-center gap-10 rounded-6 bg-background-gray-stronger p-10 text-text-and-icon-primary'>
-          <Send className='size-20' />
-        </button>
-
-        <button className='flex h-fit w-full items-center justify-center gap-10 rounded-6 bg-background-gray-stronger px-20 py-10 text-noto-label-lg-normal text-text-and-icon-primary'>
-          채널 분석 보기 →
-        </button>
-      </div>
+      {/* 채널 분석 보기 */}
+      <button className='flex h-fit shrink-0 items-center justify-center gap-10 rounded-6 bg-background-gray-stronger px-16 py-8 text-noto-label-md-normal text-text-and-icon-primary'>
+        채널 분석 보기 →
+      </button>
     </div>
   )
 }
