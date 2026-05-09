@@ -41,7 +41,7 @@ export function TypeEngagementList({ data }: Props) {
               <span className='line-clamp-2'>{item.title}</span>
             </TableCell>
             <TableCell>
-              {item.contentType == 'LONG_FORM' ? '롱폼' : '숏폼'}
+              {item.contentType === 'LONG_FORM' ? '롱폼' : '숏폼'}
             </TableCell>
             <TableCell>{item.engagementRate}%</TableCell>
           </TableRow>
