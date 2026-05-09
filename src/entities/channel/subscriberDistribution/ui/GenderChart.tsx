@@ -29,6 +29,7 @@ export function GenderChart({ data }: { data: DistributionItem[] }) {
             value={item.value}
             label={item.name}
             variant={item.color}
+            unit='%'
           />
         ))}
       </div>

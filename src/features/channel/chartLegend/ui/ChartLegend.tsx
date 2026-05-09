@@ -4,9 +4,10 @@ interface ChartLegendProps {
   label: string
   value: number | string
   variant?: string
+  unit?: string
 }
 
-export function ChartLegend({ label, value, variant }: ChartLegendProps) {
+export function ChartLegend({ label, value, variant, unit }: ChartLegendProps) {
   return (
     <div className='flex items-center gap-10'>
       <div className='p-2'>
@@ -14,7 +15,10 @@ export function ChartLegend({ label, value, variant }: ChartLegendProps) {
       </div>
       <div className='flex items-center gap-12 text-noto-body-xs-bold'>
         <span>{label}</span>
-        <span>{value}</span>
+        <span>
+          {value}
+          {unit}
+        </span>
       </div>
     </div>
   )

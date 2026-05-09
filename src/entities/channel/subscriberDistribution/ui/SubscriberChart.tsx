@@ -36,6 +36,7 @@ export function SubscriberChart({ data }: { data: SubscriberRatioDto }) {
             value={item.value}
             label={item.name}
             variant={item.color}
+            unit='%'
           />
         ))}
       </div>
