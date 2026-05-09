@@ -26,9 +26,8 @@ export interface InfluencerListResponse {
 }
 
 export async function fetchInfluencers(): Promise<InfluencerListResponse> {
-  const response = await axiosInstance.get<ApiResponse<InfluencerListResponse>>(
-    '/api/v1/influencers'
-  )
+  const response =
+    await axiosInstance.get<ApiResponse<InfluencerListResponse>>('/influencers')
   return response.data.responseDto
 }
 
@@ -37,7 +36,7 @@ export async function addBookmark(
   channelId: number
 ): Promise<BookmarkResponse> {
   const response = await axiosInstance.post<BookmarkResponse>(
-    `/api/v1/influencers/${channelId}/bookmark`
+    `/influencers/${channelId}/bookmark`
   )
   return response.data
 }
@@ -46,7 +45,7 @@ export async function removeBookmark(
   channelId: number
 ): Promise<BookmarkResponse> {
   const response = await axiosInstance.delete<BookmarkResponse>(
-    `/api/v1/influencers/${channelId}/bookmark`
+    `/influencers/${channelId}/bookmark`
   )
   return response.data
 }

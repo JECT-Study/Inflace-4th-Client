@@ -3,7 +3,7 @@ import { http, HttpResponse } from 'msw'
 import { mockInfluencers } from '@/features/influencer/mock/mockInfluencers'
 
 export const influencerHandlers = [
-  http.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/influencers`, () => {
+  http.get(`${process.env.NEXT_PUBLIC_API_URL}/influencers`, () => {
     return HttpResponse.json({
       success: true,
       responseDto: {
@@ -23,7 +23,7 @@ export const influencerHandlers = [
   }),
 
   http.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/influencers/:channelId/bookmark`,
+    `${process.env.NEXT_PUBLIC_API_URL}/influencers/:channelId/bookmark`,
     ({ params }) => {
       const { channelId } = params
       const influencer = mockInfluencers.find((i) => String(i.channelId) === channelId)
@@ -39,7 +39,7 @@ export const influencerHandlers = [
   ),
 
   http.delete(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/influencers/:channelId/bookmark`,
+    `${process.env.NEXT_PUBLIC_API_URL}/influencers/:channelId/bookmark`,
     ({ params }) => {
       const { channelId } = params
       const influencer = mockInfluencers.find((i) => String(i.channelId) === channelId)
