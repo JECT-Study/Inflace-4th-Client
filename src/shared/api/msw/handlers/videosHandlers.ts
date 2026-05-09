@@ -6,16 +6,53 @@ import {
 } from '@/features/videos/mock/mockVideos'
 
 export const videosHandlers = [
-  http.get(`${process.env.NEXT_PUBLIC_API_URL}/channel/:channelId/videos`, async ({ request }) => {
-    const url = new URL(request.url)
-    const cursor = url.searchParams.get('cursor')
+  http.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/channel/:channelId/videos`,
+    ({ request }) => {
+      const url = new URL(request.url)
+      const cursor = url.searchParams.get('cursor')
+      const sort = url.searchParams.get('sort') ?? 'LATEST'
+      const format = url.searchParams.get('format')
+      const isAd = url.searchParams.get('isAd') === 'true'
+      const keyword = url.searchParams.get('keyword') ?? ''
 
-    const responseDto = cursor ? mockVideosPage2 : mockVideosPage1
+      const basePage = cursor ? mockVideosPage2 : mockVideosPage1
+      let videos = [...basePage.videos]
 
-    return HttpResponse.json({
-      isSuccess: true,
-      responseDto,
-      error: null,
-    })
-  }),
+      if (format === 'LONG_FORM') {
+        videos = videos.filter((v) => !v.isShort)
+      } else if (format === 'SHORT_FORM') {
+        videos = videos.filter((v) => v.isShort)
+      }
+
+      if (isAd) {
+        videos = videos.filter((v) => v.isAd)
+      }
+
+      if (keyword) {
+        videos = videos.filter((v) =>
+          v.title.toLowerCase().includes(keyword.toLowerCase())
+        )
+      }
+
+      const sortFns: Record<
+        string,
+        (a: (typeof videos)[0], b: (typeof videos)[0]) => number
+      > = {
+        LATEST: (a, b) =>
+          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+        VIEWS: (a, b) => b.viewCount - a.viewCount,
+        LIKES: (a, b) => b.likeCount - a.likeCount,
+        VPH: (a, b) => b.vph - a.vph,
+        OUTLIER: (a, b) => b.outLierScore - a.outLierScore,
+      }
+      videos = videos.sort(sortFns[sort] ?? sortFns.LATEST)
+
+      return HttpResponse.json({
+        isSuccess: true,
+        responseDto: { ...basePage, videos },
+        error: null,
+      })
+    }
+  ),
 ]
