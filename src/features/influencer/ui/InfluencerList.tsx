@@ -1,13 +1,21 @@
-'use client'
-
+import type { Influencer } from '@/entities/influencer'
 import { InfluencerCard } from '@/entities/influencer'
-import { useInfluencers } from '../model/useInfluencers'
+import { InfiniteScrollList } from '@/shared/ui/infinite-scroll-list/InfiniteScrollList'
 import { formatComma } from '@/shared/lib/format'
 
-/* 인플루언서 카드 리스트 */
-export function InfluencerList() {
-  const { data, isLoading, isError } = useInfluencers()
+interface InfluencerListProps {
+  influencers: Influencer[]
+  sentinelRef: React.RefCallback<HTMLDivElement | null>
+  isFetchingNextPage: boolean
+  hasNextPage: boolean
+}
 
+export function InfluencerList({
+  influencers,
+  sentinelRef,
+  isFetchingNextPage,
+  hasNextPage,
+}: InfluencerListProps) {
   return (
     <div className='flex h-fit w-full flex-col gap-16 px-24'>
       {/* 검색 결과 및 정렬 기준
@@ -27,27 +35,19 @@ export function InfluencerList() {
         </div>
       </div>
 
-      {/* 인플루언서 리스트 */}
-      {isLoading && (
-        <div className='text-noto-label-sm-medium text-text-and-icon-tertiary'>
-          불러오는 중...
-        </div>
-      )}
-      {isError && (
-        <div className='text-noto-label-sm-medium text-status-error'>
-          조건에 맞는 인플루언서가 없습니다.
-        </div>
-      )}
-      {data && (
+      <InfiniteScrollList
+        sentinelRef={sentinelRef}
+        isFetchingNextPage={isFetchingNextPage}
+        hasNextPage={hasNextPage}>
         <div className='grid h-fit w-full grid-cols-[repeat(auto-fill,minmax(52.1rem,1fr))] gap-24'>
-          {data.pages.flatMap((page) => page.content).map((influencer) => (
+          {influencers.map((influencer) => (
             <InfluencerCard
               key={influencer.channelId}
               influencer={influencer}
             />
           ))}
         </div>
-      )}
+      </InfiniteScrollList>
     </div>
   )
 }

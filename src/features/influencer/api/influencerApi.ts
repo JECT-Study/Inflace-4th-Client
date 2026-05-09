@@ -1,6 +1,7 @@
 import { axiosInstance } from '@/shared/api'
-import type { ApiResponse, PageInfo } from '@/shared/api/types'
+import type { PageInfo } from '@/shared/api/types'
 import type { Influencer } from '@/entities/influencer'
+import { mockInfluencers } from '../mock/mockInfluencers'
 
 export interface BookmarkResponse {
   responseDto: string
@@ -26,14 +27,30 @@ export interface FetchInfluencersParams {
   size?: number
 }
 
+const PAGE_SIZE = 9
+
 export async function fetchInfluencers(
   params?: FetchInfluencersParams
 ): Promise<InfluencerListResponse> {
-  const response = await axiosInstance.get<ApiResponse<InfluencerListResponse>>(
-    '/influencers',
-    { params }
-  )
-  return response.data.responseDto
+  const startIndex = params?.cursor ? parseInt(params.cursor, 10) : 0
+  const content = mockInfluencers.slice(startIndex, startIndex + PAGE_SIZE)
+  const nextIndex = startIndex + PAGE_SIZE
+  const hasNext = nextIndex < mockInfluencers.length
+
+  return {
+    content,
+    pageInfo: {
+      size: PAGE_SIZE,
+      numberOfElements: content.length,
+      nextCursor: hasNext ? String(nextIndex) : null,
+      hasNext,
+    },
+    sort: {
+      sorted: false,
+      sortCriteria: '',
+      sortOrder: 'ASC',
+    },
+  }
 }
 
 /* 인플루언서 북마크 추가 / 삭제 */
