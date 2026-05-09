@@ -1,8 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useParams, useRouter } from 'next/navigation'
-import { useAuth } from '@/features/auth'
+import { useParams } from 'next/navigation'
 import { TabGroup } from '@/features/influencerDetail/tabGroup'
 import { ChannelSummarySection } from '@/widgets/influencerDetail/channelSummary'
 import { EngagementAnalyticsSection } from '@/widgets/influencerDetail/engagementAnalytics'
@@ -11,17 +9,10 @@ import { InfluencerBaseInfo } from '@/widgets/influencerDetail/influencerBaseInf
 
 /* 인플루언서 디테일 기본화면 */
 export function InfluencerDetailPage() {
-  const router = useRouter()
-  const { isLoggedIn, isInitializing } = useAuth()
-
-  useEffect(() => {
-    if (!isInitializing && !isLoggedIn) {
-      router.replace('/')
-    }
-  }, [isInitializing, isLoggedIn, router])
-
   const params = useParams<{ channelId: string }>()
-  const channelId = params!.channelId
+  const channelId = params?.channelId
+
+  if (!channelId) return null
 
   return (
     <div className='flex w-full flex-col gap-24 bg-background-gray-stronger p-24 pb-96'>

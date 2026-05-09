@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 
-import { useInfluencerDetail } from '@/features/influencerDetail/model/useInfluencerDetail'
+import { useInfluencerDetail } from '@/features/influencerDetail'
 import { mockInfluencerDetail } from '@/entities/influencerDetail'
 import { Button, buttonVariants } from '@/shared/ui/button'
 import { Skeleton } from '@/shared/ui/shadcn/skeleton'
@@ -52,7 +52,12 @@ export function InfluencerBaseInfo({ channelId }: { channelId: string }) {
       <div className='relative'>
         {/* 채널 프로필 이미지 */}
         <div className='absolute -top-[5rem] left-40 h-[10rem] w-[10rem] overflow-hidden rounded-full border-4 border-white'>
-          <Image src={data.profileImageUrl} alt='채널 프로필' fill />
+          <Image
+            src={data.profileImageUrl}
+            alt='채널 프로필'
+            fill
+            sizes='10rem'
+          />
         </div>
         <div className='flex justify-between p-40 pt-[5.8rem]'>
           {/* 채널 정보 텍스트 */}
@@ -87,7 +92,7 @@ export function InfluencerBaseInfo({ channelId }: { channelId: string }) {
               </div>
             </div>
             <div className='flex'>
-              <span className='rounded-6 bg-[#F3EEFF] p-4 px-16 text-noto-label-md-bold text-text-and-icon-primary'>
+              <span className='rounded-6 bg-primitive-brand-vivid-100 p-4 px-16 text-noto-label-md-bold text-text-and-icon-primary'>
                 구독자 {format10Thousands(data.subscriberCount)}
               </span>
             </div>
