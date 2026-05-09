@@ -14,7 +14,6 @@ import { RetentionChart, formatDuration } from './RetentionChart'
 import WatchRetentionIcon from '@/shared/assets/watch-retention.svg'
 import ChartIcon from '@/shared/assets/chart-bold.svg'
 import BounceRateIcon from '@/shared/assets/bounce-rate.svg'
-import QuestionIcon from '@/shared/assets/question-bold.svg'
 import { Skeleton } from '@/shared/ui/shadcn/skeleton'
 
 const SECTION_LABELS = [
@@ -46,29 +45,6 @@ function SectionCardHeader({
         {title}
       </p>
       {children}
-    </div>
-  )
-}
-
-/* 물음표 아이콘 + 인라인 툴팁 — 자체 hover 상태 관리 */
-function TooltipIcon({ text }: { text: string }) {
-  const [visible, setVisible] = useState(false)
-  return (
-    <div className='relative ml-2'>
-      <button
-        type='button'
-        className='flex items-center'
-        onMouseEnter={() => setVisible(true)}
-        onMouseLeave={() => setVisible(false)}>
-        <QuestionIcon className='size-16 text-text-and-icon-tertiary' />
-      </button>
-      {visible && (
-        <div className='absolute top-full left-1/2 z-10 mt-6 w-[18rem] -translate-x-1/2 rounded-12 bg-white p-16 shadow-[0_0_8px_0_rgba(13,13,13,0.08),0_6px_12px_0_rgba(13,13,13,0.08)]'>
-          <p className='text-noto-caption-md-normal text-text-and-icon-secondary'>
-            {text}
-          </p>
-        </div>
-      )}
     </div>
   )
 }
