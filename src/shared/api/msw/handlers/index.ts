@@ -8,6 +8,8 @@ import { videoDetailHandlers } from './videoDetailHandlers'
 import { kpiHandlers } from './kpiHandlers'
 import { subscriberGrowthHandlers } from './subscriberGrowthHandlers'
 import { videoStatsHandlers } from './videoStatsHandlers'
+import { channelTrendingVideoHandlers } from './channelTrendingVideoHandlers'
+import { newInflowHandlers } from './newInflowHandlers'
 import { influencerHandlers } from './influencerHandlers'
 
 export const handlers = [
@@ -21,5 +23,7 @@ export const handlers = [
   ...kpiHandlers,
   ...subscriberGrowthHandlers,
   ...videoStatsHandlers,
+  ...channelTrendingVideoHandlers,
+  ...newInflowHandlers,
   ...influencerHandlers,
 ]

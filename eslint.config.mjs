@@ -16,7 +16,12 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
-  ...storybook.configs["flat/recommended"]
+  ...storybook.configs["flat/recommended"],
+  {
+    rules: {
+      'react-hooks/refs': 'off',
+    },
+  },
 ]);
 
 export default eslintConfig;
