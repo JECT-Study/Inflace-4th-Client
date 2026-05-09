@@ -278,14 +278,12 @@ export function RetentionChart({
 
       {avgTooltipPos && avgWatchDuration && (
         <div
-          className='pointer-events-none fixed z-50 flex flex-col gap-4 rounded-12 bg-white p-20 shadow-[0_0_8px_0_rgba(13,13,13,0.08),0_6px_12px_0_rgba(13,13,13,0.08)]'
+          className='pointer-events-none fixed z-50'
           style={{ left: avgTooltipPos.x + 12, top: avgTooltipPos.y - 20 }}>
-          <p className='text-noto-body-xxs-bold text-text-and-icon-primary'>
-            평균 시청 지속시간
-          </p>
-          <p className='text-noto-title-sm-bold text-brand-primary'>
-            {formatDuration(avgWatchDuration)}
-          </p>
+          <ChartTooltip
+            topLabel='평균 시청 지속시간'
+            primaryValue={formatDuration(avgWatchDuration)}
+          />
         </div>
       )}
     </div>
