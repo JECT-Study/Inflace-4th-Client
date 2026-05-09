@@ -5,7 +5,11 @@ import { trendMagazineHandlers } from './trendMagazineHandlers'
 import { trendingVideosHandlers } from './trendingVideosHandlers'
 import { videosHandlers } from './videosHandlers'
 import { videoDetailHandlers } from './videoDetailHandlers'
+import { kpiHandlers } from './kpiHandlers'
+import { subscriberGrowthHandlers } from './subscriberGrowthHandlers'
 import { videoStatsHandlers } from './videoStatsHandlers'
+import { channelTrendingVideoHandlers } from './channelTrendingVideoHandlers'
+import { newInflowHandlers } from './newInflowHandlers'
 
 export const handlers = [
   ...authHandlers,
@@ -15,5 +19,9 @@ export const handlers = [
   ...onboardingHandlers,
   ...videosHandlers,
   ...videoDetailHandlers,
+  ...kpiHandlers,
+  ...subscriberGrowthHandlers,
   ...videoStatsHandlers,
+  ...channelTrendingVideoHandlers,
+  ...newInflowHandlers,
 ]
