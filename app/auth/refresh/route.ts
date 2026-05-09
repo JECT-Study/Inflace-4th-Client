@@ -19,7 +19,10 @@ export async function POST() {
       `${process.env.NEXT_PUBLIC_API_URL}/auth/reissue`,
       {
         method: 'POST',
-        headers: { Cookie: `refreshToken=${refreshToken}` },
+        headers: {
+          Cookie: `refreshToken=${refreshToken}`,
+          Origin: process.env.NEXT_PUBLIC_APP_URL!,
+        },
       }
     )
 

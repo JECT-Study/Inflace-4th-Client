@@ -34,7 +34,10 @@ export async function GET(request: NextRequest) {
       `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Origin: process.env.NEXT_PUBLIC_APP_URL!,
+        },
         body: JSON.stringify({ provider: 'google', code }),
       }
     )
