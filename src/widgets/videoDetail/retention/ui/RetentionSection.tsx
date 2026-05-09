@@ -42,7 +42,9 @@ function SectionCardHeader({
   return (
     <div className='flex items-center gap-8'>
       <span className='rounded-12 bg-background-brand-default p-4'>{icon}</span>
-      <p className='text-noto-title-sm-bold text-text-and-icon-primary'>{title}</p>
+      <p className='text-noto-title-sm-bold text-text-and-icon-primary'>
+        {title}
+      </p>
       {children}
     </div>
   )
@@ -61,8 +63,10 @@ function TooltipIcon({ text }: { text: string }) {
         <QuestionIcon className='size-16 text-text-and-icon-tertiary' />
       </button>
       {visible && (
-        <div className='absolute left-1/2 top-full z-10 mt-6 w-[18rem] -translate-x-1/2 rounded-12 bg-white p-16 shadow-[0_0_8px_0_rgba(13,13,13,0.08),0_6px_12px_0_rgba(13,13,13,0.08)]'>
-          <p className='text-noto-caption-md-normal text-text-and-icon-secondary'>{text}</p>
+        <div className='absolute top-full left-1/2 z-10 mt-6 w-[18rem] -translate-x-1/2 rounded-12 bg-white p-16 shadow-[0_0_8px_0_rgba(13,13,13,0.08),0_6px_12px_0_rgba(13,13,13,0.08)]'>
+          <p className='text-noto-caption-md-normal text-text-and-icon-secondary'>
+            {text}
+          </p>
         </div>
       )}
     </div>
@@ -89,18 +93,24 @@ function DropOffCard({
   return (
     <div
       className={`flex flex-1 flex-col gap-24 overflow-hidden rounded-12 p-16 transition-colors ${
-        isHighlighted ? 'bg-[rgba(241,61,93,0.08)]' : 'bg-background-gray-default'
+        isHighlighted
+          ? 'bg-[rgba(241,61,93,0.08)]'
+          : 'bg-background-gray-default'
       }`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}>
       <div className='flex flex-col gap-4'>
         <p
           className={`text-noto-caption-md-normal transition-colors ${
-            isHighlighted ? 'text-text-and-icon-default' : 'text-text-and-icon-secondary'
+            isHighlighted
+              ? 'text-text-and-icon-default'
+              : 'text-text-and-icon-secondary'
           }`}>
           {timeRange}
         </p>
-        <p className='text-noto-title-sm-normal text-text-and-icon-primary'>{label}</p>
+        <p className='text-noto-title-sm-normal text-text-and-icon-primary'>
+          {label}
+        </p>
       </div>
       <p
         className={`text-ibm-heading-sm-normal transition-colors ${
@@ -119,9 +129,12 @@ interface RetentionSectionProps {
 export function RetentionSection({ videoId }: RetentionSectionProps) {
   const [hoveredSection, setHoveredSection] = useState<number | null>(null)
 
-  const { data: retentionData, isLoading: retentionLoading } = useRetention(videoId)
-  const { data: summaryData, isLoading: summaryLoading } = useRetentionSummary(videoId)
-  const { data: dropPointsData, isLoading: dropLoading } = useRetentionDropPoints(videoId)
+  const { data: retentionData, isLoading: retentionLoading } =
+    useRetention(videoId)
+  const { data: summaryData, isLoading: summaryLoading } =
+    useRetentionSummary(videoId)
+  const { data: dropPointsData, isLoading: dropLoading } =
+    useRetentionDropPoints(videoId)
 
   const retention = retentionData?.retentionData ?? mockRetentionData
   const summary = summaryData?.retentionData ?? mockRetentionSummary
@@ -142,10 +155,11 @@ export function RetentionSection({ videoId }: RetentionSectionProps) {
         {/* 평균 시청 지속 시간 카드 */}
         <div className='flex flex-col gap-24 rounded-12 bg-white p-24 shadow-[0_2px_6px_0_rgba(13,13,13,0.04)] transition-colors hover:bg-background-gray-default'>
           <SectionCardHeader
-            icon={<WatchRetentionIcon className='size-24 text-btn-primary-text-disabled' />}
-            title='평균 시청 지속 시간'>
-            <TooltipIcon text='해당 영상을 시청한 사람들이 평균적으로 얼마나 오래 시청했는지를 나타냅니다.' />
-          </SectionCardHeader>
+            icon={
+              <WatchRetentionIcon className='size-24 text-btn-primary-text-disabled' />
+            }
+            title='평균 시청 지속 시간'
+          />
 
           {isLoading ? (
             <div className='flex flex-col gap-8 px-40'>
@@ -173,10 +187,12 @@ export function RetentionSection({ videoId }: RetentionSectionProps) {
         </div>
 
         {/* 시청 지속률 그래프 카드 */}
-        <div className='flex flex-col gap-16 overflow-hidden rounded-12 bg-white pb-32 pt-24 shadow-[0_2px_6px_0_rgba(13,13,13,0.04)]'>
+        <div className='flex flex-col gap-16 overflow-hidden rounded-12 bg-white pt-24 pb-32 shadow-[0_2px_6px_0_rgba(13,13,13,0.04)]'>
           <div className='px-24'>
             <SectionCardHeader
-              icon={<ChartIcon className='size-24 text-btn-primary-text-disabled' />}
+              icon={
+                <ChartIcon className='size-24 text-btn-primary-text-disabled' />
+              }
               title='시청 지속률'
             />
           </div>
@@ -200,7 +216,9 @@ export function RetentionSection({ videoId }: RetentionSectionProps) {
         {/* 구간별 이탈율 카드 */}
         <div className='flex flex-col gap-24 rounded-12 bg-white p-24 shadow-[0_2px_6px_0_rgba(13,13,13,0.04)]'>
           <SectionCardHeader
-            icon={<BounceRateIcon className='size-24 text-btn-primary-text-disabled' />}
+            icon={
+              <BounceRateIcon className='size-24 text-btn-primary-text-disabled' />
+            }
             title='구간별 이탈율'
           />
 
