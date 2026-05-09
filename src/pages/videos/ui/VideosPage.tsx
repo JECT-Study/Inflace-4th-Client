@@ -5,13 +5,14 @@ import { useSearchParams } from 'next/navigation'
 import { useAuth } from '@/features/auth'
 import { useVideos, VideoList, VALID_SORT, VALID_FORMAT } from '@/features/videos'
 import type { VideoFilterParams } from '@/features/videos'
+import { InfiniteScrollList } from '@/shared/ui/infinite-scroll-list/InfiniteScrollList'
 import { SearchAndFilter } from '@/widgets/videos'
 
 export function VideosPage() {
   return (
     <>
       <SearchAndFilter />
-      <div className="h-full">
+      <div className='h-full'>
         <Suspense fallback={<></>}>
           <VideoListSection />
         </Suspense>
@@ -20,7 +21,6 @@ export function VideosPage() {
   )
 }
 
-/* useVideos API 요청 */
 function VideoListSection() {
   const { user } = useAuth()
   const searchParams = useSearchParams()
@@ -46,7 +46,17 @@ function VideoListSection() {
     ...(keyword && { keyword }),
   }
 
-  const { data } = useVideos(channelId, params)
+  const { videos, sentinelRef, isFetchingNextPage, hasNextPage } = useVideos(
+    channelId,
+    params
+  )
 
-  return <VideoList videos={data?.videos ?? []} />
+  return (
+    <InfiniteScrollList
+      sentinelRef={sentinelRef}
+      isFetchingNextPage={isFetchingNextPage}
+      hasNextPage={!!hasNextPage}>
+      <VideoList videos={videos} />
+    </InfiniteScrollList>
+  )
 }
