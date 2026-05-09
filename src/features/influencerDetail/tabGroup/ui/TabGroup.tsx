@@ -2,16 +2,17 @@
 
 import { cn } from '@/shared/lib/utils'
 
-export type Tab = 'performance' | 'advertisement'
+export const TAB = {
+  PERFORMANCE: 'performance',
+  ADVERTISEMENT: 'advertisement',
+} as const
 
-interface TabItem {
-  id: Tab
-  label: string
-}
-const TABS: TabItem[] = [
-  { id: 'performance', label: '성과' },
-  { id: 'advertisement', label: '광고' },
-]
+const TABS = [
+  { id: TAB.PERFORMANCE, label: '성과' },
+  { id: TAB.ADVERTISEMENT, label: '광고' },
+] as const
+
+export type Tab = (typeof TAB)[keyof typeof TAB]
 
 interface TabGroupProps {
   activeTab: Tab

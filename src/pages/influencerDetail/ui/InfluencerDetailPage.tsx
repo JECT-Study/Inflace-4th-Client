@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Tab, TabGroup } from '@/features/influencerDetail/tabGroup'
+import { TAB, Tab, TabGroup } from '@/features/influencerDetail/tabGroup'
 import { ChannelSummarySection } from '@/widgets/influencerDetail/channelSummary'
 import { EngagementAnalyticsSection } from '@/widgets/influencerDetail/engagementAnalytics'
 import { ImpactMetricsSection } from '@/widgets/influencerDetail/impactMetrics'
@@ -9,7 +9,7 @@ import { InfluencerBaseInfo } from '@/widgets/influencerDetail/influencerBaseInf
 
 /* 인플루언서 디테일 기본화면 */
 export function InfluencerDetailPage() {
-  const [activeTab, setActiveTab] = useState<Tab>('performance')
+  const [activeTab, setActiveTab] = useState<Tab>(TAB.PERFORMANCE)
 
   return (
     <div className='flex w-full flex-col gap-24 bg-background-gray-default p-24 pb-96'>
@@ -19,7 +19,7 @@ export function InfluencerDetailPage() {
       <TabGroup activeTab={activeTab} onTabChange={setActiveTab} />
 
       {/* 성과 탭 선택 시 */}
-      {activeTab === 'performance' && (
+      {activeTab === TAB.PERFORMANCE && (
         <>
           {/* 채널 요약 영역 */}
           <ChannelSummarySection />
