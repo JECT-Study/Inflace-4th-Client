@@ -2,6 +2,7 @@ import type { Influencer } from '@/entities/influencer'
 import { InfluencerCard } from '@/entities/influencer'
 import { InfiniteScrollList } from '@/shared/ui/infinite-scroll-list/InfiniteScrollList'
 import { formatComma } from '@/shared/lib/format'
+import { useBookmarkToggle } from '../model/useInfluencers'
 
 interface InfluencerListProps {
   influencers: Influencer[]
@@ -16,6 +17,8 @@ export function InfluencerList({
   isFetchingNextPage,
   hasNextPage,
 }: InfluencerListProps) {
+  const toggleBookmark = useBookmarkToggle()
+
   return (
     <div className='flex h-fit w-full flex-col gap-16 px-24'>
       {/* 검색 결과 및 정렬 기준
@@ -44,6 +47,9 @@ export function InfluencerList({
             <InfluencerCard
               key={influencer.channelId}
               influencer={influencer}
+              onBookmarkToggle={(bookmarked) =>
+                toggleBookmark(influencer.channelId, bookmarked)
+              }
             />
           ))}
         </div>

@@ -1,14 +1,19 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { format10Thousands } from '@/shared/lib/format'
 import { HashtagBox } from '@/shared/ui/hashtag-box'
 import { HeartButton } from '@/shared/ui/heart-button'
-import { addBookmark, removeBookmark } from '@/features/influencer'
 import type { Influencer } from '../model/types'
 
-export function InfluencerCard({ influencer }: { influencer: Influencer }) {
+interface InfluencerCardProps {
+  influencer: Influencer
+  onBookmarkToggle?: (bookmarked: boolean) => void
+}
+
+export function InfluencerCard({ influencer, onBookmarkToggle }: InfluencerCardProps) {
   const {
     channelName,
     thumbnailUrl,
@@ -42,11 +47,7 @@ export function InfluencerCard({ influencer }: { influencer: Influencer }) {
 
               <HeartButton
                 initialBookmarked={influencer.bookmarked}
-                onToggle={(bookmarked) => {
-                  void (bookmarked
-                    ? addBookmark(influencer.channelId)
-                    : removeBookmark(influencer.channelId))
-                }}
+                onToggle={onBookmarkToggle ?? (() => {})}
               />
             </div>
 
@@ -118,9 +119,11 @@ export function InfluencerCard({ influencer }: { influencer: Influencer }) {
       </div>
 
       {/* 채널 분석 보기 */}
-      <button className='flex h-fit shrink-0 items-center justify-center gap-10 rounded-6 bg-background-gray-stronger px-16 py-8 text-noto-label-md-normal text-text-and-icon-primary'>
+      <Link
+        href={`/influencer/${influencer.channelId}`}
+        className='flex h-fit shrink-0 items-center justify-center gap-10 rounded-6 bg-background-gray-stronger px-16 py-8 text-noto-label-md-normal text-text-and-icon-primary'>
         채널 분석 보기 →
-      </button>
+      </Link>
     </div>
   )
 }
