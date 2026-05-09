@@ -10,5 +10,5 @@ export interface Influencer {
   recentUploadCount30d: number
   bookmarked: boolean
   influencerEmail: string
-  recentPplBrand: string[]
+  recentPplBrands: string[]
 }

@@ -14,7 +14,7 @@ export const mockInfluencers: Influencer[] = [
     recentUploadCount30d: 12,
     bookmarked: true,
     influencerEmail: 'chimchakman@test.com',
-    recentPplBrand: ['아디다스', '나이키', '이케아'],
+    recentPplBrands: ['아디다스', '나이키', '이케아'],
   },
   {
     channelId: 2,
@@ -28,7 +28,7 @@ export const mockInfluencers: Influencer[] = [
     recentUploadCount30d: 6,
     bookmarked: false,
     influencerEmail: 'chloe@test.com',
-    recentPplBrand: ['아디다스', '나이키'],
+    recentPplBrands: ['아디다스', '나이키'],
   },
   {
     channelId: 3,
@@ -42,7 +42,7 @@ export const mockInfluencers: Influencer[] = [
     recentUploadCount30d: 4,
     bookmarked: false,
     influencerEmail: 'workman@test.com',
-    recentPplBrand: ['이케아'],
+    recentPplBrands: ['이케아'],
   },
   {
     channelId: 4,
@@ -56,7 +56,7 @@ export const mockInfluencers: Influencer[] = [
     recentUploadCount30d: 8,
     bookmarked: true,
     influencerEmail: 'jocoding@test.com',
-    recentPplBrand: [],
+    recentPplBrands: [],
   },
   {
     channelId: 5,
@@ -70,7 +70,7 @@ export const mockInfluencers: Influencer[] = [
     recentUploadCount30d: 10,
     bookmarked: false,
     influencerEmail: 'meatlover@test.com',
-    recentPplBrand: ['나이키', '이케아'],
+    recentPplBrands: ['나이키', '이케아'],
   },
   {
     channelId: 6,
@@ -84,7 +84,7 @@ export const mockInfluencers: Influencer[] = [
     recentUploadCount30d: 7,
     bookmarked: true,
     influencerEmail: 'physicalgallery@test.com',
-    recentPplBrand: ['아디다스', '나이키', '이케아'],
+    recentPplBrands: ['아디다스', '나이키', '이케아'],
   },
   {
     channelId: 7,
@@ -98,7 +98,7 @@ export const mockInfluencers: Influencer[] = [
     recentUploadCount30d: 5,
     bookmarked: false,
     influencerEmail: 'byunseungju@test.com',
-    recentPplBrand: ['아디다스'],
+    recentPplBrands: ['아디다스'],
   },
   {
     channelId: 8,
@@ -112,7 +112,7 @@ export const mockInfluencers: Influencer[] = [
     recentUploadCount30d: 3,
     bookmarked: false,
     influencerEmail: 'risabae@test.com',
-    recentPplBrand: ['나이키', '이케아'],
+    recentPplBrands: ['나이키', '이케아'],
   },
   {
     channelId: 9,
@@ -126,7 +126,7 @@ export const mockInfluencers: Influencer[] = [
     recentUploadCount30d: 2,
     bookmarked: true,
     influencerEmail: 'ppanibottle@test.com',
-    recentPplBrand: ['아디다스', '이케아'],
+    recentPplBrands: ['아디다스', '이케아'],
   },
   {
     channelId: 10,
@@ -140,7 +140,7 @@ export const mockInfluencers: Influencer[] = [
     recentUploadCount30d: 9,
     bookmarked: false,
     influencerEmail: 'syukaworld@test.com',
-    recentPplBrand: [],
+    recentPplBrands: [],
   },
   {
     channelId: 11,
@@ -154,7 +154,7 @@ export const mockInfluencers: Influencer[] = [
     recentUploadCount30d: 11,
     bookmarked: false,
     influencerEmail: 'shortmouth@test.com',
-    recentPplBrand: ['나이키'],
+    recentPplBrands: ['나이키'],
   },
   {
     channelId: 12,
@@ -168,6 +168,6 @@ export const mockInfluencers: Influencer[] = [
     recentUploadCount30d: 15,
     bookmarked: true,
     influencerEmail: 'fullversiontv@test.com',
-    recentPplBrand: ['아디다스', '나이키', '이케아'],
+    recentPplBrands: ['아디다스', '나이키', '이케아'],
   },
 ]

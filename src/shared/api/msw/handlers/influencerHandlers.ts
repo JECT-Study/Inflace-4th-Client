@@ -8,10 +8,12 @@ export const influencerHandlers = [
       success: true,
       responseDto: {
         content: mockInfluencers,
-        pageSize: 12,
-        hasNext: false,
-        numberOfElements: 12,
-        empty: false,
+        pageInfo: {
+          size: 12,
+          numberOfElements: 12,
+          nextCursor: null,
+          hasNext: false,
+        },
         sort: {
           sorted: true,
           sortCriteria: 'engagement_rate',

@@ -17,7 +17,7 @@ export function InfluencerCard({ influencer }: { influencer: Influencer }) {
     averageViews,
     averageEngagementRate,
     recentUploadCount30d,
-    recentPplBrand,
+    recentPplBrands,
   } = influencer
 
   return (
@@ -105,7 +105,7 @@ export function InfluencerCard({ influencer }: { influencer: Influencer }) {
             </span>
 
             <div className='flex size-fit flex-wrap gap-12'>
-              {recentPplBrand.map((brand) => (
+              {recentPplBrands.map((brand) => (
                 <span
                   key={brand}
                   className='text-noto-label-md-bold text-brand-tertiary-stronger'>

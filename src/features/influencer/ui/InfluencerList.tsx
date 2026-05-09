@@ -39,8 +39,8 @@ export function InfluencerList() {
         </div>
       )}
       {data && (
-        <div className='grid h-fit w-full grid-cols-3 gap-24'>
-          {data.content.map((influencer) => (
+        <div className='grid h-fit w-full grid-cols-[repeat(auto-fill,minmax(52.1rem,1fr))] gap-24'>
+          {data.pages.flatMap((page) => page.content).map((influencer) => (
             <InfluencerCard
               key={influencer.channelId}
               influencer={influencer}

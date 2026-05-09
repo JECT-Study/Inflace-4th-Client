@@ -1,5 +1,5 @@
 import { axiosInstance } from '@/shared/api'
-import type { ApiResponse } from '@/shared/api/types'
+import type { ApiResponse, PageInfo } from '@/shared/api/types'
 import type { Influencer } from '@/entities/influencer'
 
 export interface BookmarkResponse {
@@ -11,13 +11,9 @@ export interface BookmarkResponse {
   success: boolean
 }
 
-/* TODO: 페이지 랜더링 관련 필드 형식 백엔드와 논의중 */
 export interface InfluencerListResponse {
   content: Influencer[]
-  pageSize: number
-  hasNext: boolean
-  numberOfElements: number
-  empty: boolean
+  pageInfo: PageInfo
   sort: {
     sorted: boolean
     sortCriteria: string
@@ -25,9 +21,18 @@ export interface InfluencerListResponse {
   }
 }
 
-export async function fetchInfluencers(): Promise<InfluencerListResponse> {
-  const response =
-    await axiosInstance.get<ApiResponse<InfluencerListResponse>>('/influencers')
+export interface FetchInfluencersParams {
+  cursor?: string | null
+  size?: number
+}
+
+export async function fetchInfluencers(
+  params?: FetchInfluencersParams
+): Promise<InfluencerListResponse> {
+  const response = await axiosInstance.get<ApiResponse<InfluencerListResponse>>(
+    '/influencers',
+    { params }
+  )
   return response.data.responseDto
 }
 
