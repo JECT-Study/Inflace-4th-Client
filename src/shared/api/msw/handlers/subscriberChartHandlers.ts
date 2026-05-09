@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw'
-import { mockSubscriber } from '@/entities/channel/subscriberDistribution/mock/mockSubscriberDistribution'
+import { mockSubscriber } from '@/entities/channel/subscriberDistribution'
 
 export const subscriberChartHandlers = [
   http.get(

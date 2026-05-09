@@ -3,7 +3,10 @@
 import { BaseBarChart } from '@/shared/ui/chart/barChart'
 import { DistributionItem } from '../model/types'
 
-export function DistributionChart({ data, type }: {
+export function DistributionChart({
+  data,
+  type,
+}: {
   data: DistributionItem[]
   type: string
 }) {
@@ -14,7 +17,7 @@ export function DistributionChart({ data, type }: {
         {data.map((item, idx) => (
           <div
             className='flex h-24 w-full items-center gap-16 text-text-and-icon-primary'
-            key={idx}>
+            key={item.label}>
             <span className='text-noto-body-md-bold'>{idx + 1}</span>
             <span className='text-noto-body-xs-bold'>
               {item.label}
@@ -31,10 +34,10 @@ export function DistributionChart({ data, type }: {
       <BaseBarChart data={data} />
       {/* 항목별 (%) */}
       <div className='flex w-[4.2rem] shrink-0 flex-col gap-32 text-right'>
-        {data.map((item, idx) => (
+        {data.map((item) => (
           <div
             className='flex h-24 items-center justify-end text-noto-body-xs-normal text-text-and-icon-default'
-            key={idx}>
+            key={item.label}>
             {item.percentage}%
           </div>
         ))}
