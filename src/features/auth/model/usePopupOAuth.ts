@@ -13,13 +13,11 @@ export function usePopupOAuth({ apiPath, popupName }: PopupOAuthConfig) {
   const [isLoading, setIsLoading] = useState(false)
   const popupRef = useRef<Window | null>(null)
 
-  // localStorage 변경 이벤트로 auth/callback 결과 수신
-  const handleStorage = useCallback((event: StorageEvent) => {
-    if (event.key !== 'oauth_result' || !event.newValue) return
+  // app/api/auth/callback으로부터 전달받은 메세지 활용
+  const handleMessage = useCallback((event: MessageEvent) => {
+    if (event.origin !== window.location.origin) return
 
-    localStorage.removeItem('oauth_result')
-
-    const { type, error: authError } = JSON.parse(event.newValue)
+    const { type, error: authError } = event.data
 
     if (type === 'AUTH_SUCCESS') {
       setIsLoading(false)
@@ -30,10 +28,11 @@ export function usePopupOAuth({ apiPath, popupName }: PopupOAuthConfig) {
     }
   }, [])
 
+  //전달받은 메세지를 표시
   useEffect(() => {
-    window.addEventListener('storage', handleStorage)
-    return () => window.removeEventListener('storage', handleStorage)
-  }, [handleStorage])
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [handleMessage])
 
   //유튜브/구글로 로그인 버튼을 클릭 시 유튜브/구글 로그인 팝업화면을 띄움
   const handleClick = () => {

@@ -109,14 +109,14 @@ export async function GET(request: NextRequest) {
   }
 }
 
-//HTML 페이지를 반환하여 localStorage로 결과를 부모 창에 전달하고 팝업을 닫는다
+//HTML 페이지를 반환하여 postMessage로 accessToken + user를 부모 창에 전달하고 팝업을 닫는다
 function buildPostMessageHtml(type: string, payload: Record<string, unknown>) {
   const message = JSON.stringify({ type, ...payload })
   return `<!DOCTYPE html>
 <html>
 <body>
 <script>
-  localStorage.setItem('oauth_result', ${message});
+  window.opener.postMessage(${message}, "${process.env.NEXT_PUBLIC_APP_URL}");
   window.close();
 </script>
 </body>
