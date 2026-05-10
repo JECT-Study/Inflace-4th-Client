@@ -111,7 +111,7 @@ function buildPostMessageHtml(
 <body>
 <script>
   window.opener.postMessage(${message}, "${origin}");
-  /* window.close(); */
+  window.close(); 
 </script>
 </body>
 </html>`
