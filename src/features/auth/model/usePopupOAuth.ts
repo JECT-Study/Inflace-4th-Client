@@ -15,7 +15,11 @@ export function usePopupOAuth({ apiPath, popupName }: PopupOAuthConfig) {
 
   // app/api/auth/callback으로부터 전달받은 메세지 활용
   const handleMessage = useCallback((event: MessageEvent) => {
-    if (event.origin !== window.location.origin) return
+    console.log('[usePopupOAuth] message received:', event.origin, event.data)
+    if (event.origin !== window.location.origin) {
+      console.log('[usePopupOAuth] origin mismatch, expected:', window.location.origin)
+      return
+    }
 
     const { type, error: authError } = event.data
 
