@@ -37,7 +37,6 @@ export async function GET(request: NextRequest) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Origin: process.env.NEXT_PUBLIC_APP_URL!,
         },
         body: JSON.stringify({ provider: 'google', code }),
       }
@@ -117,7 +116,7 @@ function buildPostMessageHtml(type: string, payload: Record<string, unknown>) {
 <html>
 <body>
 <script>
-  window.opener.postMessage(${message}, "${origin}");
+  window.opener.postMessage(${message}, "${process.env.NEXT_PUBLIC_APP_URL}");
   window.close(); 
 </script>
 </body>
