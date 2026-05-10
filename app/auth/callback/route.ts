@@ -111,17 +111,14 @@ export async function GET(request: NextRequest) {
 }
 
 //HTML 페이지를 반환하여 postMessage로 accessToken + user를 부모 창에 전달하고 팝업을 닫는다
-function buildPostMessageHtml(
-  type: string,
-  payload: Record<string, unknown>
-) {
+function buildPostMessageHtml(type: string, payload: Record<string, unknown>) {
   const message = JSON.stringify({ type, ...payload })
   return `<!DOCTYPE html>
 <html>
 <body>
 <script>
-  window.opener.postMessage(${message}, '*');
-  window.close();
+  window.opener.postMessage(${message}, "${origin}");
+  window.close(); 
 </script>
 </body>
 </html>`
