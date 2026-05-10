@@ -32,9 +32,7 @@ export async function POST() {
     console.log('[auth/refresh] backend body:', responseText)
 
     if (!backendResponse.ok) {
-      if (backendResponse.status === 401) {
-        cookieStore.delete('refreshToken')
-      }
+      cookieStore.delete('refreshToken')
       return NextResponse.json(
         { error: '토큰 갱신에 실패했습니다.' },
         { status: backendResponse.status }
