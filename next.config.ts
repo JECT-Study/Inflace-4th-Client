@@ -1,6 +1,18 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  /* Cross-Origin-Opener-Policy로 인해 팝업이 닫히지 않는 문제 해결 */
+  async headers() {
+    return [
+      {
+        source: '/auth/callback',
+        headers: [
+          { key: 'Cross-Origin-Opener-Policy', value: 'unsafe-none' },
+          { key: 'Cross-Origin-Embedder-Policy', value: 'unsafe-none' },
+        ],
+      },
+    ]
+  },
   webpack(config) {
     const fileLoaderRule = config.module.rules.find(
       (rule: { test?: { test?: (s: string) => boolean } }) =>

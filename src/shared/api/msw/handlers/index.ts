@@ -11,6 +11,8 @@ import { videoStatsHandlers } from './videoStatsHandlers'
 import { channelTrendingVideoHandlers } from './channelTrendingVideoHandlers'
 import { newInflowHandlers } from './newInflowHandlers'
 import { retentionHandlers } from './retentionHandlers'
+import { influencerHandlers } from './influencerHandlers'
+import { typeEngagementHandlers } from './typeEngagementHandlers'
 
 export const handlers = [
   ...authHandlers,
@@ -26,4 +28,6 @@ export const handlers = [
   ...channelTrendingVideoHandlers,
   ...newInflowHandlers,
   ...retentionHandlers,
+  ...influencerHandlers,
+  ...typeEngagementHandlers,
 ]
