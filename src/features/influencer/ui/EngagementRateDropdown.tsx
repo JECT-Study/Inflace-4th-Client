@@ -67,10 +67,7 @@ function EngagementRateDropdown({
   function handleConfirm() {
     if (isInputMode) {
       const output = from || to ? `${from || '0'}% ~ ${to || ''}%` : '전체'
-      onChange(
-        output,
-        JSON.stringify({ engagementRateFrom: from, engagementRateTo: to })
-      )
+      onChange(output, [from, to].join(','))
       return
     }
 
@@ -85,10 +82,11 @@ function EngagementRateDropdown({
           ? labels[0]
           : `${labels[0]} 외 ${labels.length - 1}`
 
-    const queryList = selectedOptions.map((o) =>
-      JSON.stringify({ engagementRateFrom: o.from, engagementRateTo: o.to })
-    )
-    onChange(output, queryList.join(','))
+    const froms = selectedOptions.map((o) => o.from).filter(Boolean)
+    const tos = selectedOptions.map((o) => o.to).filter(Boolean)
+    const mergedFrom = froms.length > 0 ? String(Math.min(...froms.map(Number))) : ''
+    const mergedTo = tos.length > 0 ? String(Math.max(...tos.map(Number))) : ''
+    onChange(output, [mergedFrom, mergedTo].join(','))
   }
 
   const isMinMaxInvalid =

@@ -1,4 +1,7 @@
-import { useState } from 'react'
+'use client'
+
+import { useState, useEffect, useRef, useCallback, Suspense } from 'react'
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 
 import { SearchBar } from '@/shared/ui/search-bar'
 import { Button } from '@/shared/ui/button'
@@ -29,6 +32,18 @@ const FILTER_DEFAULTS = {
 } satisfies Record<string, FilterState>
 
 export function InfluencerFilter() {
+  return (
+    <Suspense fallback={<div className='h-full' />}>
+      <InfluencerFilterInner />
+    </Suspense>
+  )
+}
+
+function InfluencerFilterInner() {
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
   const [category, setCategory] = useState<FilterState>(
     FILTER_DEFAULTS.category
   )
@@ -51,10 +66,159 @@ export function InfluencerFilter() {
     FILTER_DEFAULTS.language
   )
 
+  //화면 새로고침 시 필터 초기화
+  useEffect(() => {
+    router.replace(pathname ?? '/')
+  }, [router, pathname])
+
+  // 채널명 검색어 상태 및 포커스 여부
+  const [query, setQuery] = useState('')
+  const [isFocused, setIsFocused] = useState(false)
+  // useCallback 내부에서 최신 searchParams를 참조하기 위한 ref
+  const searchParamsRef = useRef(searchParams)
+  useEffect(() => {
+    searchParamsRef.current = searchParams
+  }, [searchParams])
+
+  // URL 파라미터 반영 함수들
+  const applyChannelNameToUrl = useCallback(
+    (channelName: string) => {
+      const params = new URLSearchParams(searchParamsRef.current?.toString())
+      if (channelName) {
+        params.set('channelName', channelName)
+      } else {
+        params.delete('channelName')
+      }
+      router.replace(`${pathname}?${params.toString()}`)
+    },
+    [router, pathname]
+  )
+
+  // categoryNames: 쉼표로 구분된 카테고리 값 목록
+  const applyCategoriesToUrl = useCallback(
+    (outputQuery: string) => {
+      const params = new URLSearchParams(searchParamsRef.current?.toString())
+      if (outputQuery) {
+        params.set('categoryNames', outputQuery)
+      } else {
+        params.delete('categoryNames')
+      }
+      router.replace(`${pathname}?${params.toString()}`)
+    },
+    [router, pathname]
+  )
+
+  // subscriberFrom, subscriberTo: "from,to" 포맷을 분리해 각각 반영
+  const applySubscriberToUrl = useCallback(
+    (outputQuery: string) => {
+      const params = new URLSearchParams(searchParamsRef.current?.toString())
+      const [from, to] = outputQuery.split(',')
+      if (from) {
+        params.set('subscriberFrom', from)
+      } else {
+        params.delete('subscriberFrom')
+      }
+      if (to) {
+        params.set('subscriberTo', to)
+      } else {
+        params.delete('subscriberTo')
+      }
+      router.replace(`${pathname}?${params.toString()}`)
+    },
+    [router, pathname]
+  )
+
+  // uploadPeriod: 쉼표로 구분된 주기 값 목록
+  const applyUploadPeriodToUrl = useCallback(
+    (outputQuery: string) => {
+      const params = new URLSearchParams(searchParamsRef.current?.toString())
+      if (outputQuery) {
+        params.set('uploadPeriod', outputQuery)
+      } else {
+        params.delete('uploadPeriod')
+      }
+      router.replace(`${pathname}?${params.toString()}`)
+    },
+    [router, pathname]
+  )
+
+  // hasAdHistory: "true" | "false" 불리언 문자열
+  const applyHasAdHistoryToUrl = useCallback(
+    (outputQuery: string) => {
+      const params = new URLSearchParams(searchParamsRef.current?.toString())
+      if (outputQuery) {
+        params.set('hasAdHistory', outputQuery)
+      } else {
+        params.delete('hasAdHistory')
+      }
+      router.replace(`${pathname}?${params.toString()}`)
+    },
+    [router, pathname]
+  )
+
+  // outlierRange: 선택된 배수 단일 값 (예: "1.5X")
+  const applyOutlierRangeToUrl = useCallback(
+    (outputQuery: string) => {
+      const params = new URLSearchParams(searchParamsRef.current?.toString())
+      if (outputQuery) {
+        params.set('outlierRange', outputQuery)
+      } else {
+        params.delete('outlierRange')
+      }
+      router.replace(`${pathname}?${params.toString()}`)
+    },
+    [router, pathname]
+  )
+
+  // engagementRateFrom, engagementRateTo: "from,to" 포맷을 분리해 각각 반영
+  const applyEngagementRateToUrl = useCallback(
+    (outputQuery: string) => {
+      const params = new URLSearchParams(searchParamsRef.current?.toString())
+      const [from, to] = outputQuery ? outputQuery.split(',') : ['', '']
+      if (from) {
+        params.set('engagementRateFrom', from)
+      } else {
+        params.delete('engagementRateFrom')
+      }
+      if (to) {
+        params.set('engagementRateTo', to)
+      } else {
+        params.delete('engagementRateTo')
+      }
+      router.replace(`${pathname}?${params.toString()}`)
+    },
+    [router, pathname]
+  )
+
+  // 채널명 입력 시 500ms 디바운스 후 URL 반영
+  useEffect(() => {
+    if (!isFocused) return
+    const timer = setTimeout(() => {
+      applyChannelNameToUrl(query)
+    }, 500)
+    return () => clearTimeout(timer)
+  }, [query, isFocused, applyChannelNameToUrl])
+
   return (
     <div className='flex h-fit w-full items-center gap-24 bg-background-gray-default p-24'>
       {/* 검색바 */}
-      <SearchBar placeholder='채널명 또는 키워드 검색' />
+      <SearchBar
+        placeholder='채널명 또는 키워드 검색'
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        onClear={() => {
+          setQuery('')
+          applyChannelNameToUrl('')
+        }}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            applyChannelNameToUrl(query)
+            e.currentTarget.blur()
+          }
+        }}
+      />
 
       {/* 필터 */}
       <div className='flex h-fit w-full flex-1 items-center gap-12'>
@@ -69,6 +233,7 @@ export function InfluencerFilter() {
               }
               onChange={(output, outputQuery) => {
                 setCategory({ output, outputQuery })
+                applyCategoriesToUrl(outputQuery)
                 onClose()
               }}
             />
@@ -80,15 +245,16 @@ export function InfluencerFilter() {
           output={subscriber.output}
           outputQuery={subscriber.outputQuery}>
           {(onClose) => {
-            const parsed = subscriber.outputQuery
-              ? JSON.parse(subscriber.outputQuery)
-              : {}
+            const [from, to] = subscriber.outputQuery
+              ? subscriber.outputQuery.split(',')
+              : ['', '']
             return (
               <SubscriberDropdown
-                defaultFrom={parsed.subscriberFrom ?? ''}
-                defaultTo={parsed.subscriberTo ?? ''}
+                defaultFrom={from ?? ''}
+                defaultTo={to ?? ''}
                 onChange={(output, outputQuery) => {
                   setSubscriber({ output, outputQuery })
+                  applySubscriberToUrl(outputQuery)
                   onClose()
                 }}
               />
@@ -109,6 +275,7 @@ export function InfluencerFilter() {
               }
               onChange={(output, outputQuery) => {
                 setUploadPeriod({ output, outputQuery })
+                applyUploadPeriodToUrl(outputQuery)
                 onClose()
               }}
             />
@@ -124,6 +291,7 @@ export function InfluencerFilter() {
               defaultValue={hasAdHistory.outputQuery}
               onChange={(output, outputQuery) => {
                 setHasAdHistory({ output, outputQuery })
+                applyHasAdHistoryToUrl(outputQuery)
                 onClose()
               }}
             />
@@ -135,38 +303,17 @@ export function InfluencerFilter() {
           output={engagementRate.output}
           outputQuery={engagementRate.outputQuery}>
           {(onClose) => {
-            let defaultSelectedOptions = undefined
-            let defaultFrom = ''
-            let defaultTo = ''
-
-            if (engagementRate.outputQuery) {
-              try {
-                const parsed = JSON.parse(engagementRate.outputQuery)
-                defaultFrom = parsed.engagementRateFrom ?? ''
-                defaultTo = parsed.engagementRateTo ?? ''
-              } catch {
-                type EngagementRateItem = {
-                  engagementRateFrom: string
-                  engagementRateTo: string
-                }
-                const items: EngagementRateItem[] | undefined =
-                  engagementRate.outputQuery
-                    .match(/\{[^}]+\}/g)
-                    ?.map((s) => JSON.parse(s) as EngagementRateItem)
-                defaultSelectedOptions = items?.map((o) => ({
-                  from: o.engagementRateFrom,
-                  to: o.engagementRateTo,
-                }))
-              }
-            }
+            const [from, to] = engagementRate.outputQuery
+              ? engagementRate.outputQuery.split(',')
+              : ['', '']
 
             return (
               <EngagementRateDropdown
-                defaultSelectedOptions={defaultSelectedOptions}
-                defaultFrom={defaultFrom}
-                defaultTo={defaultTo}
+                defaultFrom={from ?? ''}
+                defaultTo={to ?? ''}
                 onChange={(output, outputQuery) => {
                   setEngagementRate({ output, outputQuery })
+                  applyEngagementRateToUrl(outputQuery)
                   onClose()
                 }}
               />
@@ -183,6 +330,7 @@ export function InfluencerFilter() {
               defaultValue={outlierRange.outputQuery}
               onChange={(output, outputQuery) => {
                 setOutlierRange({ output, outputQuery })
+                applyOutlierRangeToUrl(outputQuery)
                 onClose()
               }}
             />

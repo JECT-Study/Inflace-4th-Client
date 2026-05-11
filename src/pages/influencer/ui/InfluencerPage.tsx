@@ -1,6 +1,7 @@
 'use client'
 
 import { Suspense } from 'react'
+import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import { InfluencerList, useInfluencers } from '@/features/influencer'
 import { InfluencerFilter } from '@/widgets/influencer'
 
@@ -18,14 +19,39 @@ export function InfluencerPage() {
 }
 
 function InfluencerListSection() {
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
+  const filters = {
+    channelName: searchParams?.get('channelName') ?? undefined,
+    categoryNames: searchParams?.get('categoryNames') ?? undefined,
+    subscriberFrom: searchParams?.get('subscriberFrom') ?? undefined,
+    subscriberTo: searchParams?.get('subscriberTo') ?? undefined,
+    uploadPeriod: searchParams?.get('uploadPeriod') ?? undefined,
+    hasAdHistory: searchParams?.get('hasAdHistory') ?? undefined,
+    engagementRateFrom: searchParams?.get('engagementRateFrom') ?? undefined,
+    engagementRateTo: searchParams?.get('engagementRateTo') ?? undefined,
+    outlierRange: searchParams?.get('outlierRange') ?? undefined,
+    language: searchParams?.get('language') ?? undefined,
+    sortCriteria: searchParams?.get('sortCriteria') ?? undefined,
+    sortOrder: searchParams?.get('sortOrder') ?? undefined,
+  }
+
+  const handleSortChange = (sortCriteria: string, sortOrder: string) => {
+    const params = new URLSearchParams(searchParams?.toString())
+    params.set('sortCriteria', sortCriteria)
+    params.set('sortOrder', sortOrder)
+    router.replace(`${pathname}?${params.toString()}`)
+  }
+
   const {
     data,
     isLoading,
-    isError,
     sentinelRef,
     isFetchingNextPage,
     hasNextPage,
-  } = useInfluencers()
+  } = useInfluencers(filters)
 
   const influencers = data?.pages.flatMap((page) => page.content) ?? []
 
@@ -37,20 +63,15 @@ function InfluencerListSection() {
     )
   }
 
-  if (isError) {
-    return (
-      <div className='text-noto-label-sm-medium text-status-error px-24'>
-        조건에 맞는 인플루언서가 없습니다.
-      </div>
-    )
-  }
-
   return (
     <InfluencerList
       influencers={influencers}
+      sortCriteria={filters.sortCriteria}
+      sortOrder={filters.sortOrder}
       sentinelRef={sentinelRef}
       isFetchingNextPage={isFetchingNextPage}
       hasNextPage={!!hasNextPage}
+      onSortChange={handleSortChange}
     />
   )
 }

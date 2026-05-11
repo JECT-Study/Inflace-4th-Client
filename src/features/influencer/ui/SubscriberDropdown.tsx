@@ -16,10 +16,17 @@ function SubscriberDropdown({
   const [from, setFrom] = useState(defaultFrom)
   const [to, setTo] = useState(defaultTo)
 
+  const isDisabled =
+    (from === '' && to === '') ||
+    (from !== '' && to !== '' && Number(from) > Number(to))
+
   function handleConfirm() {
     const output = from || to ? `${from || '0'}명 ~ ${to || ''}명` : '전체'
+    onChange(output, [from, to].join(','))
+  }
 
-    onChange(output, JSON.stringify({ subscriberFrom: from, subscriberTo: to }))
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter' && !isDisabled) handleConfirm()
   }
 
   return (
@@ -37,6 +44,7 @@ function SubscriberDropdown({
               placeholder='min'
               value={from}
               onChange={(e) => setFrom(e.target.value)}
+              onKeyDown={handleKeyDown}
               className='flex h-fit w-full flex-1 [appearance:textfield] items-center gap-24 rounded-6 border px-16 py-12 text-noto-label-md-normal text-text-and-icon-secondary outline-none placeholder:text-text-and-icon-tertiary [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
             />
 
@@ -56,6 +64,7 @@ function SubscriberDropdown({
               placeholder='max'
               value={to}
               onChange={(e) => setTo(e.target.value)}
+              onKeyDown={handleKeyDown}
               className='flex h-fit w-full flex-1 [appearance:textfield] items-center gap-24 rounded-6 border px-16 py-12 text-noto-label-md-normal text-text-and-icon-secondary outline-none placeholder:text-text-and-icon-tertiary [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
             />
 

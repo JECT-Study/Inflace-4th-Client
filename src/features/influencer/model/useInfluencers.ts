@@ -9,14 +9,13 @@ import {
   addBookmark,
   removeBookmark,
 } from '../api/influencerApi'
-import type { InfluencerListResponse } from '../api/influencerApi'
+import type { InfluencerListResponse, FetchInfluencersParams } from '../api/influencerApi'
 
-const INFLUENCERS_QUERY_KEY = ['influencers']
-
-export function useInfluencers() {
+export function useInfluencers(filters?: Omit<FetchInfluencersParams, 'cursor'>) {
   return useInfiniteScroll({
-    queryKey: INFLUENCERS_QUERY_KEY,
-    queryFn: ({ pageParam }) => fetchInfluencers({ cursor: pageParam }),
+    queryKey: ['influencers', filters],
+    queryFn: ({ pageParam }) =>
+      fetchInfluencers({ ...filters, cursor: pageParam }),
   })
 }
 
@@ -25,23 +24,28 @@ export function useBookmarkToggle() {
   const queryClient = useQueryClient()
 
   return (channelId: number, bookmarked: boolean) => {
-    queryClient.setQueryData<InfiniteData<InfluencerListResponse>>(
-      INFLUENCERS_QUERY_KEY,
-      (prev) => {
-        if (!prev) return prev
-        return {
-          ...prev,
-          pages: prev.pages.map((page) => ({
-            ...page,
-            content: page.content.map((influencer: Influencer) =>
-              influencer.channelId === channelId
-                ? { ...influencer, bookmarked }
-                : influencer
-            ),
-          })),
-        }
-      }
-    )
+    queryClient
+      .getQueryCache()
+      .findAll({ queryKey: ['influencers'] })
+      .forEach(({ queryKey }) => {
+        queryClient.setQueryData<InfiniteData<InfluencerListResponse>>(
+          queryKey,
+          (prev) => {
+            if (!prev) return prev
+            return {
+              ...prev,
+              pages: prev.pages.map((page) => ({
+                ...page,
+                content: page.content.map((influencer: Influencer) =>
+                  influencer.channelId === channelId
+                    ? { ...influencer, bookmarked }
+                    : influencer
+                ),
+              })),
+            }
+          }
+        )
+      })
 
     void (bookmarked ? addBookmark(channelId) : removeBookmark(channelId))
   }

@@ -1,7 +1,6 @@
 import { axiosInstance } from '@/shared/api'
 import type { PageInfo } from '@/shared/api/types'
 import type { Influencer } from '@/entities/influencer'
-import { mockInfluencers } from '../mock/mockInfluencers'
 
 export interface BookmarkResponse {
   responseDto: string
@@ -25,32 +24,37 @@ export interface InfluencerListResponse {
 export interface FetchInfluencersParams {
   cursor?: string | null
   size?: number
+  channelName?: string
+  categoryNames?: string
+  subscriberFrom?: string
+  subscriberTo?: string
+  uploadPeriod?: string
+  hasAdHistory?: string
+  engagementRateFrom?: string
+  engagementRateTo?: string
+  outlierRange?: string
+  language?: string
+  sortCriteria?: string
+  sortOrder?: string
 }
-
-const PAGE_SIZE = 9
 
 export async function fetchInfluencers(
   params?: FetchInfluencersParams
 ): Promise<InfluencerListResponse> {
-  const startIndex = params?.cursor ? parseInt(params.cursor, 10) : 0
-  const content = mockInfluencers.slice(startIndex, startIndex + PAGE_SIZE)
-  const nextIndex = startIndex + PAGE_SIZE
-  const hasNext = nextIndex < mockInfluencers.length
-
-  return {
-    content,
-    pageInfo: {
-      size: PAGE_SIZE,
-      numberOfElements: content.length,
-      nextCursor: hasNext ? String(nextIndex) : null,
-      hasNext,
-    },
-    sort: {
-      sorted: false,
-      sortCriteria: '',
-      sortOrder: 'ASC',
-    },
-  }
+  const { cursor, ...rest } = params ?? {}
+  const query: Record<string, string> = {}
+  if (cursor) query['cursor'] = cursor
+  Object.entries(rest).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== '') {
+      query[key] = String(value)
+    }
+  })
+  const response = await axiosInstance.get<{
+    success: boolean
+    responseDto: InfluencerListResponse
+    error: null
+  }>('/influencers', { params: query })
+  return response.data.responseDto
 }
 
 /* 인플루언서 북마크 추가 / 삭제 */
