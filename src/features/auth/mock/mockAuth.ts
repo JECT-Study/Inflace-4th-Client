@@ -5,9 +5,10 @@ import {
 } from '@/shared/api/mock/mockUser'
 
 import type { LoginResponse } from '../model/types'
+import type { ApiResponse } from '@/shared/api/types'
 
 /* 로그인 응답 DTO */
-const mockResponseDto = {
+const mockLoginResponseDto = {
   accessToken: mockAccessToken,
   userDetails: mockUserDetails,
   userChannelDetails: mockUserChannelDetails,
@@ -16,14 +17,14 @@ const mockResponseDto = {
 /* 로그인 응답 */
 export const mockLoginResponse: LoginResponse = {
   success: true,
-  responseDto: mockResponseDto,
+  responseDto: mockLoginResponseDto,
   error: null,
 }
 
 /* 리프레시 응답 */
-export const mockReissueResponse: LoginResponse = {
+export const mockReissueResponse: ApiResponse<{ accessToken: string } | string> = {
   success: true,
-  responseDto: mockResponseDto,
+  responseDto: { accessToken: mockAccessToken },
   error: null,
 }
 
