@@ -4,6 +4,7 @@ import { SearchBar } from '@/shared/ui/search-bar'
 import { Button } from '@/shared/ui/button'
 import IconHeart from '@/shared/assets/heart-bold.svg?react'
 import { DropdownTrigger } from './DropdownTrigger'
+import { CategoryNamesDropdown } from './CategoryNamesDropdown'
 import { UploadPeriodDropdown } from './UploadPeriodDropdown'
 
 type FilterState = {
@@ -54,11 +55,19 @@ export function InfluencerFilter() {
         <DropdownTrigger
           label='카테고리'
           output={category.output}
-          outputQuery={category.outputQuery}
-          onChange={(output, outputQuery) =>
-            setCategory({ output, outputQuery })
-          }
-        />
+          outputQuery={category.outputQuery}>
+          {(onClose) => (
+            <CategoryNamesDropdown
+              defaultValue={
+                category.outputQuery ? category.outputQuery.split(',') : []
+              }
+              onChange={(output, outputQuery) => {
+                setCategory({ output, outputQuery })
+                onClose()
+              }}
+            />
+          )}
+        </DropdownTrigger>
         <DropdownTrigger
           label='구독자 수'
           output={subscriber.output}
@@ -74,7 +83,9 @@ export function InfluencerFilter() {
           {(onClose) => (
             <UploadPeriodDropdown
               defaultValue={
-                uploadPeriod.outputQuery ? uploadPeriod.outputQuery.split(',') : []
+                uploadPeriod.outputQuery
+                  ? uploadPeriod.outputQuery.split(',')
+                  : []
               }
               onChange={(output, outputQuery) => {
                 setUploadPeriod({ output, outputQuery })
