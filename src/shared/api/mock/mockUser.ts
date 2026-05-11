@@ -53,7 +53,5 @@ export const mockReissueResponse = {
   error: null,
   responseDto: {
     accessToken: mockAccessToken,
-    userDetails: mockUserDetails,
-    userChannelDetails: null,
   },
 }

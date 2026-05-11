@@ -25,16 +25,21 @@ export async function POST() {
 
     const responseText = await backendResponse.text()
 
+    console.log('[auth/refresh] backend status:', backendResponse.status)
+    console.log('[auth/refresh] backend body:', responseText)
+
     if (!backendResponse.ok) {
-      cookieStore.delete('refreshToken')
+      if (backendResponse.status === 401) {
+        cookieStore.delete('refreshToken')
+      }
       return NextResponse.json(
         { error: '토큰 갱신에 실패했습니다.' },
-        { status: 401 }
+        { status: backendResponse.status }
       )
     }
 
     const { responseDto } = JSON.parse(responseText)
-    const { accessToken, userDetails, userChannelDetails } = responseDto
+    const { accessToken } = responseDto
 
     // 백엔드가 새 refreshToken을 Set-Cookie로 내려주는 경우 재설정
     const setCookieHeader = backendResponse.headers.get('set-cookie')
@@ -44,17 +49,14 @@ export async function POST() {
     if (newRefreshToken) {
       cookieStore.set('refreshToken', newRefreshToken, {
         httpOnly: true,
-        secure: false,
+        secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
         path: '/',
         maxAge: 60 * 60 * 24 * 7,
       })
     }
 
-    const user = { userDetails, userChannelDetails: userChannelDetails ?? null }
-
-    //새 AT와 user 정보는 response body로 전달
-    return NextResponse.json({ accessToken, user })
+    return NextResponse.json({ accessToken })
   } catch {
     return NextResponse.json(
       { error: '토큰 갱신 중 오류가 발생했습니다.' },
