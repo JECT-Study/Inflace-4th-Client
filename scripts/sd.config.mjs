@@ -250,6 +250,12 @@ function genPrimitiveTransparentColors() {
     .join('\n')
 }
 
+function genPrimitiveBrandColors() {
+  return flatten(prim.color.brand)
+    .map(([k, v]) => `  --color-primitive-brand-${k}: ${resolve(v)};`)
+    .join('\n')
+}
+
 function genComponent() {
   return flatten(comp.component.button, 'btn')
     .map(([k, v]) => {
@@ -433,6 +439,10 @@ const css = `/* 자동생성 파일 — 직접 편집하지 마세요. npm run b
 
   /* === Semantic Colors === */
 ${genColors()}
+
+
+  /* === Primitive Brand Colors === */
+${genPrimitiveBrandColors()}
 
 
   /* === Primitive Transparent Colors === */
