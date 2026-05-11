@@ -13,6 +13,8 @@ import { newInflowHandlers } from './newInflowHandlers'
 import { retentionHandlers } from './retentionHandlers'
 import { influencerHandlers } from './influencerHandlers'
 import { typeEngagementHandlers } from './typeEngagementHandlers'
+import { distributionChartHandlers } from './distributionChartHandlers'
+import { subscriberChartHandlers } from './subscriberChartHandlers'
 
 export const handlers = [
   ...authHandlers,
@@ -30,4 +32,6 @@ export const handlers = [
   ...retentionHandlers,
   ...influencerHandlers,
   ...typeEngagementHandlers,
+  ...distributionChartHandlers,
+  ...subscriberChartHandlers,
 ]

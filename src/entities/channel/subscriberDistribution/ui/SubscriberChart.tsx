@@ -1,39 +1,34 @@
 'use client'
 
 import { ChartLegend } from '@/features/channel/chartLegend'
-import type { TypeEngagementSummaryDto } from '../model/types'
+import { SubscriberRatioDto } from '../model/types'
 import { BasePieChart, type PieDataPoint } from '@/shared/ui/chart'
 
-export function TypeEngagementChart({
-  data,
-}: {
-  data: TypeEngagementSummaryDto
-}) {
-  const { longFormEngagementRate, shortFormEngagementRate } = data
+export function SubscriberChart({ data }: { data: SubscriberRatioDto }) {
+  const { ratio } = data
 
   const pieData: PieDataPoint[] = [
     {
-      name: '롱폼',
-      value: longFormEngagementRate,
+      name: '기존 구독자',
+      value: 100 - ratio,
       color: 'bg-brand-primary',
     },
     {
-      name: '숏폼',
-      value: shortFormEngagementRate,
+      name: '신규 구독자',
+      value: ratio,
       color: 'bg-btn-primary-filled-disabled',
     },
   ]
-
   return (
-    <div className='flex items-center justify-center gap-40'>
-      {/* 롱폼 / 숏폼 평균 참여율 차트 */}
+    <div className='flex flex-col items-center gap-40'>
+      {/* 기존 / 신규 구독자 차트 */}
       <BasePieChart<PieDataPoint>
         data={pieData}
         dataKey='value'
         nameKey='name'
         tooltipFormatter={(value) => `${value}%`}
       />
-      {/* 롱폼 / 숏폼 평균 참여율 차트 범례 */}
+      {/* 기존 / 신규 구독자 차트 범례 */}
       <div className='flex flex-col gap-12'>
         {pieData.map((item) => (
           <ChartLegend
