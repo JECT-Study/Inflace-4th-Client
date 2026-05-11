@@ -6,3 +6,13 @@ export { SubscriberDropdown } from './ui/SubscriberDropdown'
 export { OutlierRangeDropdown } from './ui/OutlierRangeDropdown'
 export { HasAdHistoryDropdown } from './ui/HasAdHistoryDropdown'
 export { EngagementRateDropdown } from './ui/EngagementRateDropdown'
+export {
+  fetchInfluencers,
+  addBookmark,
+  removeBookmark,
+} from './api/influencerApi'
+export { useInfluencers } from './model/useInfluencers'
+export type {
+  InfluencerListResponse,
+  BookmarkResponse,
+} from './api/influencerApi'
