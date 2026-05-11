@@ -71,8 +71,9 @@ function UploadPeriodDropdown({
       <div className='flex justify-end'>
         <Button
           color='secondary'
-          variant='outlined'
+          variant='filled'
           size='sm'
+          disabled={selected.length === 0}
           onClick={handleConfirm}>
           완료
         </Button>

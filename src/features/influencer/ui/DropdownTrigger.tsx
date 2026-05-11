@@ -1,9 +1,16 @@
 import { useState, useRef, useEffect } from 'react'
 
 import { cn } from '@/shared/lib/utils'
-import type { DropdownTriggerProps } from './type'
-
 import IconUp from '@/shared/assets/up-bold.svg'
+
+type DropdownTriggerProps = {
+  label: string
+  output: string
+  outputQuery: string
+  onChange?: (output: string, outputQuery: string) => void
+  children?: (onClose: () => void) => React.ReactNode
+  className?: string
+}
 
 /**
  * 드랍다운 트리거
@@ -53,7 +60,7 @@ function DropdownTrigger({
         {/* 결과값 */}
         <span
           className={cn(
-            'text-noto-label-sm-normal text-text-and-icon-tertiary',
+            'max-w-[8rem] truncate text-noto-label-sm-normal text-text-and-icon-tertiary',
             isOpen && 'text-white'
           )}>
           {output}

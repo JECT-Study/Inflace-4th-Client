@@ -3,9 +3,15 @@ import { useState } from 'react'
 import { SearchBar } from '@/shared/ui/search-bar'
 import { Button } from '@/shared/ui/button'
 import IconHeart from '@/shared/assets/heart-bold.svg?react'
-import { DropdownTrigger } from './DropdownTrigger'
-import { CategoryNamesDropdown } from './CategoryNamesDropdown'
-import { UploadPeriodDropdown } from './UploadPeriodDropdown'
+import {
+  DropdownTrigger,
+  CategoryNamesDropdown,
+  SubscriberDropdown,
+  UploadPeriodDropdown,
+  OutlierRangeDropdown,
+  HasAdHistoryDropdown,
+  EngagementRateDropdown,
+} from '@/features/influencer'
 
 type FilterState = {
   output: string
@@ -16,9 +22,9 @@ const FILTER_DEFAULTS = {
   category: { output: '전체', outputQuery: '' },
   subscriber: { output: '전체', outputQuery: '' },
   uploadPeriod: { output: '전체', outputQuery: '' },
-  adHistory: { output: '있음', outputQuery: 'true' },
-  engagementRate: { output: '5%', outputQuery: '5' },
-  outlierMultiplier: { output: '전체', outputQuery: '' },
+  hasAdHistory: { output: '있음', outputQuery: 'true' },
+  engagementRate: { output: '전체', outputQuery: '' },
+  outlierRange: { output: '전체', outputQuery: '' },
   language: { output: '한국어', outputQuery: 'ko' },
 } satisfies Record<string, FilterState>
 
@@ -32,14 +38,14 @@ export function InfluencerFilter() {
   const [uploadPeriod, setUploadPeriod] = useState<FilterState>(
     FILTER_DEFAULTS.uploadPeriod
   )
-  const [adHistory, setAdHistory] = useState<FilterState>(
-    FILTER_DEFAULTS.adHistory
+  const [hasAdHistory, setHasAdHistory] = useState<FilterState>(
+    FILTER_DEFAULTS.hasAdHistory
   )
   const [engagementRate, setEngagementRate] = useState<FilterState>(
     FILTER_DEFAULTS.engagementRate
   )
-  const [outlierMultiplier, setOutlierMultiplier] = useState<FilterState>(
-    FILTER_DEFAULTS.outlierMultiplier
+  const [outlierRange, setOutlierRange] = useState<FilterState>(
+    FILTER_DEFAULTS.outlierRange
   )
   const [language, setLanguage] = useState<FilterState>(
     FILTER_DEFAULTS.language
@@ -68,14 +74,28 @@ export function InfluencerFilter() {
             />
           )}
         </DropdownTrigger>
+
         <DropdownTrigger
           label='구독자 수'
           output={subscriber.output}
-          outputQuery={subscriber.outputQuery}
-          onChange={(output, outputQuery) =>
-            setSubscriber({ output, outputQuery })
-          }
-        />
+          outputQuery={subscriber.outputQuery}>
+          {(onClose) => {
+            const parsed = subscriber.outputQuery
+              ? JSON.parse(subscriber.outputQuery)
+              : {}
+            return (
+              <SubscriberDropdown
+                defaultFrom={parsed.subscriberFrom ?? ''}
+                defaultTo={parsed.subscriberTo ?? ''}
+                onChange={(output, outputQuery) => {
+                  setSubscriber({ output, outputQuery })
+                  onClose()
+                }}
+              />
+            )
+          }}
+        </DropdownTrigger>
+
         <DropdownTrigger
           label='업로드 주기'
           output={uploadPeriod.output}
@@ -94,30 +114,82 @@ export function InfluencerFilter() {
             />
           )}
         </DropdownTrigger>
+
         <DropdownTrigger
           label='광고 이력'
-          output={adHistory.output}
-          outputQuery={adHistory.outputQuery}
-          onChange={(output, outputQuery) =>
-            setAdHistory({ output, outputQuery })
-          }
-        />
+          output={hasAdHistory.output}
+          outputQuery={hasAdHistory.outputQuery}>
+          {(onClose) => (
+            <HasAdHistoryDropdown
+              defaultValue={hasAdHistory.outputQuery}
+              onChange={(output, outputQuery) => {
+                setHasAdHistory({ output, outputQuery })
+                onClose()
+              }}
+            />
+          )}
+        </DropdownTrigger>
+
         <DropdownTrigger
           label='참여율'
           output={engagementRate.output}
-          outputQuery={engagementRate.outputQuery}
-          onChange={(output, outputQuery) =>
-            setEngagementRate({ output, outputQuery })
-          }
-        />
+          outputQuery={engagementRate.outputQuery}>
+          {(onClose) => {
+            let defaultSelectedOptions = undefined
+            let defaultFrom = ''
+            let defaultTo = ''
+
+            if (engagementRate.outputQuery) {
+              try {
+                const parsed = JSON.parse(engagementRate.outputQuery)
+                defaultFrom = parsed.engagementRateFrom ?? ''
+                defaultTo = parsed.engagementRateTo ?? ''
+              } catch {
+                type EngagementRateItem = {
+                  engagementRateFrom: string
+                  engagementRateTo: string
+                }
+                const items: EngagementRateItem[] | undefined =
+                  engagementRate.outputQuery
+                    .match(/\{[^}]+\}/g)
+                    ?.map((s) => JSON.parse(s) as EngagementRateItem)
+                defaultSelectedOptions = items?.map((o) => ({
+                  from: o.engagementRateFrom,
+                  to: o.engagementRateTo,
+                }))
+              }
+            }
+
+            return (
+              <EngagementRateDropdown
+                defaultSelectedOptions={defaultSelectedOptions}
+                defaultFrom={defaultFrom}
+                defaultTo={defaultTo}
+                onChange={(output, outputQuery) => {
+                  setEngagementRate({ output, outputQuery })
+                  onClose()
+                }}
+              />
+            )
+          }}
+        </DropdownTrigger>
+
         <DropdownTrigger
           label='Outlier 배수'
-          output={outlierMultiplier.output}
-          outputQuery={outlierMultiplier.outputQuery}
-          onChange={(output, outputQuery) =>
-            setOutlierMultiplier({ output, outputQuery })
-          }
-        />
+          output={outlierRange.output}
+          outputQuery={outlierRange.outputQuery}>
+          {(onClose) => (
+            <OutlierRangeDropdown
+              defaultValue={outlierRange.outputQuery}
+              onChange={(output, outputQuery) => {
+                setOutlierRange({ output, outputQuery })
+                onClose()
+              }}
+            />
+          )}
+        </DropdownTrigger>
+
+        {/* TODO: 기획단에서 언어와 관련된 필터값 논의중 */}
         <DropdownTrigger
           label='언어'
           output={language.output}

@@ -4,20 +4,20 @@ import { cn } from '@/shared/lib/utils'
 import { Button } from '@/shared/ui/button'
 
 const CATEGORY_OPTIONS: { label: string; value: string }[] = [
-  { label: '영화/애니메이션', value: 'FILM_ANIMATION' },
-  { label: '인물/블로그', value: 'PEOPLE_BLOG' },
-  { label: '자동차', value: 'AUTOS_VEHICLES' },
-  { label: '코미디', value: 'COMEDY' },
-  { label: '음악', value: 'MUSIC' },
-  { label: '엔터테인먼트', value: 'ENTERTAINMENT' },
-  { label: '반려동물/동물', value: 'PETS_ANIMALS' },
-  { label: '뉴스/정치', value: 'NEWS_POLITICS' },
-  { label: '스포츠', value: 'SPORTS' },
-  { label: '노하우/스타일', value: 'HOWTO_STYLE' },
-  { label: '여행/이벤트', value: 'TRAVEL_EVENTS' },
-  { label: '교육', value: 'EDUCATION' },
-  { label: '게임', value: 'GAMING' },
-  { label: '과학/기술', value: 'SCIENCE_TECHNOLOGY' },
+  { label: '영화/애니메이션', value: '영화/애니메이션' },
+  { label: '인물/블로그', value: '인물/블로그' },
+  { label: '자동차', value: '자동차' },
+  { label: '코미디', value: '코미디' },
+  { label: '음악', value: '음악' },
+  { label: '엔터테인먼트', value: '엔터테인먼트' },
+  { label: '반려동물/동물', value: '반려동물/동물' },
+  { label: '뉴스/정치', value: '뉴스/정치' },
+  { label: '스포츠', value: '스포츠' },
+  { label: '노하우/스타일', value: '노하우/스타일' },
+  { label: '여행/이벤트', value: '여행/이벤트' },
+  { label: '교육', value: '교육' },
+  { label: '게임', value: '게임' },
+  { label: '과학/기술', value: '과학/기술' },
 ]
 
 type CategoryNamesDropdownProps = {
@@ -79,8 +79,9 @@ function CategoryNamesDropdown({
       <div className='flex justify-end'>
         <Button
           color='secondary'
-          variant='outlined'
+          variant='filled'
           size='sm'
+          disabled={selected.length === 0}
           onClick={handleConfirm}>
           완료
         </Button>

@@ -1,7 +1,43 @@
+import { useState } from 'react'
 import { InfluencerCard } from '@/entities/influencer'
 
+type SortCriteria = 'subscriber' | 'engagement_rate'
+type SortOrder = 'ASC' | 'DESC'
+
+interface SortOption {
+  label: string
+  sortCriteria: SortCriteria
+  sortOrder: SortOrder
+}
+
+interface InfluencerListProps {
+  onSortChange?: (sortCriteria: SortCriteria, sortOrder: SortOrder) => void
+}
+
+const SORT_OPTIONS: SortOption[] = [
+  { label: '구독자 많은 순', sortCriteria: 'subscriber', sortOrder: 'DESC' },
+  { label: '구독자 적은 순', sortCriteria: 'subscriber', sortOrder: 'ASC' },
+  {
+    label: '참여율 높은 순',
+    sortCriteria: 'engagement_rate',
+    sortOrder: 'DESC',
+  },
+  {
+    label: '참여율 낮은 순',
+    sortCriteria: 'engagement_rate',
+    sortOrder: 'ASC',
+  },
+]
+
 /* 인플루언서 카드 리스트 */
-export function InfluencerList() {
+export function InfluencerList({ onSortChange }: InfluencerListProps) {
+  const [selectedIndex, setSelectedIndex] = useState(0)
+
+  const handleSortClick = (index: number, option: SortOption) => {
+    setSelectedIndex(index)
+    onSortChange?.(option.sortCriteria, option.sortOrder)
+  }
+
   return (
     <div className='flex h-fit w-full flex-col gap-16 px-24'>
       {/* 검색 결과 및 정렬 기준
@@ -13,11 +49,20 @@ export function InfluencerList() {
         </span>
 
         {/* 정렬기준 */}
-        <div className='flex size-fit text-brand-secondary'>
-          <span className='size-fit px-8 py-4'>구독자 많은 순</span>
-          <span className='size-fit px-8 py-4'>구독자 많은 순</span>
-          <span className='size-fit px-8 py-4'>구독자 많은 순</span>
-          <span className='size-fit px-8 py-4'>구독자 많은 순</span>
+        <div className='flex size-fit'>
+          {SORT_OPTIONS.map((option, index) => (
+            <span
+              key={option.label}
+              className='flex items-center text-noto-label-md-normal text-text-and-icon-tertiary'>
+              <button
+                type='button'
+                className={`size-fit px-8 py-4 ${selectedIndex === index ? 'text-noto-label-md-bold text-brand-secondary' : ''}`}
+                onClick={() => handleSortClick(index, option)}>
+                {option.label}
+              </button>
+              {index < SORT_OPTIONS.length - 1 && '・'}
+            </span>
+          ))}
         </div>
       </div>
 
