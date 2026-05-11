@@ -8,7 +8,7 @@ import {
 } from '@/shared/ui/shadcn/dialog'
 import { useYoutubeConnectModal, useConnectChannel } from '@/features/auth'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
-import YouTubeIcon from '@/shared/assets/youtube.svg?react'
+import YouTubeIcon from '@/shared/assets/youtube.svg'
 
 export function YoutubeConnectModal() {
   const isOpen = useYoutubeConnectModal((s) => s.isOpen)
@@ -21,29 +21,32 @@ export function YoutubeConnectModal() {
       <DialogOverlay className='bg-background-dim-default' />
       <DialogContent
         showCloseButton={false}
-        className='flex w-full max-w-[38.4rem] flex-col items-center gap-40 rounded-16 bg-white p-40 lg:max-w-[56rem]'>
+        className='flex w-full flex-col items-center justify-center gap-40 rounded-16 bg-white p-40 lg:max-w-[73rem] lg:px-[12rem]'>
         <VisuallyHidden>
           <DialogTitle>유튜브 채널 연동하기</DialogTitle>
         </VisuallyHidden>
 
-        {/* 헤더: 제목 + 설명 */}
-        <div className='flex w-full flex-col items-center gap-16'>
-          <h2 className='text-center text-noto-title-sm-bold text-text-and-icon-primary'>
-            유튜브 채널 연동하기
-          </h2>
-          <p className='text-center text-noto-body-xs-normal text-text-and-icon-secondary'>
-            채널을 연동하고 내 채널 데이터 분석 및 인플루언서 분석 기능을
-            사용해보세요.
-          </p>
-        </div>
+        {/* 헤더 + 이미지 묶음 */}
+        <div className='flex w-full flex-col items-center gap-20'>
+          {/* 헤더: 제목 + 설명 */}
+          <div className='flex w-full flex-col items-center gap-8'>
+            <h2 className='text-center text-ibm-heading-sm-normal text-text-and-icon-default'>
+              유튜브 채널 연동하기
+            </h2>
+            <p className='text-center text-noto-body-xs-normal text-text-and-icon-primary'>
+              채널을 연동하고 내 채널 데이터 분석 및 인플루언서 분석 기능을
+              사용해보세요.
+            </p>
+          </div>
 
-        {/* 목업 이미지 (데스크탑 전용) */}
-        <div className='hidden w-full lg:block'>
-          <div className='h-[28rem] w-full rounded-8 bg-background-gray-default' />
+          {/* 목업 이미지 (데스크탑 전용) */}
+          <div className='hidden w-full lg:block'>
+            <div className='h-[32.6rem] w-full bg-background-gray-default' />
+          </div>
         </div>
 
         {/* 버튼 영역 */}
-        <div className='flex w-full flex-col items-center gap-24'>
+        <div className='flex w-full flex-col items-center gap-16'>
           <button
             type='button'
             onClick={() => connect()}
@@ -67,7 +70,7 @@ export function YoutubeConnectModal() {
             type='button'
             onClick={close}
             disabled={isPending}
-            className='text-noto-label-md-normal text-text-and-icon-secondary transition-colors hover:text-text-and-icon-primary disabled:pointer-events-none disabled:opacity-50'>
+            className='text-noto-label-sm-normal text-text-and-icon-tertiary transition-colors hover:text-text-and-icon-primary disabled:pointer-events-none disabled:opacity-50'>
             나중에 할래요
           </button>
         </div>
