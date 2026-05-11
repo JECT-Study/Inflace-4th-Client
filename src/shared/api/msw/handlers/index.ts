@@ -1,4 +1,5 @@
 import { authHandlers } from './authHandlers'
+import { channelConnectHandlers } from './channelConnectHandlers'
 import { channelProfileHandlers } from './channelProfileHandlers'
 import { onboardingHandlers } from './onboardingHandlers'
 import { trendMagazineHandlers } from './trendMagazineHandlers'
@@ -15,6 +16,7 @@ import { typeEngagementHandlers } from './typeEngagementHandlers'
 
 export const handlers = [
   ...authHandlers,
+  ...channelConnectHandlers,
   ...channelProfileHandlers,
   ...trendingVideosHandlers,
   ...trendMagazineHandlers,

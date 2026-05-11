@@ -1,10 +1,19 @@
 import { http, HttpResponse } from 'msw'
 
-import { mockAccessToken, mockUser } from '@/shared/api/mock/mockUser'
+import {
+  mockAccessToken,
+  mockUserDetails,
+  mockUserChannelDetails,
+} from '@/shared/api/mock/mockUser'
 
-// 서비스 워커 컨텍스트에서 mock 로그인 상태를 추적하는 플래그
+// 서비스 워커 컨텍스트에서 mock 상태를 추적하는 플래그
 // httpOnly 쿠키는 서비스 워커에서 읽을 수 없으므로 모듈 변수로 관리
 let isMockLoggedIn = true
+let isMockChannelConnected = false
+
+export function setMockChannelConnected(value: boolean) {
+  isMockChannelConnected = value
+}
 
 // 브라우저가 Next.js Route Handler로 보내는 요청을 인터셉트
 export const authHandlers = [
@@ -17,15 +26,18 @@ export const authHandlers = [
       )
     }
 
-    return HttpResponse.json({
-      accessToken: mockAccessToken,
-      user: mockUser,
-    })
+    const user = {
+      userDetails: mockUserDetails,
+      userChannelDetails: isMockChannelConnected ? mockUserChannelDetails : null,
+    }
+
+    return HttpResponse.json({ accessToken: mockAccessToken, user })
   }),
 
   // 로그아웃 시 플래그 해제 (실제 쿠키 삭제는 Next.js 라우트가 처리)
   http.post(`${process.env.NEXT_PUBLIC_APP_URL}/auth/logout`, () => {
     isMockLoggedIn = false
+    isMockChannelConnected = false
     return HttpResponse.json({ success: true })
   }),
 
