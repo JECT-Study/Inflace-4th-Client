@@ -16,30 +16,40 @@ export async function GET(request: NextRequest) {
 
   cookieStore.delete('oauth_state')
 
-  const origin = process.env.NEXT_PUBLIC_APP_URL!
-
   if (error || !code || !state || state !== storedState) {
     const errorMessage = error || 'OAuth 검증에 실패했습니다.'
     return new NextResponse(
-      buildPostMessageHtml('AUTH_ERROR', origin, { error: errorMessage }),
+      buildPostMessageHtml('AUTH_ERROR', { error: errorMessage }),
       {
-        headers: { 'Content-Type': 'text/html' },
+        headers: {
+          'Content-Type': 'text/html',
+          'Cross-Origin-Opener-Policy': 'unsafe-none',
+        },
       }
     )
   }
 
-  // authorization code를 백엔드 GET /auth/login에 Query Parameter로 전달
+  // authorization code를 백엔드 POST /auth/login에 JSON body로 전달
   try {
     const backendResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/login?provider=google&code=${code}`,
-      { method: 'GET' }
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Origin: process.env.NEXT_PUBLIC_APP_URL!,
+        },
+        body: JSON.stringify({ provider: 'google', code }),
+      }
     )
 
     if (!backendResponse.ok) {
-      throw new Error('백엔드 인증에 실패했습니다.')
+      const errText = await backendResponse.text()
+      throw new Error(`백엔드 ${backendResponse.status}: ${errText}`)
     }
 
     const data: LoginResponse = await backendResponse.json()
+    console.log('[auth/callback] backend data:', JSON.stringify(data))
 
     if (!data.success) {
       throw new Error(
@@ -50,7 +60,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (typeof data.responseDto !== 'object') {
-      throw new Error('백엔드 인증에 실패했습니다.')
+      throw new Error(`responseDto 타입 오류: ${typeof data.responseDto}`)
     }
 
     const { accessToken, userDetails, userChannelDetails } = data.responseDto
@@ -63,7 +73,7 @@ export async function GET(request: NextRequest) {
     if (refreshToken) {
       cookieStore.set('refreshToken', refreshToken, {
         httpOnly: true,
-        secure: false,
+        secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
         path: '/',
         maxAge: 60 * 60 * 24 * 7,
@@ -73,34 +83,42 @@ export async function GET(request: NextRequest) {
     const user = { userDetails, userChannelDetails: userChannelDetails ?? null }
 
     return new NextResponse(
-      buildPostMessageHtml('AUTH_SUCCESS', origin, {
+      buildPostMessageHtml('AUTH_SUCCESS', {
         accessToken,
         user,
       }),
-      { headers: { 'Content-Type': 'text/html' } }
+      {
+        headers: {
+          'Content-Type': 'text/html',
+          'Cross-Origin-Opener-Policy': 'unsafe-none',
+        },
+      }
     )
-  } catch {
+  } catch (e) {
+    console.error('[auth/callback] error:', e)
     return new NextResponse(
-      buildPostMessageHtml('AUTH_ERROR', origin, {
-        error: '로그인 처리 중 오류가 발생했습니다.',
+      buildPostMessageHtml('AUTH_ERROR', {
+        error: e instanceof Error ? e.message : String(e),
       }),
-      { headers: { 'Content-Type': 'text/html' } }
+      {
+        headers: {
+          'Content-Type': 'text/html',
+          'Cross-Origin-Opener-Policy': 'unsafe-none',
+        },
+      }
     )
   }
 }
 
 //HTML 페이지를 반환하여 postMessage로 accessToken + user를 부모 창에 전달하고 팝업을 닫는다
-function buildPostMessageHtml(
-  type: string,
-  origin: string,
-  payload: Record<string, unknown>
-) {
+function buildPostMessageHtml(type: string, payload: Record<string, unknown>) {
+  const targetOrigin = process.env.NEXT_PUBLIC_APP_URL!
   const message = JSON.stringify({ type, ...payload })
   return `<!DOCTYPE html>
 <html>
 <body>
 <script>
-  window.opener.postMessage(${message}, "${origin}");
+  window.opener.postMessage(${message}, "${targetOrigin}");
   window.close();
 </script>
 </body>

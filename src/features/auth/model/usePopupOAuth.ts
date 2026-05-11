@@ -20,6 +20,7 @@ export function usePopupOAuth({ apiPath, popupName }: PopupOAuthConfig) {
     const { type, error: authError } = event.data
 
     if (type === 'AUTH_SUCCESS') {
+      setIsLoading(false)
       window.location.href = '/'
     } else if (type === 'AUTH_ERROR') {
       setError(authError || '로그인에 실패했습니다.')
@@ -54,13 +55,6 @@ export function usePopupOAuth({ apiPath, popupName }: PopupOAuthConfig) {
     }
 
     popupRef.current = popup
-
-    const timer = setInterval(() => {
-      if (popup.closed) {
-        clearInterval(timer)
-        setIsLoading(false)
-      }
-    }, 500)
   }
 
   return { isLoading, error, handleClick }

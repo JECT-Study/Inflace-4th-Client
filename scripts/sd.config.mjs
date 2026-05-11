@@ -257,7 +257,7 @@ function genPrimitiveBrandColors() {
 }
 
 function genComponent() {
-  return flatten(comp.button, 'btn')
+  return flatten(comp.component.button, 'btn')
     .map(([k, v]) => {
       const deduped = k
         .split('-')
@@ -322,12 +322,14 @@ function genLetterSpacing(indent = '  ') {
 }
 
 function genRadius(sem, indent = '  ') {
+  if (!sem.radius) return ''
   return Object.entries(sem.radius)
     .map(([k, v]) => `${indent}--radius-${k}: ${px(v.value)};`)
     .join('\n')
 }
 
 function genOpacity(sem, indent = '  ') {
+  if (!sem.opacity) return ''
   return Object.entries(sem.opacity)
     .map(([k, v]) => {
       const raw = resolve(v.value)

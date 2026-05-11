@@ -5,7 +5,6 @@ import {
   mockRefreshToken,
   mockNewRefreshToken,
   mockReissueResponse,
-  mockUserDetails,
 } from '@/shared/api/mock/mockUser'
 
 const mockCookieStore = {
@@ -80,7 +79,7 @@ describe('POST /auth/reissue', () => {
     )
   })
 
-  it('백엔드 성공 시 { accessToken, user }를 반환한다', async () => {
+  it('백엔드 성공 시 { accessToken }를 반환한다', async () => {
     mockCookieStore.get.mockReturnValue({ value: mockRefreshToken })
     vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
       new Response(JSON.stringify(mockReissueResponse), { status: 200 })
@@ -91,14 +90,6 @@ describe('POST /auth/reissue', () => {
     const data = await response.json()
 
     expect(data.accessToken).toBe(mockAccessToken)
-    expect(data.user).toEqual(
-      expect.objectContaining({
-        userDetails: expect.objectContaining({
-          id: mockUserDetails.id,
-          isOnboardingCompleted: false,
-        }),
-      })
-    )
   })
 
   it('백엔드 실패 시 RT 쿠키를 삭제하고 401을 반환한다', async () => {
