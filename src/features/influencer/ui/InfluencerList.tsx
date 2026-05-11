@@ -1,7 +1,24 @@
+import type { Influencer } from '@/entities/influencer'
 import { InfluencerCard } from '@/entities/influencer'
+import { InfiniteScrollList } from '@/shared/ui/infinite-scroll-list/InfiniteScrollList'
+import { formatComma } from '@/shared/lib/format'
+import { useBookmarkToggle } from '../model/useInfluencers'
 
-/* 인플루언서 카드 리스트 */
-export function InfluencerList() {
+interface InfluencerListProps {
+  influencers: Influencer[]
+  sentinelRef: React.RefCallback<HTMLDivElement | null>
+  isFetchingNextPage: boolean
+  hasNextPage: boolean
+}
+
+export function InfluencerList({
+  influencers,
+  sentinelRef,
+  isFetchingNextPage,
+  hasNextPage,
+}: InfluencerListProps) {
+  const toggleBookmark = useBookmarkToggle()
+
   return (
     <div className='flex h-fit w-full flex-col gap-16 px-24'>
       {/* 검색 결과 및 정렬 기준
@@ -9,7 +26,7 @@ export function InfluencerList() {
        */}
       <div className='flex h-fit w-full justify-between text-noto-label-sm-bold'>
         <span className='gap-10 px-2 text-text-and-icon-primary'>
-          검색결과 {'38,973,842'}명
+          검색결과 {formatComma(38973842)}명
         </span>
 
         {/* 정렬기준 */}
@@ -21,12 +38,22 @@ export function InfluencerList() {
         </div>
       </div>
 
-      {/* 인플루언서 리스트 */}
-      <div className='grid h-fit w-full grid-cols-3 gap-24'>
-        {Array.from({ length: 12 }).map((_, index) => (
-          <InfluencerCard key={index} />
-        ))}
-      </div>
+      <InfiniteScrollList
+        sentinelRef={sentinelRef}
+        isFetchingNextPage={isFetchingNextPage}
+        hasNextPage={hasNextPage}>
+        <div className='grid h-fit w-full grid-cols-[repeat(auto-fill,minmax(52.1rem,1fr))] gap-24'>
+          {influencers.map((influencer) => (
+            <InfluencerCard
+              key={influencer.channelId}
+              influencer={influencer}
+              onBookmarkToggle={(bookmarked) =>
+                toggleBookmark(influencer.channelId, bookmarked)
+              }
+            />
+          ))}
+        </div>
+      </InfiniteScrollList>
     </div>
   )
 }
