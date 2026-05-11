@@ -3,7 +3,7 @@
 import { useMutation } from '@tanstack/react-query'
 
 import { useAuthStore } from '@/shared/api/authStore'
-import { connectChannel } from '../api/channelApi'
+import { connectChannel, fetchConnectedChannelProfile } from '../api/channelApi'
 import { useYoutubeConnectModal } from './useYoutubeConnectModal'
 
 export function useConnectChannel() {
@@ -11,15 +11,28 @@ export function useConnectChannel() {
 
   return useMutation({
     mutationFn: connectChannel,
-    onSuccess: async () => {
-      try {
-        const res = await fetch('/auth/refresh', { method: 'POST' })
-        if (res.ok) {
-          const { accessToken, user } = await res.json()
-          useAuthStore.getState().setAuth(accessToken, user)
+    onSuccess: async (data) => {
+      const { accessToken, user } = useAuthStore.getState()
+      if (accessToken && user) {
+        let youtubeChannelName: string | null = null
+        let youtubeChannelProfileImageUrl: string | null = null
+
+        try {
+          const profile = await fetchConnectedChannelProfile()
+          youtubeChannelName = profile.name
+          youtubeChannelProfileImageUrl = profile.profileImageUrl
+        } catch {
+          // 프로필 조회 실패 시 채널 ID만으로 연동 상태 업데이트
         }
-      } catch {
-        // refresh 실패 시 다음 요청에서 인터셉터가 재시도
+
+        useAuthStore.getState().setAuth(accessToken, {
+          ...user,
+          userChannelDetails: {
+            youtubeChannelId: data.youtubeChannelId,
+            youtubeChannelName,
+            youtubeChannelProfileImageUrl,
+          },
+        })
       }
       close()
     },

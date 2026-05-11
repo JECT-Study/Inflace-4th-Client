@@ -1,7 +1,5 @@
 import { http, HttpResponse } from 'msw'
 
-import { setMockChannelConnected } from './authHandlers'
-
 const mockChannelConnectResponse = {
   success: true,
   responseDto: {
@@ -16,7 +14,6 @@ export const channelConnectHandlers = [
   http.post(
     `${process.env.NEXT_PUBLIC_API_URL}/channels/connect`,
     async () => {
-      setMockChannelConnected(true)
       return HttpResponse.json(mockChannelConnectResponse)
     }
   ),
