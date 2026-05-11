@@ -1,3 +1,5 @@
+'use client'
+
 import { InfluencerList } from '@/features/influencer'
 import { InfluencerFilter } from '@/widgets/influencer'
 
