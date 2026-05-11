@@ -1,8 +1,6 @@
 'use client'
 
 import { Suspense } from 'react'
-;('use client')
-
 import { InfluencerList, useInfluencers } from '@/features/influencer'
 import { InfluencerFilter } from '@/widgets/influencer'
 

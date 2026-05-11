@@ -13,6 +13,10 @@ interface SortOption {
 
 interface InfluencerListProps {
   onSortChange?: (sortCriteria: SortCriteria, sortOrder: SortOrder) => void
+  influencers: Influencer[]
+  sentinelRef: React.RefCallback<HTMLDivElement | null>
+  isFetchingNextPage: boolean
+  hasNextPage: boolean
 }
 
 const SORT_OPTIONS: SortOption[] = [
@@ -33,14 +37,8 @@ import { InfiniteScrollList } from '@/shared/ui/infinite-scroll-list/InfiniteScr
 import { formatComma } from '@/shared/lib/format'
 import { useBookmarkToggle } from '../model/useInfluencers'
 
-interface InfluencerListProps {
-  influencers: Influencer[]
-  sentinelRef: React.RefCallback<HTMLDivElement | null>
-  isFetchingNextPage: boolean
-  hasNextPage: boolean
-}
-
-export function InfluencerList({ onSortChange }: InfluencerListProps{
+export function InfluencerList({
+  onSortChange,
   influencers,
   sentinelRef,
   isFetchingNextPage,
