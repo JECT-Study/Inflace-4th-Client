@@ -3,6 +3,9 @@ import '../src/app/styles'
 
 const preview: Preview = {
   parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,

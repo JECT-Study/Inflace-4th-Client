@@ -10,6 +10,8 @@ import { subscriberGrowthHandlers } from './subscriberGrowthHandlers'
 import { videoStatsHandlers } from './videoStatsHandlers'
 import { channelTrendingVideoHandlers } from './channelTrendingVideoHandlers'
 import { newInflowHandlers } from './newInflowHandlers'
+import { retentionHandlers } from './retentionHandlers'
+import { influencerHandlers } from './influencerHandlers'
 import { typeEngagementHandlers } from './typeEngagementHandlers'
 import { distributionChartHandlers } from './distributionChartHandlers'
 import { subscriberChartHandlers } from './subscriberChartHandlers'
@@ -27,7 +29,9 @@ export const handlers = [
   ...videoStatsHandlers,
   ...channelTrendingVideoHandlers,
   ...newInflowHandlers,
+  ...retentionHandlers,
+  ...influencerHandlers,
   ...typeEngagementHandlers,
-  ...subscriberChartHandlers,
   ...distributionChartHandlers,
+  ...subscriberChartHandlers,
 ]
