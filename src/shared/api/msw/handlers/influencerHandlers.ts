@@ -1,14 +1,25 @@
 import { http, HttpResponse } from 'msw'
 
 import { mockInfluencers } from '@/features/influencer/mock/mockInfluencers'
+import { mockYoutubeCategories } from '@/features/influencer/mock/mockYoutubeCategories'
 
 const PAGE_SIZE = 9
 
 export const influencerHandlers = [
+  http.get(`${process.env.NEXT_PUBLIC_API_URL}/youtube-categories`, () => {
+    return HttpResponse.json({
+      responseDto: {
+        youtubeCategories: mockYoutubeCategories,
+      },
+      error: null,
+      success: true,
+    })
+  }),
+
   http.get(`${process.env.NEXT_PUBLIC_API_URL}/influencers`, ({ request }) => {
     const url = new URL(request.url)
     const channelName = url.searchParams.get('channelName') ?? ''
-    const categories = url.searchParams.get('categoryNames') ?? ''
+    const categoryIdParams = url.searchParams.getAll('categoryIds').map(Number)
     const subscriberFrom = url.searchParams.get('subscriberFrom')
     const subscriberTo = url.searchParams.get('subscriberTo')
     const uploadPeriod = url.searchParams.get('uploadPeriod') ?? ''
@@ -29,10 +40,13 @@ export const influencerHandlers = [
       )
     }
 
-    if (categories) {
-      const cats = categories.split(',')
+    if (categoryIdParams.length > 0) {
       filtered = filtered.filter((i) =>
-        cats.some((cat) => i.categories.includes(cat))
+        i.categories.some((cat) =>
+          categoryIdParams.some(
+            (id) => mockYoutubeCategories.find((mc) => mc.id === id)?.title === cat
+          )
+        )
       )
     }
 

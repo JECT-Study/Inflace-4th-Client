@@ -1,6 +1,8 @@
 import { axiosInstance } from '@/shared/api'
-import type { PageInfo } from '@/shared/api/types'
+import type { ApiResponse, PageInfo } from '@/shared/api/types'
 import type { Influencer } from '@/entities/influencer'
+import type { YoutubeCategory } from '../mock/mockYoutubeCategories'
+import { mockInfluencers } from '../mock/mockInfluencers'
 
 export interface BookmarkResponse {
   responseDto: string
@@ -21,11 +23,15 @@ export interface InfluencerListResponse {
   }
 }
 
+export interface YoutubeCategoriesResponse {
+  youtubeCategories: YoutubeCategory[]
+}
+
 export interface FetchInfluencersParams {
   cursor?: string | null
   size?: number
   channelName?: string
-  categoryNames?: string
+  categoryIds?: number[]
   subscriberFrom?: string
   subscriberTo?: string
   uploadPeriod?: string
@@ -41,19 +47,33 @@ export interface FetchInfluencersParams {
 export async function fetchInfluencers(
   params?: FetchInfluencersParams
 ): Promise<InfluencerListResponse> {
-  const { cursor, ...rest } = params ?? {}
-  const query: Record<string, string> = {}
-  if (cursor) query['cursor'] = cursor
-  Object.entries(rest).forEach(([key, value]) => {
-    if (value !== undefined && value !== null && value !== '') {
-      query[key] = String(value)
-    }
-  })
   const response = await axiosInstance.get<{
     success: boolean
     responseDto: InfluencerListResponse
     error: null
-  }>('/influencers', { params: query })
+  }>('/influencers', {
+    params,
+    paramsSerializer: (p) => {
+      const searchParams = new URLSearchParams()
+      Object.entries(p).forEach(([key, value]) => {
+        if (value === undefined || value === null || value === '') return
+        if (Array.isArray(value)) {
+          value.forEach((v) => searchParams.append(key, String(v)))
+        } else {
+          searchParams.set(key, String(value))
+        }
+      })
+      return searchParams.toString()
+    },
+  })
+  return response.data.responseDto
+}
+
+/* 카테고리 드롭다운 목록 */
+export async function fetchYoutubeCategories(): Promise<YoutubeCategoriesResponse> {
+  const response = await axiosInstance.get<
+    ApiResponse<YoutubeCategoriesResponse>
+  >('/youtube-categories')
   return response.data.responseDto
 }
 
