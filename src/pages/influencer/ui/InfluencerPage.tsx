@@ -2,13 +2,20 @@
 
 import { Suspense } from 'react'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
-import { InfluencerList, useInfluencers } from '@/features/influencer'
+import {
+  InfluencerList,
+  useInfluencers,
+  useYoutubeCategories,
+} from '@/features/influencer'
 import { InfluencerFilter } from '@/widgets/influencer'
 
 export function InfluencerPage() {
+  const { data: categoriesData } = useYoutubeCategories()
+  const categories = categoriesData?.youtubeCategories ?? []
+
   return (
     <div className='flex h-fit w-full flex-col gap-24 pb-[9.6rem]'>
-      <InfluencerFilter />
+      <InfluencerFilter categories={categories} />
       <div className='h-full'>
         <Suspense fallback={<></>}>
           <InfluencerListSection />
@@ -25,7 +32,7 @@ function InfluencerListSection() {
 
   const filters = {
     channelName: searchParams?.get('channelName') ?? undefined,
-    categoryNames: searchParams?.get('categoryNames') ?? undefined,
+    categoryIds: searchParams?.getAll('categoryIds').map(Number) ?? undefined,
     subscriberFrom: searchParams?.get('subscriberFrom') ?? undefined,
     subscriberTo: searchParams?.get('subscriberTo') ?? undefined,
     uploadPeriod: searchParams?.get('uploadPeriod') ?? undefined,
@@ -45,13 +52,8 @@ function InfluencerListSection() {
     router.replace(`${pathname}?${params.toString()}`)
   }
 
-  const {
-    data,
-    isLoading,
-    sentinelRef,
-    isFetchingNextPage,
-    hasNextPage,
-  } = useInfluencers(filters)
+  const { data, isLoading, sentinelRef, isFetchingNextPage, hasNextPage } =
+    useInfluencers(filters)
 
   const influencers = data?.pages.flatMap((page) => page.content) ?? []
 

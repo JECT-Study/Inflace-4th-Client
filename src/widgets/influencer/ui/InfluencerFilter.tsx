@@ -15,6 +15,7 @@ import {
   OutlierRangeDropdown,
   HasAdHistoryDropdown,
   EngagementRateDropdown,
+  type YoutubeCategory,
 } from '@/features/influencer'
 
 type FilterState = {
@@ -22,8 +23,17 @@ type FilterState = {
   outputQuery: string
 }
 
+type CategoryFilterState = {
+  output: string
+  categoryIds: number[]
+}
+
+const CATEGORY_DEFAULT: CategoryFilterState = {
+  output: '전체',
+  categoryIds: [],
+}
+
 const FILTER_DEFAULTS = {
-  category: { output: '전체', outputQuery: '' },
   subscriber: { output: '전체', outputQuery: '' },
   uploadPeriod: { output: '전체', outputQuery: '' },
   hasAdHistory: { output: '있음', outputQuery: 'true' },
@@ -32,22 +42,25 @@ const FILTER_DEFAULTS = {
   language: { output: '한국어', outputQuery: 'ko' },
 } satisfies Record<string, FilterState>
 
-export function InfluencerFilter() {
+type InfluencerFilterProps = {
+  categories: YoutubeCategory[]
+}
+
+export function InfluencerFilter({ categories }: InfluencerFilterProps) {
   return (
     <Suspense fallback={<div className='h-full' />}>
-      <InfluencerFilterInner />
+      <InfluencerFilterInner categories={categories} />
     </Suspense>
   )
 }
 
-function InfluencerFilterInner() {
+function InfluencerFilterInner({ categories }: InfluencerFilterProps) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  const [category, setCategory] = useState<FilterState>(
-    FILTER_DEFAULTS.category
-  )
+  const [category, setCategory] =
+    useState<CategoryFilterState>(CATEGORY_DEFAULT)
   const [subscriber, setSubscriber] = useState<FilterState>(
     FILTER_DEFAULTS.subscriber
   )
@@ -95,15 +108,11 @@ function InfluencerFilterInner() {
     [router, pathname]
   )
 
-  // categoryNames: 쉼표로 구분된 카테고리 값 목록
   const applyCategoriesToUrl = useCallback(
-    (outputQuery: string) => {
+    (categoryIds: number[]) => {
       const params = new URLSearchParams(searchParamsRef.current?.toString())
-      if (outputQuery) {
-        params.set('categoryNames', outputQuery)
-      } else {
-        params.delete('categoryNames')
-      }
+      params.delete('categoryIds')
+      categoryIds.forEach((id) => params.append('categoryIds', String(id)))
       router.replace(`${pathname}?${params.toString()}`)
     },
     [router, pathname]
@@ -246,15 +255,14 @@ function InfluencerFilterInner() {
           <DropdownTrigger
             label='카테고리'
             output={category.output}
-            outputQuery={category.outputQuery}>
+            outputQuery={category.categoryIds.join(',')}>
             {(onClose) => (
               <CategoryNamesDropdown
-                defaultValue={
-                  category.outputQuery ? category.outputQuery.split(',') : []
-                }
-                onChange={(output, outputQuery) => {
-                  setCategory({ output, outputQuery })
-                  applyCategoriesToUrl(outputQuery)
+                categories={categories}
+                defaultValue={category.categoryIds}
+                onChange={(output, categoryIds) => {
+                  setCategory({ output, categoryIds })
+                  applyCategoriesToUrl(categoryIds)
                   onClose()
                 }}
               />
