@@ -16,6 +16,7 @@ import { influencerHandlers } from './influencerHandlers'
 import { typeEngagementHandlers } from './typeEngagementHandlers'
 import { distributionChartHandlers } from './distributionChartHandlers'
 import { subscriberChartHandlers } from './subscriberChartHandlers'
+import { influencerSummaryHandlers } from './influencerSummaryHandlers'
 
 export const handlers = [
   ...authHandlers,
@@ -36,4 +37,5 @@ export const handlers = [
   ...typeEngagementHandlers,
   ...distributionChartHandlers,
   ...subscriberChartHandlers,
+  ...influencerSummaryHandlers,
 ]
