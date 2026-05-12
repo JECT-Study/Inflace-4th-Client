@@ -1,13 +1,16 @@
 'use client'
 
 import { Suspense } from 'react'
-import { InfluencerList, useInfluencers } from '@/features/influencer'
+import { InfluencerList, useInfluencers, useYoutubeCategories } from '@/features/influencer'
 import { InfluencerFilter } from '@/widgets/influencer'
 
 export function InfluencerPage() {
+  const { data: categoriesData } = useYoutubeCategories()
+  const categories = categoriesData?.youtubeCategories ?? []
+
   return (
     <div className='flex h-fit w-full flex-col gap-24 pb-[9.6rem]'>
-      <InfluencerFilter />
+      <InfluencerFilter categories={categories} />
       <div className='h-full'>
         <Suspense fallback={<></>}>
           <InfluencerListSection />

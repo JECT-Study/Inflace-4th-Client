@@ -11,6 +11,7 @@ import {
   OutlierRangeDropdown,
   HasAdHistoryDropdown,
   EngagementRateDropdown,
+  type YoutubeCategory,
 } from '@/features/influencer'
 
 type FilterState = {
@@ -18,8 +19,14 @@ type FilterState = {
   outputQuery: string
 }
 
+type CategoryFilterState = {
+  output: string
+  categoryIds: number[]
+}
+
+const CATEGORY_DEFAULT: CategoryFilterState = { output: '전체', categoryIds: [] }
+
 const FILTER_DEFAULTS = {
-  category: { output: '전체', outputQuery: '' },
   subscriber: { output: '전체', outputQuery: '' },
   uploadPeriod: { output: '전체', outputQuery: '' },
   hasAdHistory: { output: '있음', outputQuery: 'true' },
@@ -28,10 +35,12 @@ const FILTER_DEFAULTS = {
   language: { output: '한국어', outputQuery: 'ko' },
 } satisfies Record<string, FilterState>
 
-export function InfluencerFilter() {
-  const [category, setCategory] = useState<FilterState>(
-    FILTER_DEFAULTS.category
-  )
+type InfluencerFilterProps = {
+  categories: YoutubeCategory[]
+}
+
+export function InfluencerFilter({ categories }: InfluencerFilterProps) {
+  const [category, setCategory] = useState<CategoryFilterState>(CATEGORY_DEFAULT)
   const [subscriber, setSubscriber] = useState<FilterState>(
     FILTER_DEFAULTS.subscriber
   )
@@ -61,14 +70,13 @@ export function InfluencerFilter() {
         <DropdownTrigger
           label='카테고리'
           output={category.output}
-          outputQuery={category.outputQuery}>
+          outputQuery={category.categoryIds.join(',')}>
           {(onClose) => (
             <CategoryNamesDropdown
-              defaultValue={
-                category.outputQuery ? category.outputQuery.split(',') : []
-              }
-              onChange={(output, outputQuery) => {
-                setCategory({ output, outputQuery })
+              categories={categories}
+              defaultValue={category.categoryIds}
+              onChange={(output, categoryIds) => {
+                setCategory({ output, categoryIds })
                 onClose()
               }}
             />
