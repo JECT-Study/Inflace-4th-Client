@@ -9,7 +9,7 @@ import {
 } from '@/features/influencer'
 import { InfluencerFilter } from '@/widgets/influencer'
 
-export function InfluencerPage() {
+export function BookmarkedInfluencerPage() {
   const { data: categoriesData } = useYoutubeCategories()
   const categories = categoriesData?.youtubeCategories ?? []
 
@@ -18,14 +18,14 @@ export function InfluencerPage() {
       <InfluencerFilter categories={categories} />
       <div className='h-full'>
         <Suspense fallback={<></>}>
-          <InfluencerListSection />
+          <BookmarkedInfluencerListSection />
         </Suspense>
       </div>
     </div>
   )
 }
 
-function InfluencerListSection({ bookmarkedOnly }: { bookmarkedOnly?: boolean }) {
+function BookmarkedInfluencerListSection() {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -43,7 +43,7 @@ function InfluencerListSection({ bookmarkedOnly }: { bookmarkedOnly?: boolean })
     language: searchParams?.get('language') ?? undefined,
     sortCriteria: searchParams?.get('sortCriteria') ?? undefined,
     sortOrder: searchParams?.get('sortOrder') ?? undefined,
-    ...(bookmarkedOnly && { bookmarkedOnly: true }),
+    bookmarkedOnly: true,
   }
 
   const handleSortChange = (sortCriteria: string, sortOrder: string) => {

@@ -1,1 +1,1 @@
-export { InfluencerPage as default } from '@/pages/influencer'
+export { BookmarkedInfluencerPage as default } from '@/pages/influencer'

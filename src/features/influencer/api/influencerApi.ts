@@ -2,7 +2,6 @@ import { axiosInstance } from '@/shared/api'
 import type { ApiResponse, PageInfo } from '@/shared/api/types'
 import type { Influencer } from '@/entities/influencer'
 import type { YoutubeCategory } from '../mock/mockYoutubeCategories'
-import { mockInfluencers } from '../mock/mockInfluencers'
 
 export interface BookmarkResponse {
   responseDto: string
@@ -42,6 +41,7 @@ export interface FetchInfluencersParams {
   language?: string
   sortCriteria?: string
   sortOrder?: string
+  bookmarkedOnly?: boolean
 }
 
 export async function fetchInfluencers(
