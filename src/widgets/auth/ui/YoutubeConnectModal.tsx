@@ -6,9 +6,12 @@ import {
   DialogOverlay,
   DialogTitle,
 } from '@/shared/ui/shadcn/dialog'
-import { useYoutubeConnectModal, useConnectChannel } from '@/features/auth'
+import {
+  useYoutubeConnectModal,
+  useConnectChannel,
+  YoutubeConnectActions,
+} from '@/features/auth'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
-import YouTubeIcon from '@/shared/assets/youtube.svg'
 
 export function YoutubeConnectModal() {
   const isOpen = useYoutubeConnectModal((s) => s.isOpen)
@@ -39,41 +42,16 @@ export function YoutubeConnectModal() {
             </p>
           </div>
 
-          {/* 목업 이미지 (데스크탑 전용) */}
-          <div className='hidden w-full lg:block'>
-            <div className='h-[32.6rem] w-full bg-background-gray-default' />
-          </div>
+          {/* 목업 이미지 */}
+          <div className='h-[32.6rem] w-full bg-background-gray-default' />
         </div>
 
-        {/* 버튼 영역 */}
-        <div className='flex w-full flex-col items-center gap-16'>
-          <button
-            type='button'
-            onClick={() => connect()}
-            disabled={isPending}
-            className='flex h-[5.4rem] w-full items-center justify-center gap-16 rounded-6 border border-stroke-border-gray-stronger bg-white transition-colors disabled:pointer-events-none disabled:opacity-50'>
-            <span className='flex size-24 shrink-0 items-center justify-center *:size-full'>
-              <YouTubeIcon />
-            </span>
-            <span className='text-ibm-label-lg-bold text-text-and-icon-primary'>
-              {isPending ? '연동 중...' : 'Continue with YouTube'}
-            </span>
-          </button>
-
-          {error && (
-            <p className='text-noto-label-sm-normal text-destructive'>
-              {error.message}
-            </p>
-          )}
-
-          <button
-            type='button'
-            onClick={close}
-            disabled={isPending}
-            className='text-noto-label-sm-normal text-text-and-icon-tertiary transition-colors hover:text-text-and-icon-primary disabled:pointer-events-none disabled:opacity-50'>
-            나중에 할래요
-          </button>
-        </div>
+        <YoutubeConnectActions
+          onConnect={() => connect()}
+          onLater={close}
+          isPending={isPending}
+          error={error}
+        />
       </DialogContent>
     </Dialog>
   )
