@@ -31,7 +31,7 @@ export function InfluencerDetailPage() {
           {/* 임팩트 지표 영역 */}
           <ImpactMetricsSection />
           {/* 롱폼 vs 숏폼 참여율 분석 영역 */}
-          <EngagementAnalyticsSection />
+          <EngagementAnalyticsSection channelId={channelId} />
         </>
       )}
     </div>
