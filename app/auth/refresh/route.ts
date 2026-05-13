@@ -19,7 +19,10 @@ export async function POST() {
       `${process.env.NEXT_PUBLIC_API_URL}/auth/reissue`,
       {
         method: 'POST',
-        headers: { Cookie: `refreshToken=${refreshToken}` },
+        headers: {
+          Cookie: `refreshToken=${refreshToken}`,
+          Origin: process.env.NEXT_PUBLIC_APP_URL!,
+        },
       }
     )
 
@@ -29,9 +32,7 @@ export async function POST() {
     console.log('[auth/refresh] backend body:', responseText)
 
     if (!backendResponse.ok) {
-      if (backendResponse.status === 401) {
-        cookieStore.delete('refreshToken')
-      }
+      cookieStore.delete('refreshToken')
       return NextResponse.json(
         { error: '토큰 갱신에 실패했습니다.' },
         { status: backendResponse.status }

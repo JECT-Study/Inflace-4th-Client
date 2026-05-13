@@ -16,49 +16,25 @@ const config: StorybookConfig = {
     '@storybook/addon-docs',
     '@storybook/addon-onboarding',
   ],
-  framework: '@storybook/nextjs-vite',
+  framework: {
+    name: '@storybook/nextjs-vite',
+    options: {
+      image: {
+        excludeFiles: /\.svg$/,
+      },
+    },
+  },
   viteFinal: async (config) => {
     config.plugins = config.plugins ?? []
 
     config.plugins.unshift(
       tailwindcss(),
       svgr({
-        include: '**/*.svg?react', // 쿼리 스트링이 붙은 경우만 타겟팅
+        include: /\.svg(\?.*)?$/,
         svgrOptions: {
-          icon: true, // 크기 조절 등을 위해 아이콘 모드 활성화
-          exportType: 'default',
+          icon: true,
         },
       }),
-      // SVG 파일을 React 컴포넌트로 처리 (일반 import 방식, ?ignore 전에 캐치)
-      {
-        name: 'svg-component-mock',
-        enforce: 'pre',
-        transform(_code: string, id: string) {
-          if (/\.svg(\?.*)?$/.test(id) && !id.includes('?react')) {
-            return {
-              code: `
-                import { createElement } from 'react';
-                const SvgMock = (props) => createElement('svg', props);
-                export default SvgMock;
-              `,
-              map: null,
-            }
-          }
-        },
-      },
-      // 테스트 환경에서 PNG/이미지 파일을 빈 객체로 mock 처리
-      {
-        name: 'image-mock',
-        enforce: 'pre',
-        transform(_code: string, id: string) {
-          if (/\.(png|jpg|jpeg|gif|webp)(\?.*)?$/.test(id)) {
-            return {
-              code: `export default { src: '/mock-image.png', height: 100, width: 100 };`,
-              map: null,
-            }
-          }
-        },
-      }
     )
 
     config.resolve = config.resolve || {}
