@@ -21,7 +21,7 @@ export async function refreshChannel(
 
 export async function fetchConnectedChannelProfile(): Promise<ChannelProfileDto> {
   const res = await axiosInstance.get<ApiResponse<ChannelProfileDto>>(
-    'user/channels/main'
+    '/user/channels/main'
   )
   return res.data.responseDto
 }
