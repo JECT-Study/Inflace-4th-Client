@@ -9,12 +9,12 @@ import IconArticle from '@/shared/assets/article-bold.svg'
 import IconRefresh from '@/shared/assets/refresh-bold.svg'
 
 export function ChannelSummarySection({ channelId }: { channelId: string }) {
-  const { data: apiData, isFetching, isError } = useInfluencerSummary(channelId)
+  const { data: apiData, isLoading, isError } = useInfluencerSummary(channelId)
   const data = apiData ?? mockInfluencerSummary
 
   const queryClient = useQueryClient()
 
-  if (isFetching) {
+  if (isLoading || true) {
     return (
       <div className='flex flex-col gap-32 rounded-12 bg-white p-24 pb-32'>
         {/* 아이콘 + 타이틀 */}
