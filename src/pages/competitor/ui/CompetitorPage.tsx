@@ -1,20 +1,92 @@
 'use client'
 
 import { useState } from 'react'
-import { CompetitorFilter } from '@/widgets/competitor'
-import type { CompetitorFilterState } from '@/features/competitor'
+import {
+  CompetitorFilterPanel,
+  CompetitorFilterCollapsed,
+} from '@/widgets/competitor'
+import {
+  DEFAULT_COMPETITOR_FILTER,
+  useBrandCollaborations,
+  type CompetitorFilterState,
+} from '@/features/competitor'
+import { Lightbulb } from 'lucide-react'
 
 export function CompetitorPage() {
-  const [, setFilter] = useState<CompetitorFilterState | null>(null)
+  /* 사용자가 입력 중인 필터 (편집 상태) */
+  const [draftFilter, setDraftFilter] = useState<CompetitorFilterState>(
+    DEFAULT_COMPETITOR_FILTER
+  )
 
-  function handleAnalyze(filter: CompetitorFilterState) {
-    setFilter(filter)
-    // TODO: T-2, T-3에서 영상 리스트 / AI 인사이트 연동
+  /* 검색하기로 확정된 필터 — 이 값이 있어야 API 호출됨 */
+  const [appliedFilter, setAppliedFilter] =
+    useState<CompetitorFilterState | null>(null)
+
+  /* 검색 후 필터 카드 축약 여부 */
+  const [isCollapsed, setIsCollapsed] = useState(false)
+
+  const { data } = useBrandCollaborations({ filter: appliedFilter })
+
+  function handleChange<K extends keyof CompetitorFilterState>(
+    key: K,
+    value: CompetitorFilterState[K]
+  ) {
+    setDraftFilter((prev) => ({ ...prev, [key]: value }))
+  }
+
+  function handleReset() {
+    setDraftFilter(DEFAULT_COMPETITOR_FILTER)
+  }
+
+  function handleSearch() {
+    setAppliedFilter(draftFilter)
+    setIsCollapsed(true)
   }
 
   return (
-    <div className='flex h-fit w-full flex-col gap-24 bg-background-gray-default p-24 pb-96'>
-      <CompetitorFilter onAnalyze={handleAnalyze} />
+    <div className='flex w-full flex-col bg-white pb-96'>
+      {isCollapsed ? (
+        <CompetitorFilterCollapsed onExpand={() => setIsCollapsed(false)} />
+      ) : (
+        <CompetitorFilterPanel
+          filter={draftFilter}
+          onChange={handleChange}
+          onReset={handleReset}
+          onSearch={handleSearch}
+        />
+      )}
+
+      {/* 결과 영역 — 영상 그리드는 다음 PR에서 작업, 일단 AI 분석 인사이트 placeholder만 */}
+      <div className='w-full px-24 pt-24'>
+        <AnalysisInsightCard hasResults={!!data?.content.length} />
+      </div>
+    </div>
+  )
+}
+
+function AnalysisInsightCard({ hasResults }: { hasResults: boolean }) {
+  return (
+    <div className='flex w-full flex-col items-center gap-24 overflow-hidden rounded-16 bg-background-gray-default p-32'>
+      <div className='flex flex-col items-center gap-12'>
+        <Lightbulb className='size-24 text-text-and-icon-primary' />
+        <p className='text-ibm-title-lg-thin text-text-and-icon-primary'>
+          AI 분석 인사이트
+        </p>
+      </div>
+      <div className='text-center text-noto-body-xs-normal text-text-and-icon-secondary'>
+        <p>
+          {hasResults
+            ? '조회된 영상 중 1개 이상을 선택한 후, 영상 분석하기 버튼을 누르면 분석이 시작됩니다.'
+            : '검색을 시작하면 결과가 이곳에 표시됩니다.'}
+        </p>
+        <p>
+          유료 광고 영상들 중, 강조되는 내용 및 주요 키워드, 채널 특성을 분석한
+          리포트를 제공합니다.
+        </p>
+        <p className='mt-16 text-noto-label-md-normal text-text-and-icon-primary'>
+          * 영상은 최대 10개까지 선택 가능합니다.
+        </p>
+      </div>
     </div>
   )
 }

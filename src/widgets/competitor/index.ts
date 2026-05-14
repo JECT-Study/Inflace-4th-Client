@@ -1,1 +1,4 @@
-export { CompetitorFilter } from './competitorFilter'
+export {
+  CompetitorFilterPanel,
+  CompetitorFilterCollapsed,
+} from './competitorFilter'

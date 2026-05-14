@@ -1,32 +1,96 @@
-export type ContentType = 'ALL' | 'LONG_FORM' | 'SHORT_FORM'
+/* 영상 형식 (유튜브 videoDuration 매핑) */
+export type VideoFormat = 'ALL' | 'LONG_FORM' | 'SHORT_FORM'
 
+/* 정렬 기준 */
+export type SortCriteria = 'LATEST' | 'VIEWS' | 'LIKES' | 'COMMENTS'
+
+/* 정렬 방향 */
+export type SortOrder = 'ASC' | 'DESC'
+
+/* UI 필터 상태 — 폼 입력값을 그대로 보관 */
 export interface CompetitorFilterState {
-  dateFrom: Date | undefined
-  dateTo: Date | undefined
+  videoFormat: VideoFormat
+  startDate: Date | undefined
+  endDate: Date | undefined
   includeKeywords: string[]
-  // 상세 필터
-  contentType: ContentType
   excludeKeywords: string[]
-  category: string
-  region: string
-  language: string
-  sortBy: string
+  categoryId: string
+  regionCode: string
+  languageCode: string
   minViews: string
   minLikes: string
   minComments: string
+  sortCriteria: SortCriteria
+  sortOrder: SortOrder
 }
 
-export const DEFAULT_FILTER_STATE: CompetitorFilterState = {
-  dateFrom: undefined,
-  dateTo: undefined,
+export const DEFAULT_COMPETITOR_FILTER: CompetitorFilterState = {
+  videoFormat: 'ALL',
+  startDate: undefined,
+  endDate: undefined,
   includeKeywords: [],
-  contentType: 'ALL',
   excludeKeywords: [],
-  category: '',
-  region: 'KR',
-  language: 'ko',
-  sortBy: 'LATEST',
+  categoryId: '',
+  regionCode: '',
+  languageCode: '',
   minViews: '',
   minLikes: '',
   minComments: '',
+  sortCriteria: 'LATEST',
+  sortOrder: 'DESC',
+}
+
+/* API 요청 쿼리 파라미터 */
+export interface BrandCollaborationsQuery {
+  startDate?: string
+  endDate?: string
+  includeKeywords?: string[]
+  excludeKeywords?: string[]
+  videoFormat?: VideoFormat
+  categoryId?: string
+  regionCode?: string
+  languageCode?: string
+  minViews?: number
+  minLikes?: number
+  minComments?: number
+  sortCriteria?: SortCriteria
+  sortOrder?: SortOrder
+  cursor?: string
+  pageSize?: number
+}
+
+/* API 응답 DTO — 영상 한 건 */
+export interface BrandCollaborationDto {
+  videoId: string
+  videoTitle: string
+  videoThumbnailUrl: string
+  publishedAt: string
+  viewCount: number
+  likeCount: number
+  commentCount: number
+  channelId: string
+  channelName: string
+  channelThumbnailUrl: string
+}
+
+/* 페이지네이션 정보 */
+export interface BrandCollaborationsPageInfo {
+  size: number
+  numberOfElements: number
+  nextCursor: string | null
+  hasNext: boolean
+}
+
+/* 적용된 정렬 정보 */
+export interface BrandCollaborationsSort {
+  sorted: boolean
+  sortCriteria: SortCriteria
+  sortOrder: SortOrder
+}
+
+/* API 응답 DTO — 페이지 단위 */
+export interface BrandCollaborationsResponseDto {
+  content: BrandCollaborationDto[]
+  pageInfo: BrandCollaborationsPageInfo
+  sort: BrandCollaborationsSort
 }
