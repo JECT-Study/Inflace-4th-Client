@@ -1,10 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import {
-  CompetitorFilterPanel,
-  CompetitorFilterCollapsed,
-} from '@/widgets/competitor'
+import { useQueryClient } from '@tanstack/react-query'
+import { CompetitorFilterPanel } from '@/widgets/competitor'
 import {
   DEFAULT_COMPETITOR_FILTER,
   useBrandCollaborations,
@@ -13,6 +11,8 @@ import {
 import { Lightbulb } from 'lucide-react'
 
 export function CompetitorPage() {
+  const queryClient = useQueryClient()
+
   /* 사용자가 입력 중인 필터 (편집 상태) */
   const [draftFilter, setDraftFilter] = useState<CompetitorFilterState>(
     DEFAULT_COMPETITOR_FILTER
@@ -21,9 +21,6 @@ export function CompetitorPage() {
   /* 검색하기로 확정된 필터 — 이 값이 있어야 API 호출됨 */
   const [appliedFilter, setAppliedFilter] =
     useState<CompetitorFilterState | null>(null)
-
-  /* 검색 후 필터 카드 축약 여부 */
-  const [isCollapsed, setIsCollapsed] = useState(false)
 
   const { data } = useBrandCollaborations({ filter: appliedFilter })
 
@@ -34,27 +31,26 @@ export function CompetitorPage() {
     setDraftFilter((prev) => ({ ...prev, [key]: value }))
   }
 
+  /* 초기화: 편집 필터 + 적용 필터 모두 초기 상태로 */
   function handleReset() {
     setDraftFilter(DEFAULT_COMPETITOR_FILTER)
+    setAppliedFilter(null)
   }
 
+  /* 검색: 편집 필터를 확정. 동일 조건 재검색 시에도 강제 refetch */
   function handleSearch() {
     setAppliedFilter(draftFilter)
-    setIsCollapsed(true)
+    queryClient.invalidateQueries({ queryKey: ['brand-collaborations'] })
   }
 
   return (
     <div className='flex w-full flex-col bg-white pb-96'>
-      {isCollapsed ? (
-        <CompetitorFilterCollapsed onExpand={() => setIsCollapsed(false)} />
-      ) : (
-        <CompetitorFilterPanel
-          filter={draftFilter}
-          onChange={handleChange}
-          onReset={handleReset}
-          onSearch={handleSearch}
-        />
-      )}
+      <CompetitorFilterPanel
+        filter={draftFilter}
+        onChange={handleChange}
+        onReset={handleReset}
+        onSearch={handleSearch}
+      />
 
       {/* 결과 영역 — 영상 그리드는 다음 PR에서 작업, 일단 AI 분석 인사이트 placeholder만 */}
       <div className='w-full px-24 pt-24'>

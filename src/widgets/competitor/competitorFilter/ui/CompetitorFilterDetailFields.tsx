@@ -112,6 +112,7 @@ function DropdownField({
         {label}
       </p>
       <Select.Root
+        key={value || 'empty'}
         value={value || undefined}
         onValueChange={(v) => onChange(v)}>
         <Select.Trigger

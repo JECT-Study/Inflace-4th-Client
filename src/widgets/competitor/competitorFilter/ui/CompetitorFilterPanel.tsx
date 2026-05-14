@@ -33,8 +33,6 @@ export function CompetitorFilterPanel({
   onSearch,
 }: CompetitorFilterPanelProps) {
   const [isDetailOpen, setIsDetailOpen] = useState(false)
-  const canSearch =
-    !!filter.startDate && !!filter.endDate && filter.includeKeywords.length > 0
 
   return (
     <div className='flex w-full flex-col gap-24 bg-background-gray-default py-24'>
@@ -57,7 +55,6 @@ export function CompetitorFilterPanel({
             variant='filled'
             size='lg'
             onClick={onSearch}
-            disabled={!canSearch}
             className='w-[20rem]'>
             검색하기
           </Button>
