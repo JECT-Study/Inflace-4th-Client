@@ -14,7 +14,7 @@ export function ChannelSummarySection({ channelId }: { channelId: string }) {
 
   const queryClient = useQueryClient()
 
-  if (isLoading || true) {
+  if (isLoading) {
     return (
       <div className='flex flex-col gap-32 rounded-12 bg-white p-24 pb-32'>
         {/* 아이콘 + 타이틀 */}
