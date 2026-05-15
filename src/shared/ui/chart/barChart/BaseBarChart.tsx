@@ -22,6 +22,7 @@ interface BaseBarChartProps {
   marginBottom?: number
   barSize?: number
   fill?: string
+  domain?: [number, number]
 }
 
 export function BaseBarChart({
@@ -31,6 +32,7 @@ export function BaseBarChart({
   marginTop = -16,
   marginBottom = -16,
   fill = '#273C5D',
+  domain,
 }: BaseBarChartProps) {
   // 데이터가 0일때 화면 표시 용으로 작은값(0.00001)으로 변경
   const chartData = data.map((item) => ({
@@ -47,7 +49,7 @@ export function BaseBarChart({
           layout='vertical'
           data={chartData}
           margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
-          <XAxis type='number' hide height={0} />
+          <XAxis type='number' hide height={0} domain={domain} />
           <YAxis dataKey='label' type='category' hide width={0} />
           {/* 막대 차트 */}
           <Bar

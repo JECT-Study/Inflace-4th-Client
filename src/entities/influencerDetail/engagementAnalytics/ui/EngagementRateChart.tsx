@@ -42,6 +42,7 @@ export function EngagementRateChart({ data }: { data: FormatAnalysis }) {
           marginTop={-8}
           marginBottom={-8}
           data={averageViewsData}
+          domain={[0, 100]}
         />
         {/* 항목별 참여율 */}
         <div className='flex w-[8rem] shrink-0 flex-col gap-16 text-right'>
