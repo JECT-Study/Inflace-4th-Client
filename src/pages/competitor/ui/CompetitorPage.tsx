@@ -24,6 +24,10 @@ export function CompetitorPage() {
 
   const { data } = useBrandCollaborations({ filter: appliedFilter })
 
+  const totalCount =
+    data?.pages.reduce((sum, p) => sum + p.content.length, 0) ?? 0
+  const hasResults = totalCount > 0
+
   function handleChange<K extends keyof CompetitorFilterState>(
     key: K,
     value: CompetitorFilterState[K]
@@ -54,7 +58,7 @@ export function CompetitorPage() {
 
       {/* 결과 영역 — 영상 그리드는 다음 PR에서 작업, 일단 AI 분석 인사이트 placeholder만 */}
       <div className='w-full px-24 pt-24'>
-        <AnalysisInsightCard hasResults={!!data?.content.length} />
+        <AnalysisInsightCard hasResults={hasResults} />
       </div>
     </div>
   )
