@@ -1,6 +1,6 @@
 'use client'
 
-import { useQuery, keepPreviousData } from '@tanstack/react-query'
+import { useInfiniteQuery, keepPreviousData } from '@tanstack/react-query'
 
 import { fetchBrandCollaborations } from '../api/competitorApi'
 import type {
@@ -41,16 +41,24 @@ interface UseBrandCollaborationsOptions {
   enabled?: boolean
 }
 
+/* 커서 기반 무한 페이지네이션 — '결과 더보기' 버튼 클릭으로 다음 페이지 누적 */
 export function useBrandCollaborations({
   filter,
   enabled = true,
 }: UseBrandCollaborationsOptions) {
-  const query = filter ? toBrandCollaborationsQuery(filter) : null
+  /* queryKey 안정화를 위해 cursor 없는 baseQuery를 키로 사용 */
+  const baseQuery = filter ? toBrandCollaborationsQuery(filter) : null
 
-  return useQuery({
-    queryKey: ['brand-collaborations', query],
-    queryFn: () => fetchBrandCollaborations(query!),
-    enabled: enabled && query !== null,
+  return useInfiniteQuery({
+    queryKey: ['brand-collaborations', baseQuery],
+    queryFn: ({ pageParam }) =>
+      fetchBrandCollaborations(
+        toBrandCollaborationsQuery(filter!, pageParam ?? undefined)
+      ),
+    initialPageParam: null as string | null,
+    getNextPageParam: (lastPage) =>
+      lastPage.pageInfo.hasNext ? lastPage.pageInfo.nextCursor : undefined,
+    enabled: enabled && baseQuery !== null,
     placeholderData: keepPreviousData,
   })
 }

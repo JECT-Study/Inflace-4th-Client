@@ -52,7 +52,6 @@ export const LANGUAGE_OPTIONS: SelectOption[] = [
 /* 정렬 기준 */
 export const SORT_CRITERIA_OPTIONS: SelectOption<SortCriteria>[] = [
   { value: 'LATEST', label: '최신순' },
-  { value: 'VIEWS', label: '조회수순' },
-  { value: 'LIKES', label: '좋아요순' },
-  { value: 'COMMENTS', label: '댓글순' },
+  { value: 'VIEW_COUNT', label: '조회수순' },
+  { value: 'ENGAGEMENT', label: '좋아요순' },
 ]

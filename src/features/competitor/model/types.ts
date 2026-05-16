@@ -2,7 +2,7 @@
 export type VideoFormat = 'ALL' | 'LONG_FORM' | 'SHORT_FORM'
 
 /* 정렬 기준 */
-export type SortCriteria = 'LATEST' | 'VIEWS' | 'LIKES' | 'COMMENTS'
+export type SortCriteria = 'LATEST' | 'VIEW_COUNT' | 'ENGAGEMENT'
 
 /* 정렬 방향 */
 export type SortOrder = 'ASC' | 'DESC'
