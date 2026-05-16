@@ -1,4 +1,5 @@
 import { authHandlers } from './authHandlers'
+import { channelConnectHandlers } from './channelConnectHandlers'
 import { channelProfileHandlers } from './channelProfileHandlers'
 import { onboardingHandlers } from './onboardingHandlers'
 import { trendMagazineHandlers } from './trendMagazineHandlers'
@@ -10,11 +11,17 @@ import { subscriberGrowthHandlers } from './subscriberGrowthHandlers'
 import { videoStatsHandlers } from './videoStatsHandlers'
 import { channelTrendingVideoHandlers } from './channelTrendingVideoHandlers'
 import { newInflowHandlers } from './newInflowHandlers'
+import { influencerDetailHandlers } from './influencerDetailHandlers'
+import { retentionHandlers } from './retentionHandlers'
+import { influencerHandlers } from './influencerHandlers'
 import { typeEngagementHandlers } from './typeEngagementHandlers'
-
+import { distributionChartHandlers } from './distributionChartHandlers'
+import { subscriberChartHandlers } from './subscriberChartHandlers'
+import { influencerSummaryHandlers } from './influencerSummaryHandlers'
 
 export const handlers = [
   ...authHandlers,
+  ...channelConnectHandlers,
   ...channelProfileHandlers,
   ...trendingVideosHandlers,
   ...trendMagazineHandlers,
@@ -26,5 +33,11 @@ export const handlers = [
   ...videoStatsHandlers,
   ...channelTrendingVideoHandlers,
   ...newInflowHandlers,
+  ...influencerDetailHandlers,
+  ...retentionHandlers,
+  ...influencerHandlers,
   ...typeEngagementHandlers,
+  ...distributionChartHandlers,
+  ...subscriberChartHandlers,
+  ...influencerSummaryHandlers,
 ]
