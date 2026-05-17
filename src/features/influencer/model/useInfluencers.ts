@@ -19,6 +19,7 @@ export function useYoutubeCategories() {
   return useQuery({
     queryKey: YOUTUBE_CATEGORIES_QUERY_KEY,
     queryFn: fetchYoutubeCategories,
+    staleTime: 1000 * 60 * 60 * 24,
   })
 }
 
