@@ -7,7 +7,6 @@ type DropdownTriggerProps = {
   label: string
   output: string
   children?: (onClose: () => void) => React.ReactNode
-  className?: string
 }
 
 function DropdownTrigger({ label, output, children }: DropdownTriggerProps) {

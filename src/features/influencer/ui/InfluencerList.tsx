@@ -1,8 +1,8 @@
-import type { Influencer } from '@/entities/influencer'
+import type { Influencer, SortCriteria, SortOrder } from '@/entities/influencer'
 import { InfluencerCard } from '@/entities/influencer'
-
-type SortCriteria = 'subscriber' | 'engagement_rate'
-type SortOrder = 'ASC' | 'DESC'
+import { InfiniteScrollList } from '@/shared/ui/infinite-scroll-list/InfiniteScrollList'
+import { formatComma } from '@/shared/lib/format'
+import { useBookmarkToggle } from '../model/useInfluencers'
 
 interface SortOption {
   label: string
@@ -11,11 +11,10 @@ interface SortOption {
 }
 
 interface InfluencerListProps {
-  onSortChange?: (sortCriteria: SortCriteria, sortOrder: SortOrder) => void
+  selectedIndex: number
+  onSortChange?: (index: number, sortCriteria: SortCriteria, sortOrder: SortOrder) => void
   influencers: Influencer[]
-  sortCriteria?: string
-  sortOrder?: string
-  sentinelRef: React.RefCallback<HTMLDivElement | null>
+  sentinelRef: (node: HTMLDivElement | null) => void
   isFetchingNextPage: boolean
   hasNextPage: boolean
 }
@@ -34,30 +33,19 @@ const SORT_OPTIONS: SortOption[] = [
     sortOrder: 'ASC',
   },
 ]
-import { InfiniteScrollList } from '@/shared/ui/infinite-scroll-list/InfiniteScrollList'
-import { formatComma } from '@/shared/lib/format'
-import { useBookmarkToggle } from '../model/useInfluencers'
 
 export function InfluencerList({
+  selectedIndex,
   onSortChange,
   influencers,
-  sortCriteria,
-  sortOrder,
   sentinelRef,
   isFetchingNextPage,
   hasNextPage,
 }: InfluencerListProps) {
   const toggleBookmark = useBookmarkToggle()
 
-  const selectedIndex = Math.max(
-    0,
-    SORT_OPTIONS.findIndex(
-      (o) => o.sortCriteria === sortCriteria && o.sortOrder === sortOrder
-    )
-  )
-
-  const handleSortClick = (option: SortOption) => {
-    onSortChange?.(option.sortCriteria, option.sortOrder)
+  const handleSortClick = (index: number, option: SortOption) => {
+    onSortChange?.(index, option.sortCriteria, option.sortOrder)
   }
 
   return (
@@ -76,7 +64,7 @@ export function InfluencerList({
               <button
                 type='button'
                 className={`size-fit px-8 py-4 ${selectedIndex === index ? 'text-noto-label-md-bold text-brand-secondary' : ''}`}
-                onClick={() => handleSortClick(option)}>
+                onClick={() => handleSortClick(index, option)}>
                 {option.label}
               </button>
               {index < SORT_OPTIONS.length - 1 && '・'}
