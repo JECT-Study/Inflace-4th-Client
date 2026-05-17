@@ -1,9 +1,8 @@
-import { useState } from 'react'
-import type { Influencer } from '@/entities/influencer'
+import type { Influencer, SortCriteria, SortOrder } from '@/entities/influencer'
 import { InfluencerCard } from '@/entities/influencer'
-
-type SortCriteria = 'subscriber' | 'engagement_rate'
-type SortOrder = 'ASC' | 'DESC'
+import { InfiniteScrollList } from '@/shared/ui/infinite-scroll-list/InfiniteScrollList'
+import { formatComma } from '@/shared/lib/format'
+import { useBookmarkToggle } from '../model/useInfluencers'
 
 interface SortOption {
   label: string
@@ -12,9 +11,10 @@ interface SortOption {
 }
 
 interface InfluencerListProps {
-  onSortChange?: (sortCriteria: SortCriteria, sortOrder: SortOrder) => void
+  selectedIndex: number
+  onSortChange?: (index: number, sortCriteria: SortCriteria, sortOrder: SortOrder) => void
   influencers: Influencer[]
-  sentinelRef: React.RefCallback<HTMLDivElement | null>
+  sentinelRef: (node: HTMLDivElement | null) => void
   isFetchingNextPage: boolean
   hasNextPage: boolean
 }
@@ -33,11 +33,9 @@ const SORT_OPTIONS: SortOption[] = [
     sortOrder: 'ASC',
   },
 ]
-import { InfiniteScrollList } from '@/shared/ui/infinite-scroll-list/InfiniteScrollList'
-import { formatComma } from '@/shared/lib/format'
-import { useBookmarkToggle } from '../model/useInfluencers'
 
 export function InfluencerList({
+  selectedIndex,
   onSortChange,
   influencers,
   sentinelRef,
@@ -46,11 +44,8 @@ export function InfluencerList({
 }: InfluencerListProps) {
   const toggleBookmark = useBookmarkToggle()
 
-  const [selectedIndex, setSelectedIndex] = useState(0)
-
   const handleSortClick = (index: number, option: SortOption) => {
-    setSelectedIndex(index)
-    onSortChange?.(option.sortCriteria, option.sortOrder)
+    onSortChange?.(index, option.sortCriteria, option.sortOrder)
   }
 
   return (

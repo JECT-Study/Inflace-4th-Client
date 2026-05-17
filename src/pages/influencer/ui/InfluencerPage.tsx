@@ -1,7 +1,8 @@
 'use client'
 
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
 import { InfluencerList, useInfluencers, useYoutubeCategories } from '@/features/influencer'
+import type { SortCriteria, SortOrder } from '@/entities/influencer'
 import { InfluencerFilter } from '@/widgets/influencer'
 
 export function InfluencerPage() {
@@ -21,6 +22,12 @@ export function InfluencerPage() {
 }
 
 function InfluencerListSection() {
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [sortParams, setSortParams] = useState<{
+    sortCriteria?: SortCriteria
+    sortOrder?: SortOrder
+  }>({})
+
   const {
     data,
     isLoading,
@@ -28,9 +35,18 @@ function InfluencerListSection() {
     sentinelRef,
     isFetchingNextPage,
     hasNextPage,
-  } = useInfluencers()
+  } = useInfluencers(sortParams)
 
   const influencers = data?.pages.flatMap((page) => page.content) ?? []
+
+  const handleSortChange = (
+    index: number,
+    sortCriteria: SortCriteria,
+    sortOrder: SortOrder
+  ) => {
+    setSelectedIndex(index)
+    setSortParams({ sortCriteria, sortOrder })
+  }
 
   if (isLoading) {
     return (
@@ -50,6 +66,8 @@ function InfluencerListSection() {
 
   return (
     <InfluencerList
+      selectedIndex={selectedIndex}
+      onSortChange={handleSortChange}
       influencers={influencers}
       sentinelRef={sentinelRef}
       isFetchingNextPage={isFetchingNextPage}

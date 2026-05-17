@@ -1,6 +1,6 @@
 import { axiosInstance } from '@/shared/api'
 import type { ApiResponse, PageInfo } from '@/shared/api/types'
-import type { Influencer } from '@/entities/influencer'
+import type { Influencer, SortCriteria, SortOrder } from '@/entities/influencer'
 import type { YoutubeCategory } from '../mock/mockYoutubeCategories'
 import { mockInfluencers } from '../mock/mockInfluencers'
 
@@ -18,8 +18,8 @@ export interface InfluencerListResponse {
   pageInfo: PageInfo
   sort: {
     sorted: boolean
-    sortCriteria: string
-    sortOrder: 'ASC' | 'DESC'
+    sortCriteria: SortCriteria | ''
+    sortOrder: SortOrder
   }
 }
 
@@ -31,6 +31,8 @@ export interface FetchInfluencersParams {
   cursor?: string | null
   size?: number
   categoryIds?: number[]
+  sortCriteria?: SortCriteria
+  sortOrder?: SortOrder
 }
 
 const PAGE_SIZE = 9
