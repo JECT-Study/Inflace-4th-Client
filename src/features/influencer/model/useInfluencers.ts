@@ -10,7 +10,7 @@ import {
   addBookmark,
   removeBookmark,
 } from '../api/influencerApi'
-import type { InfluencerListResponse, FetchInfluencersParams } from '../api/influencerApi'
+import type { FetchInfluencersParams, InfluencerListResponse } from '../api/influencerApi'
 
 const INFLUENCERS_QUERY_KEY = ['influencers']
 const YOUTUBE_CATEGORIES_QUERY_KEY = ['youtube-categories']
@@ -19,6 +19,7 @@ export function useYoutubeCategories() {
   return useQuery({
     queryKey: YOUTUBE_CATEGORIES_QUERY_KEY,
     queryFn: fetchYoutubeCategories,
+    staleTime: 1000 * 60 * 60 * 24,
   })
 }
 

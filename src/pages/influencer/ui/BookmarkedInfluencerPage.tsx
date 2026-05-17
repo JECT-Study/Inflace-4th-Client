@@ -1,12 +1,13 @@
 'use client'
 
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import {
   InfluencerList,
   useInfluencers,
   useYoutubeCategories,
 } from '@/features/influencer'
+import type { SortCriteria, SortOrder } from '@/entities/influencer'
 import { InfluencerFilter } from '@/widgets/influencer'
 
 export function BookmarkedInfluencerPage() {
@@ -29,6 +30,7 @@ function BookmarkedInfluencerListSection() {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const [selectedIndex, setSelectedIndex] = useState(0)
 
   const filters = {
     channelName: searchParams?.get('channelName') ?? undefined,
@@ -41,22 +43,27 @@ function BookmarkedInfluencerListSection() {
     engagementRateTo: searchParams?.get('engagementRateTo') ?? undefined,
     outlierRange: searchParams?.get('outlierRange') ?? undefined,
     language: searchParams?.get('language') ?? undefined,
-    sortCriteria: searchParams?.get('sortCriteria') ?? undefined,
-    sortOrder: searchParams?.get('sortOrder') ?? undefined,
+    sortCriteria: (searchParams?.get('sortCriteria') ?? undefined) as SortCriteria | undefined,
+    sortOrder: (searchParams?.get('sortOrder') ?? undefined) as SortOrder | undefined,
     bookmarkedOnly: true,
-  }
-
-  const handleSortChange = (sortCriteria: string, sortOrder: string) => {
-    const params = new URLSearchParams(searchParams?.toString())
-    params.set('sortCriteria', sortCriteria)
-    params.set('sortOrder', sortOrder)
-    router.replace(`${pathname}?${params.toString()}`)
   }
 
   const { data, isLoading, sentinelRef, isFetchingNextPage, hasNextPage } =
     useInfluencers(filters)
 
   const influencers = data?.pages.flatMap((page) => page.content) ?? []
+
+  const handleSortChange = (
+    index: number,
+    sortCriteria: SortCriteria,
+    sortOrder: SortOrder
+  ) => {
+    setSelectedIndex(index)
+    const params = new URLSearchParams(searchParams?.toString())
+    params.set('sortCriteria', sortCriteria)
+    params.set('sortOrder', sortOrder)
+    router.replace(`${pathname}?${params.toString()}`)
+  }
 
   if (isLoading) {
     return (
@@ -68,13 +75,12 @@ function BookmarkedInfluencerListSection() {
 
   return (
     <InfluencerList
+      selectedIndex={selectedIndex}
+      onSortChange={handleSortChange}
       influencers={influencers}
-      sortCriteria={filters.sortCriteria}
-      sortOrder={filters.sortOrder}
       sentinelRef={sentinelRef}
       isFetchingNextPage={isFetchingNextPage}
       hasNextPage={!!hasNextPage}
-      onSortChange={handleSortChange}
     />
   )
 }

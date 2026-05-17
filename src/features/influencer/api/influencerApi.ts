@@ -1,6 +1,6 @@
 import { axiosInstance } from '@/shared/api'
 import type { ApiResponse, PageInfo } from '@/shared/api/types'
-import type { Influencer } from '@/entities/influencer'
+import type { Influencer, SortCriteria, SortOrder } from '@/entities/influencer'
 import type { YoutubeCategory } from '../mock/mockYoutubeCategories'
 
 export interface BookmarkResponse {
@@ -17,8 +17,8 @@ export interface InfluencerListResponse {
   pageInfo: PageInfo
   sort: {
     sorted: boolean
-    sortCriteria: string
-    sortOrder: 'ASC' | 'DESC'
+    sortCriteria: SortCriteria | ''
+    sortOrder: SortOrder
   }
 }
 
@@ -39,8 +39,8 @@ export interface FetchInfluencersParams {
   engagementRateTo?: string
   outlierRange?: string
   language?: string
-  sortCriteria?: string
-  sortOrder?: string
+  sortCriteria?: SortCriteria
+  sortOrder?: SortOrder
   bookmarkedOnly?: boolean
 }
 
