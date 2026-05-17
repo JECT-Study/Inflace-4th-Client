@@ -4,7 +4,6 @@ export type {
   SortCriteria,
   SortOrder,
   BrandCollaborationDto,
-  BrandCollaborationsPageInfo,
   BrandCollaborationsSort,
   BrandCollaborationsResponseDto,
   BrandCollaborationsQuery,
