@@ -17,11 +17,13 @@ const ENGAGEMENT_RATE_OPTIONS: {
 
 type SelectedOption = { from: string; to: string }
 
+type EngagementRateQuery = { from: string; to: string }
+
 type EngagementRateDropdownProps = {
   defaultSelectedOptions?: SelectedOption[]
   defaultFrom?: string
   defaultTo?: string
-  onChange: (output: string, outputQuery: string) => void
+  onChange: (output: string, query: EngagementRateQuery) => void
 }
 
 function EngagementRateDropdown({
@@ -67,7 +69,7 @@ function EngagementRateDropdown({
   function handleConfirm() {
     if (isInputMode) {
       const output = from || to ? `${from || '0'}% ~ ${to || ''}%` : '전체'
-      onChange(output, [from, to].join(','))
+      onChange(output, { from, to })
       return
     }
 
@@ -86,7 +88,7 @@ function EngagementRateDropdown({
     const tos = selectedOptions.map((o) => o.to).filter(Boolean)
     const mergedFrom = froms.length > 0 ? String(Math.min(...froms.map(Number))) : ''
     const mergedTo = tos.length > 0 ? String(Math.max(...tos.map(Number))) : ''
-    onChange(output, [mergedFrom, mergedTo].join(','))
+    onChange(output, { from: mergedFrom, to: mergedTo })
   }
 
   const isMinMaxInvalid =
@@ -181,3 +183,4 @@ function EngagementRateDropdown({
 }
 
 export { EngagementRateDropdown }
+export type { EngagementRateQuery }

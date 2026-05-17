@@ -2,10 +2,12 @@ import { useState } from 'react'
 
 import { Button } from '@/shared/ui/button'
 
+type SubscriberQuery = { from: string; to: string }
+
 type SubscriberDropdownProps = {
   defaultFrom?: string
   defaultTo?: string
-  onChange: (output: string, outputQuery: string) => void
+  onChange: (output: string, query: SubscriberQuery) => void
 }
 
 function SubscriberDropdown({
@@ -22,7 +24,7 @@ function SubscriberDropdown({
 
   function handleConfirm() {
     const output = from || to ? `${from || '0'}명 ~ ${to || ''}명` : '전체'
-    onChange(output, [from, to].join(','))
+    onChange(output, { from, to })
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -93,3 +95,4 @@ function SubscriberDropdown({
 }
 
 export { SubscriberDropdown }
+export type { SubscriberQuery }
