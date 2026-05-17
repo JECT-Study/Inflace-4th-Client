@@ -6,10 +6,7 @@ import IconUp from '@/shared/assets/up-bold.svg'
 type DropdownTriggerProps = {
   label: string
   output: string
-  outputQuery: string
-  onChange?: (output: string, outputQuery: string) => void
   children?: (onClose: () => void) => React.ReactNode
-  className?: string
 }
 
 /**
@@ -17,12 +14,7 @@ type DropdownTriggerProps = {
  * 해당 버튼을 클릭하면 필터링 조건을 선택할수 있는 드랍다운 컴포넌트를 랜더링합니다.
  * 드랍다운 컴포넌트로부터 결과값(필터링 조건 - output, outputQuery)을 반환 받습니다.
  * */
-function DropdownTrigger({
-  label,
-  output,
-  outputQuery,
-  children,
-}: DropdownTriggerProps) {
+function DropdownTrigger({ label, output, children }: DropdownTriggerProps) {
   const [isOpen, setIsOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
