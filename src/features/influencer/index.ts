@@ -20,3 +20,10 @@ export type {
   FetchInfluencersParams,
 } from './api/influencerApi'
 export type { YoutubeCategory } from './mock/mockYoutubeCategories'
+export type { SubscriberQuery } from './ui/SubscriberDropdown'
+export type {
+  EngagementRateQuery,
+  EngagementRateSelectQuery,
+  EngagementRateRangeQuery,
+  SelectedOption as EngagementRateOption,
+} from './ui/EngagementRateDropdown'

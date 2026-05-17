@@ -17,11 +17,15 @@ const ENGAGEMENT_RATE_OPTIONS: {
 
 type SelectedOption = { from: string; to: string }
 
+type EngagementRateSelectQuery = { selectedOptions: SelectedOption[] }
+type EngagementRateRangeQuery = { from: string; to: string }
+type EngagementRateQuery = EngagementRateSelectQuery | EngagementRateRangeQuery
+
 type EngagementRateDropdownProps = {
   defaultSelectedOptions?: SelectedOption[]
   defaultFrom?: string
   defaultTo?: string
-  onChange: (output: string, outputQuery: string) => void
+  onChange: (output: string, query: EngagementRateQuery) => void
 }
 
 function EngagementRateDropdown({
@@ -67,10 +71,7 @@ function EngagementRateDropdown({
   function handleConfirm() {
     if (isInputMode) {
       const output = from || to ? `${from || '0'}% ~ ${to || ''}%` : '전체'
-      onChange(
-        output,
-        JSON.stringify({ engagementRateFrom: from, engagementRateTo: to })
-      )
+      onChange(output, { from, to })
       return
     }
 
@@ -85,10 +86,7 @@ function EngagementRateDropdown({
           ? labels[0]
           : `${labels[0]} 외 ${labels.length - 1}`
 
-    const queryList = selectedOptions.map((o) =>
-      JSON.stringify({ engagementRateFrom: o.from, engagementRateTo: o.to })
-    )
-    onChange(output, queryList.join(','))
+    onChange(output, { selectedOptions })
   }
 
   const isMinMaxInvalid =
@@ -183,3 +181,4 @@ function EngagementRateDropdown({
 }
 
 export { EngagementRateDropdown }
+export type { EngagementRateQuery, EngagementRateSelectQuery, EngagementRateRangeQuery, SelectedOption }
