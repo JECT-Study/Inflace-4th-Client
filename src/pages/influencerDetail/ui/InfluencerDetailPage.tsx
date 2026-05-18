@@ -7,7 +7,7 @@ import { ChannelSummarySection } from '@/widgets/influencerDetail/channelSummary
 import { EngagementAnalyticsSection } from '@/widgets/influencerDetail/engagementAnalytics'
 import { ImpactMetricsSection } from '@/widgets/influencerDetail/impactMetrics'
 import { InfluencerBaseInfo } from '@/widgets/influencerDetail/influencerBaseInfo'
-import { AdvertisementFilter } from '@/widgets/influencerDetail/advertisementFilter/ui/AdvertisementFilter'
+import { AdvertisementFilter } from '@/widgets/influencerDetail/advertisementFilter'
 import { AdvertisementMetricsSection } from '@/widgets/influencerDetail/advertisementMetrics'
 import { AdvertisementList } from '@/features/influencerDetail/advertisementList'
 
