@@ -268,12 +268,6 @@ function genComponent() {
     .join('\n')
 }
 
-function genPrimitiveBasicColors() {
-  return flatten(prim.color.basic)
-    .map(([k, v]) => `  --color-primitive-basic-${k}: ${resolve(v)};`)
-    .join('\n')
-}
-
 function genNamedSpacing(sem) {
   return Object.entries(sem.breakpoint.spacing)
     .map(([k, v]) => `  --spacing-${k}: ${px(v.value)};`)
@@ -449,10 +443,6 @@ ${genColors()}
 
   /* === Primitive Brand Colors === */
 ${genPrimitiveBrandColors()}
-
-
-  /* === Primitive Basic Colors === */
-${genPrimitiveBasicColors()}
 
 
   /* === Primitive Transparent Colors === */
