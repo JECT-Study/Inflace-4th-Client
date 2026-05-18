@@ -7,13 +7,22 @@ import {
   ImpactMetricsList,
   getImpactTier,
 } from '@/entities/influencerDetail/impactMetrics'
-import { mockInfluencerDetail } from '@/entities/influencerDetail/mock/mockInfluencerDetail'
+import {
+  mockInfluencerDetail,
+  FrequencyTrend,
+} from '@/entities/influencerDetail'
 import { useInfluencerDetail } from '@/features/influencerDetail'
 import IconChart from '@/shared/assets/chart-bold.svg'
 import IconDown from '@/shared/assets/down-bold.svg'
 import { cn } from '@/shared/lib/utils'
 import { Skeleton } from '@/shared/ui/shadcn/skeleton'
 import { useState } from 'react'
+
+const frequencyTrendValue: Record<FrequencyTrend, string> = {
+  INCREASING: '증가중',
+  DECREASING: '감소중',
+  STABLE: '유지중',
+}
 
 export function ImpactMetricsSection({ channelId }: { channelId: string }) {
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -195,13 +204,7 @@ export function ImpactMetricsSection({ channelId }: { channelId: string }) {
             },
             {
               label: '빈도 변화',
-              value: (
-                {
-                  INCREASING: '증가중',
-                  DECREASING: '감소중',
-                  STABLE: '유지중',
-                } as Record<string, string>
-              )[activity.frequencyTrend],
+              value: frequencyTrendValue[activity.frequencyTrend],
             },
           ]}
           variant='activity'
