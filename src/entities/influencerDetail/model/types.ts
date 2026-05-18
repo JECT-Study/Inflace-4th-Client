@@ -51,6 +51,10 @@ export interface InfluencerDetailResponseDto {
   audience: Audience
   content: Content
   activity: Activity
-  advertisement: Advertisement
+  advertisement: Advertisement | null
   formatAnalysis: FormatAnalysis
+}
+
+export interface InfluencerSummaryResponseDto {
+  summary: string
 }

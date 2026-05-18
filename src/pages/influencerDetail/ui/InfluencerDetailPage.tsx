@@ -27,7 +27,7 @@ export function InfluencerDetailPage() {
       {activeTab === TAB.PERFORMANCE && (
         <>
           {/* 채널 요약 영역 */}
-          <ChannelSummarySection />
+          <ChannelSummarySection channelId={channelId} />
           {/* 임팩트 지표 영역 */}
           <ImpactMetricsSection channelId={channelId} />
           {/* 롱폼 vs 숏폼 참여율 분석 영역 */}
