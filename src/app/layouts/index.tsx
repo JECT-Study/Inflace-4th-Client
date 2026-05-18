@@ -8,7 +8,7 @@ import { SidebarTrigger } from '@/shared/ui/shadcn/sidebar'
 import { SidebarStoreProvider } from './SidebarStoreProvider'
 import { Header, Footer, AppSidebar } from '@/widgets/layout'
 import { AuthInitializer } from '@/features/auth'
-import { LoginModal } from '@/widgets/auth'
+import { LoginModal, YoutubeConnectModal } from '@/widgets/auth'
 import { OnboardingModal } from '@/widgets/onboarding'
 
 const notoSansKr = Noto_Sans_KR({
@@ -38,6 +38,7 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
           <QueryProvider>
             <AuthInitializer />
             <LoginModal />
+            <YoutubeConnectModal />
             <OnboardingModal />
             <div className='flex flex-1'>
               <SidebarStoreProvider>
