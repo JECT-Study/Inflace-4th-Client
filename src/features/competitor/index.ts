@@ -13,7 +13,6 @@ export { DEFAULT_COMPETITOR_FILTER } from './model/types'
 export type { SelectOption } from './model/options'
 export {
   VIDEO_FORMAT_OPTIONS,
-  CATEGORY_OPTIONS,
   REGION_OPTIONS,
   LANGUAGE_OPTIONS,
   SORT_CRITERIA_OPTIONS,
