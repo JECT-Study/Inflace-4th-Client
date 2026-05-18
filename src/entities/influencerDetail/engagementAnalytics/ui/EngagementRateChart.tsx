@@ -4,7 +4,7 @@ import { FormatAnalysis } from '@/entities/influencerDetail'
 import { BarChartItem, BaseBarChart } from '@/shared/ui/chart/barChart'
 
 export function EngagementRateChart({ data }: { data: FormatAnalysis }) {
-  const averageViewsData: BarChartItem[] = [
+  const engagementRateData: BarChartItem[] = [
     {
       label: '롱폼',
       percentage: data.longForm.engagementRate,
@@ -27,7 +27,7 @@ export function EngagementRateChart({ data }: { data: FormatAnalysis }) {
       <div className='flex gap-4'>
         {/* 항목 라벨 */}
         <div className='flex w-[10rem] shrink-0 flex-col gap-16'>
-          {averageViewsData.map((item) => (
+          {engagementRateData.map((item) => (
             <div
               className='flex h-20 w-full items-center gap-10 text-text-and-icon-primary'
               key={item.label}>
@@ -41,12 +41,12 @@ export function EngagementRateChart({ data }: { data: FormatAnalysis }) {
           barSize={20}
           marginTop={-8}
           marginBottom={-8}
-          data={averageViewsData}
+          data={engagementRateData}
           domain={[0, 100]}
         />
         {/* 항목별 참여율 */}
         <div className='flex w-[8rem] shrink-0 flex-col gap-16 text-right'>
-          {averageViewsData.map((item) => (
+          {engagementRateData.map((item) => (
             <div
               className='flex h-20 items-center justify-end text-noto-body-xs-normal text-text-and-icon-default'
               key={item.label}>
