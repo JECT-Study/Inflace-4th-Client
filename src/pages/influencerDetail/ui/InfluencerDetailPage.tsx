@@ -29,7 +29,7 @@ export function InfluencerDetailPage() {
           {/* 채널 요약 영역 */}
           <ChannelSummarySection channelId={channelId} />
           {/* 임팩트 지표 영역 */}
-          <ImpactMetricsSection />
+          <ImpactMetricsSection channelId={channelId} />
           {/* 롱폼 vs 숏폼 참여율 분석 영역 */}
           <EngagementAnalyticsSection />
         </>
