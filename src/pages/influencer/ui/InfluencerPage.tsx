@@ -1,7 +1,12 @@
 'use client'
 
 import { Suspense, useState } from 'react'
-import { InfluencerList, useInfluencers, useYoutubeCategories } from '@/features/influencer'
+import { useSearchParams, useRouter, usePathname } from 'next/navigation'
+import {
+  InfluencerList,
+  useInfluencers,
+  useYoutubeCategories,
+} from '@/features/influencer'
 import type { SortCriteria, SortOrder } from '@/entities/influencer'
 import { InfluencerFilter } from '@/widgets/influencer'
 
@@ -22,20 +27,28 @@ export function InfluencerPage() {
 }
 
 function InfluencerListSection() {
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   const [selectedIndex, setSelectedIndex] = useState(0)
-  const [sortParams, setSortParams] = useState<{
-    sortCriteria?: SortCriteria
-    sortOrder?: SortOrder
-  }>({})
 
-  const {
-    data,
-    isLoading,
-    isError,
-    sentinelRef,
-    isFetchingNextPage,
-    hasNextPage,
-  } = useInfluencers(sortParams)
+  const filters = {
+    channelName: searchParams?.get('channelName') ?? undefined,
+    categoryIds: searchParams?.getAll('categoryIds').map(Number) ?? undefined,
+    subscriberFrom: searchParams?.get('subscriberFrom') ?? undefined,
+    subscriberTo: searchParams?.get('subscriberTo') ?? undefined,
+    uploadPeriod: searchParams?.get('uploadPeriod') ?? undefined,
+    hasAdHistory: searchParams?.get('hasAdHistory') ?? undefined,
+    engagementRateFrom: searchParams?.get('engagementRateFrom') ?? undefined,
+    engagementRateTo: searchParams?.get('engagementRateTo') ?? undefined,
+    outlierRange: searchParams?.get('outlierRange') ?? undefined,
+    language: searchParams?.get('language') ?? undefined,
+    sortCriteria: (searchParams?.get('sortCriteria') ?? undefined) as SortCriteria | undefined,
+    sortOrder: (searchParams?.get('sortOrder') ?? undefined) as SortOrder | undefined,
+  }
+
+  const { data, isLoading, sentinelRef, isFetchingNextPage, hasNextPage } =
+    useInfluencers(filters)
 
   const influencers = data?.pages.flatMap((page) => page.content) ?? []
 
@@ -45,21 +58,16 @@ function InfluencerListSection() {
     sortOrder: SortOrder
   ) => {
     setSelectedIndex(index)
-    setSortParams({ sortCriteria, sortOrder })
+    const params = new URLSearchParams(searchParams?.toString())
+    params.set('sortCriteria', sortCriteria)
+    params.set('sortOrder', sortOrder)
+    router.replace(`${pathname}?${params.toString()}`)
   }
 
   if (isLoading) {
     return (
       <div className='text-noto-label-sm-medium px-24 text-text-and-icon-tertiary'>
         불러오는 중...
-      </div>
-    )
-  }
-
-  if (isError) {
-    return (
-      <div className='text-noto-label-sm-medium text-status-error px-24'>
-        조건에 맞는 인플루언서가 없습니다.
       </div>
     )
   }
