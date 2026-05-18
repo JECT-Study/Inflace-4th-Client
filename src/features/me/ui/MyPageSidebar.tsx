@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { cn } from '@/shared/lib/utils'
 import UserIcon from '@/shared/assets/user-bold.svg'
 import VideoIcon from '@/shared/assets/video-bold.svg'
@@ -14,11 +15,8 @@ export const SIDEBAR_ITEMS = [
   { label: '알림 설정', href: '/me/alarm', Icon: BellIcon },
 ] as const
 
-type MyPageSidebarProps = {
-  currentPath: string
-}
-
-export function MyPageSidebar({ currentPath }: MyPageSidebarProps) {
+export function MyPageSidebar() {
+  const currentPath = usePathname()
   return (
     <div className='h-fit w-[30.3rem] shrink-0 gap-20 p-24'>
       <div className='flex h-fit w-full gap-4 rounded-8 bg-white p-16 shadow-[0px_2px_6px_0px_#0D0D0D0A]'>
