@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { ToggleGroup, ToggleGroupItem } from './ToggleGroup'
-import ImgUrl from '@/features/onboarding/assets/features-icon01.png'
+import ImgUrl from '@/features/onboarding/assets/IconChannelAnalysis.png'
 
 const PLACEHOLDER_IMG = ImgUrl
 

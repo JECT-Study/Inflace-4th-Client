@@ -20,8 +20,11 @@ export function MyProfilePage() {
         <h1 className='text-ibm-title-lg-normal text-text-and-icon-default'>
           프로필 설정
         </h1>
-        <PersonalInfoSection />
-        <CustomInfoSection />
+
+        <div className='flex h-fit w-full max-w-[118.6rem] flex-col gap-24'>
+          <PersonalInfoSection />
+          <CustomInfoSection />
+        </div>
       </div>
     </div>
   )
