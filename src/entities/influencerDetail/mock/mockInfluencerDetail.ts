@@ -1,4 +1,7 @@
-import { InfluencerDetailResponseDto } from '../model/types'
+import {
+  InfluencerDetailResponseDto,
+  InfluencerSummaryResponseDto,
+} from '../model/types'
 import mockChannelBanner from '@/shared/assets/mock/mockBannerImage.png'
 import mockChannelProfile from '@/shared/assets/mock/mockProfileImage.png'
 
@@ -48,4 +51,9 @@ export const mockInfluencerDetail: InfluencerDetailResponseDto = {
       engagementRate: 0.68,
     },
   },
+}
+
+export const mockInfluencerSummary: InfluencerSummaryResponseDto = {
+  summary:
+    "채널 '봐쓩'은 11,000명의 구독자를 보유하고 있으며, 팬층 점수와 참여율이 낮은 편으로, 구독자 대비 조회수는 높은 수준을 유지하고 있습니다. 콘텐츠는 주로 숏폼 중심이며, 평균 조회수는 약 43만 회로 바이럴 비율은 12%로 나타나고 있습니다. 최근 15일 전에 업로드가 있었고, 업로드 빈도는 증가 추세입니다. 광고 점수는 낮아 광고 수익화에 대한 적합성은 제한적일 것으로 보입니다.",
 }

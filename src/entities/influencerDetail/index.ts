@@ -1,2 +1,10 @@
-export type { InfluencerDetailResponseDto, FormatAnalysis } from './model/types'
-export { mockInfluencerDetail } from './mock/mockInfluencerDetail'
+export type {
+  InfluencerDetailResponseDto,
+  InfluencerSummaryResponseDto,
+  FrequencyTrend,
+  FormatAnalysis,
+} from './model/types'
+export {
+  mockInfluencerDetail,
+  mockInfluencerSummary,
+} from './mock/mockInfluencerDetail'

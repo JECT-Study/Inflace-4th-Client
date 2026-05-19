@@ -1,4 +1,5 @@
 import { authHandlers } from './authHandlers'
+import { channelConnectHandlers } from './channelConnectHandlers'
 import { channelProfileHandlers } from './channelProfileHandlers'
 import { onboardingHandlers } from './onboardingHandlers'
 import { trendMagazineHandlers } from './trendMagazineHandlers'
@@ -16,9 +17,11 @@ import { influencerHandlers } from './influencerHandlers'
 import { typeEngagementHandlers } from './typeEngagementHandlers'
 import { distributionChartHandlers } from './distributionChartHandlers'
 import { subscriberChartHandlers } from './subscriberChartHandlers'
+import { influencerSummaryHandlers } from './influencerSummaryHandlers'
 
 export const handlers = [
   ...authHandlers,
+  ...channelConnectHandlers,
   ...channelProfileHandlers,
   ...trendingVideosHandlers,
   ...trendMagazineHandlers,
@@ -36,4 +39,5 @@ export const handlers = [
   ...typeEngagementHandlers,
   ...distributionChartHandlers,
   ...subscriberChartHandlers,
+  ...influencerSummaryHandlers,
 ]
