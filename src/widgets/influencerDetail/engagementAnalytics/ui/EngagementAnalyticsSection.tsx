@@ -3,10 +3,10 @@
 import axios from 'axios'
 import { mockInfluencerDetail } from '@/entities/influencerDetail'
 import {
-  AverageViewsChart,
   ContentChart,
-  EngagementRateChart,
+  FormatBarChart,
 } from '@/entities/influencerDetail/engagementAnalytics'
+import { format10Thousands } from '@/shared/lib/format'
 import { useInfluencerDetail } from '@/features/influencerDetail'
 import IconParticipation from '@/shared/assets/participation-bold.svg'
 import { Skeleton } from '@/shared/ui/shadcn/skeleton'
@@ -91,9 +91,21 @@ export function EngagementAnalyticsSection({
         <ContentChart data={data.formatAnalysis} />
         <div className='flex flex-1 flex-col gap-40'>
           {/* 평균 조회수 차트 */}
-          <AverageViewsChart data={data.formatAnalysis} />
-          {/* 참여율 차트 */}
-          <EngagementRateChart data={data.formatAnalysis} />
+          <FormatBarChart
+            title='평균 조회수'
+            subtitle='최근 30일'
+            data={data.formatAnalysis}
+            dataKey='averageViews30d'
+            formatValue={format10Thousands}
+          />
+          {/* 평균 참여율 차트 */}
+          <FormatBarChart
+            title='참여율'
+            data={data.formatAnalysis}
+            dataKey='engagementRate'
+            formatValue={(v) => `${v.toFixed(1)}%`}
+            domain={[0, 100]}
+          />
         </div>
       </div>
     </div>
