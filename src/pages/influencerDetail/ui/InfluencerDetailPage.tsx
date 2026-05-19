@@ -18,6 +18,16 @@ export function InfluencerDetailPage() {
   const params = useParams<{ channelId: string }>()
   const channelId = params?.channelId
 
+  // 현재 활성화된 탭 (성과/광고)
+  const [activeTab, setActiveTab] = useState<Tab>(TAB.ADVERTISEMENT)
+
+  // 광고 필터 검색 버튼 클릭 시 필터 값
+  const [committedFilter, setCommittedFilter] =
+    useState<AdvertisementFilterQueryParams | null>(null)
+
+  const { data: brandAnalysisData, isLoading: isBrandAnalysisLoading } =
+    useInfluencerBrandAnalysis(channelId ?? '', committedFilter)
+
   if (!channelId) return null
 
   return (
@@ -43,11 +53,19 @@ export function InfluencerDetailPage() {
       {activeTab === TAB.ADVERTISEMENT && (
         <>
           {/* 광고 검색 영역 */}
-          <AdvertisementFilter />
-          {/* 광고 지표 분석 영역 */}
-          <AdvertisementMetricsSection />
-          {/* 검색 결과 영역 */}
-          <AdvertisementList />
+          <AdvertisementFilter onSearch={setCommittedFilter} />
+          {/* 검색 후 노출 영역 */}
+          {committedFilter !== null && (
+            <>
+              {/* 광고 지표 분석 영역 */}
+              <AdvertisementMetricsSection
+                data={brandAnalysisData}
+                isLoading={isBrandAnalysisLoading}
+              />
+              {/* 검색 결과 영역 */}
+              <AdvertisementList />
+            </>
+          )}
         </>
       )}
     </div>
